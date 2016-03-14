@@ -12,7 +12,7 @@ import ws.servicios.Beans;
 
 /**
  *
- * @author ozkrp
+ * @author ozkrpy
  */
 @WebService(serviceName = "Servicios")
 public class Servicios {
