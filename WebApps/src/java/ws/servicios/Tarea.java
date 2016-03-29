@@ -1,13 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Author: Oscar Ruffinelli
+ * Date created: 18/02/2016
+ * Modified: Oscar Ruffinelli 28/03/2016
+ *
  */
 package ws.servicios;
 
 /**
  *
- * @author ozkrp
+ * @author Oscar Ruffinelli
+ * @version 1.0
+ * 
+ * Instancia el objeto que sera retornado a la aplicacion para desplegar el detalle de la tarea recuperada. 
  */
 public class Tarea {
     
@@ -177,7 +181,5 @@ public class Tarea {
     public void setTareaComentarioAdicional(String tareaComentarioAdicional) {
         this.tareaComentarioAdicional = tareaComentarioAdicional;
     }
-    
-    
-    
+          
 }

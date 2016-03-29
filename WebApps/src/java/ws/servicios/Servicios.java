@@ -1,7 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Aplicacion Web encargada de efectuar las transacciones directamente con la base de datos.
+ * 
+ * Author: Oscar Ruffinelli
+ * Date created: 18/02/2016
+ * Modified: Oscar Ruffinelli 28/03/2016
+ *
  */
 package ws.servicios;
 
@@ -12,24 +15,20 @@ import ws.servicios.Beans;
 
 /**
  *
- * @author ozkrpy
+ * @author Oscar Ruffinelli
+ * @version 1.0
+ * 
  */
 @WebService(serviceName = "Servicios")
 public class Servicios {
-    Beans bean = new Beans();
+    Beans bean;
     /**
-     * Web service operation
-     */
-    @WebMethod(operationName = "validarUsuarios")
-    public String validarUsuarios(@WebParam(name = "user") String user, @WebParam(name = "pass") String pass) {
-        if (user.equals("oscar") && (pass.equals("oscar"))) {
-            return "OK";
-        }
-        return "ER";  
-    }
-
-    /**
-     * Web service operation
+     * Metodo:
+     * - Registro de login (Validacion usuario/contraseña)
+     *   . Metodo que recibe como parametros los datos del usuario (login/pass) y debe validarlos contra la DB.
+     *   . Retorna un objeto respuesta (Codigo, mensaje, referencia) que indique si es un usuario valido.
+     *   . La carga de solicitudes pendientes en la vista se realizara en base al usuario y su rol definido.
+     * Pendiente de desarrollo conector a la DB, validacion de roles.
      */
     @WebMethod(operationName = "validaUsuarioObjeto")
     public Respuesta validaUsuarioObjeto(@WebParam(name = "user") String user, @WebParam(name = "pass") String pass) {
@@ -48,12 +47,20 @@ public class Servicios {
     }
 
     /**
-     * Web service operation
+     * Metodo:
+     * - Recuperar listado de Solicitudes pendientes por usuario.
+     *   . Metodo invocado directamente despues de la validacion del login, y que debe retornar una lista de Solicitudes pendientes.
+     *   . Recibe como parametros usuario y contraseña del usuario logueado en la aplicacion.
+     *   . Retorna una lista de String con el codigo de la solicitud.
+     * Pendiente de desarrollo:
+     * . El conector a la DB que consulte y recupere las solicitudes pendientes.
+     * . Que el retorno sea una lista de objetos, conteniendo los datos (Numero de Solicitud, y descripcion de la solicitud).
      */
     @WebMethod(operationName = "recuperaLista")
     public String[] recuperaLista(@WebParam(name = "user") String user, @WebParam(name = "pass") String pass) {
         String[] solicitudes;
         if (user.equals("oscar") && (pass.equals("oscar"))) {
+            bean.escribeLogs("recuperaLista", "recibio los parametros, user: " + user + " pass: " + pass);
             solicitudes = new String[] {
                 "2386",
                 "2340",
@@ -69,7 +76,13 @@ public class Servicios {
     }
 
     /**
-     * Web service operation
+     * Metodo:
+     * - Recuperar detalle de tarea vigente asociada a la solicitud 
+     *   . Crea y retorna un objeto tarea con los datos relacionados al numero de solicitud que se recibio como parametro.
+     *   . Recibe como parametros los datos de user/pass, y numero de la solicitud en cuestion.
+     *   . Retorna un objeto Tarea con todos los datos de la solicitud.
+     * Pendiente de desarrollo:
+     * . Conector a la DB
      */
     @WebMethod(operationName = "recuperaTareas")
     public Tarea recuperaTareas(@WebParam(name = "user") String user, @WebParam(name = "pass") String pass, @WebParam(name = "numeroSolicitud") String numeroSolicitud) {
@@ -88,7 +101,23 @@ public class Servicios {
         }
         return tarea;
     }
-    
-    
+
+    /**
+     * Metodo:
+     * - Gestionar siguiente estado de la tarea
+     * . De acuerdo a la seleccion que haya realizado el usuario se debera invocar al procedimiento almacenado encargado de: 
+     *   . Aprobar
+     *   . Rechazar
+     *   . Anular
+     * . Recibe como parametros el user/pass, numero de solicitud, estado seleccionado desde la aplicacion (Aprobar, Rechazar, Cancelar), comentario de la evaluacion.
+     * . Retorna un objeto respuesta (Codigo, mensaje, referencia) que indique si la operacion en la DB fue exitosa.
+     * Pendiente de desarrollo:
+     * . Implementacion del conector y la invocacion a los metodos de acuerdo al parametro de entrada.
+     */
+    @WebMethod(operationName = "invocaSiguienteEstado")
+    public Respuesta invocaSiguienteEstado(@WebParam(name = "user") String user, @WebParam(name = "pass") String pass, @WebParam(name = "numeroSolicitud") String numeroSolicitud, @WebParam(name = "estadoEvaluacion") String estadoEvaluacion, @WebParam(name = "comentarioAprobacion") String comentarioAprobacion) {
+        //TODO write your implementation code here:
+        return null;
+    }
     
 }
