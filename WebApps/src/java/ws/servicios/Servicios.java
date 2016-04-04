@@ -16,7 +16,7 @@ import ws.servicios.Beans;
 /**
  *
  * @author Oscar Ruffinelli
- * @version 1.0
+ * @version 1.1
  * 
  */
 @WebService(serviceName = "Servicios")
@@ -118,6 +118,39 @@ public class Servicios {
     public Respuesta invocaSiguienteEstado(@WebParam(name = "user") String user, @WebParam(name = "pass") String pass, @WebParam(name = "numeroSolicitud") String numeroSolicitud, @WebParam(name = "estadoEvaluacion") String estadoEvaluacion, @WebParam(name = "comentarioAprobacion") String comentarioAprobacion) {
         //TODO write your implementation code here:
         return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "validarUsuarioParametroObjeto")
+    public Respuesta validarUsuarioParametroObjeto(@WebParam(name = "datosUser") DatosUsuario datosUser) {
+        Respuesta respuesta = new Respuesta(0, "ER", "se inicializo correctamente en el WS");
+        String metodo = "validarUsuarioParametroObjeto";
+        Beans.escribeLogs(metodo, respuesta.getReferencia());
+        if (datosUser == null) {
+            Beans.escribeLogs(metodo, "Parametro de entrada es nulo");
+            respuesta.setReferencia("Parametro de entrada es nulo");
+        } else {
+            String user = datosUser.getUser().toString().trim();
+            String pass = datosUser.getPass().toString().trim();
+            if ((user == null) || (pass == null) || (user.length() == 0) || (pass.length() == 0)) {
+                Beans.escribeLogs(metodo, "entro al if de datos nulos");
+                respuesta.setReferencia("Datos del objeto son nulos");
+            } else {
+                Beans.escribeLogs(metodo, "entro al else datos no son nulos");
+                if (user.equals("oscar") && pass.equals("oscar")) {
+                    Beans.escribeLogs(metodo, "entro al if de datos correctos");
+                    respuesta.setCodigo(1);
+                    respuesta.setMensaje("OK");
+                    respuesta.setReferencia("Usuario valido");
+                } else {
+                    Beans.escribeLogs(metodo, "entro al if de datos erroneos");
+                    respuesta.setReferencia("Datos incorrectos.");
+                }
+            }    
+        }
+        return respuesta;
     }
     
 }
