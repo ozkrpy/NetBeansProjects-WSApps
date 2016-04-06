@@ -25,4 +25,11 @@ public class Beans {
         System.out.println(modulo + "_LOG: " + mensaje);
     }
     
+    public static boolean validarLogin (String usuario, String password) {
+        if (usuario.equals("oscar") && password.equals("oscar")) {
+            return true;
+        }
+        return false;
+    }
+    
 }
