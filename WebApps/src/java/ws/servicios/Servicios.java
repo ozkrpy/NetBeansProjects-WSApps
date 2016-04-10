@@ -8,6 +8,7 @@
  */
 package ws.servicios;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.jws.WebService;
@@ -226,6 +227,41 @@ public class Servicios {
         }
         
         return tarea;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "recuperaListaParametroRetorno")
+    public ArrayList<Item> recuperaListaParametroRetorno(@WebParam(name = "datosUser") DatosUsuario datosUser) {
+        //TODO write your implementation code here:
+        List<String> lista = Arrays.asList("0","Vacio inicio");
+        String metodo = "recuperaListaParametroObjeto";
+        Beans.escribeLogs(metodo, "invocado el metodo de recuperacion de listas");
+        if (datosUser == null) {
+            Beans.escribeLogs(metodo, "Parametro de entrada es nulo");
+            return null;
+        } else {
+            String user = datosUser.getUser().toString().trim();
+            String pass = datosUser.getPass().toString().trim();
+            if ((user == null) || (pass == null) || (user.length() == 0) || (pass.length() == 0)) {
+                Beans.escribeLogs(metodo, "entro al if de datos nulos");
+                return null;
+            } else {
+                Beans.escribeLogs(metodo, "entro al else datos no son nulos");
+                if (Beans.validarLogin(user, pass)) {
+                    Beans.escribeLogs(metodo, "entro al if de datos correctos");
+                    lista = Arrays.asList( "2386",
+                                           "2340",
+                                           //"2333",
+                                           "2305");
+                } else {
+                    Beans.escribeLogs(metodo, "entro al if de datos erroneos");
+                    return null;
+                }
+            }    
+        }
+        return null;
     }
     
 }
