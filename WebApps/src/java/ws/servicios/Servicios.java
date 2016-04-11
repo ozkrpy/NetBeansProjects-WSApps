@@ -235,7 +235,7 @@ public class Servicios {
     @WebMethod(operationName = "recuperaListaParametroRetorno")
     public ArrayList<Item> recuperaListaParametroRetorno(@WebParam(name = "datosUser") DatosUsuario datosUser) {
         //TODO write your implementation code here:
-        List<String> lista = Arrays.asList("0","Vacio inicio");
+        ArrayList<Item> lista = new ArrayList<Item>();
         String metodo = "recuperaListaParametroObjeto";
         Beans.escribeLogs(metodo, "invocado el metodo de recuperacion de listas");
         if (datosUser == null) {
@@ -250,18 +250,55 @@ public class Servicios {
             } else {
                 Beans.escribeLogs(metodo, "entro al else datos no son nulos");
                 if (Beans.validarLogin(user, pass)) {
-                    Beans.escribeLogs(metodo, "entro al if de datos correctos");
-                    lista = Arrays.asList( "2386",
-                                           "2340",
-                                           //"2333",
-                                           "2305");
+                   Beans.escribeLogs(metodo, "entro al if de datos correctos");
+                    Item item1 = new Item();
+                    item1.setTitle("2386");
+                    item1.setDescription("CREDITOS HASTA 5.000.000");
+                    lista.add(item1);
+                    Item item2 = new Item();
+                    item2.setTitle("2340");
+                    item2.setDescription("CREDITOS HASTA 15.000.000");
+                    lista.add(item2);
+                    Item item3 = new Item();
+                    item3.setTitle("2305");
+                    item3.setDescription("SOLICITUD DE TARJETA");
+                    lista.add(item3);
+
+                    //Item itemExtra = new Item(); itemExtra.setTitle("2333"); itemExtra.setDescription("SOLICITUD EXPLICITAMENTE PREPROCESADA"); lista.add(itemExtra);
+
                 } else {
                     Beans.escribeLogs(metodo, "entro al if de datos erroneos");
                     return null;
+                    
                 }
             }    
         }
-        return null;
+        return lista;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "recuperaListaParametroRetornoEmpty")
+    public ArrayList<Item> recuperaListaParametroRetornoEmpty() {
+        ArrayList<Item> lista = new ArrayList<Item>();
+        
+        Item item1 = new Item();
+        item1.setTitle("2386");
+        item1.setDescription("CREDITOS HASTA 5.000.000");
+        Item item2 = new Item();
+        item2.setTitle("2340");
+        item2.setDescription("CREDITOS HASTA 15.000.000");
+        Item item3 = new Item();
+        item3.setTitle("2305");
+        item3.setDescription("SOLICITUD DE TARJETA");
+        
+        
+        lista.add(item1);
+        lista.add(item2);
+        lista.add(item3);
+
+        return lista;
     }
     
 }
