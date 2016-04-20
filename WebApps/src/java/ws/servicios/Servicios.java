@@ -118,9 +118,34 @@ public class Servicios {
      * . Implementacion del conector y la invocacion a los metodos de acuerdo al parametro de entrada.
      */
     @WebMethod(operationName = "invocaSiguienteEstado")
-    public Respuesta invocaSiguienteEstado(@WebParam(name = "user") String user, @WebParam(name = "pass") String pass, @WebParam(name = "numeroSolicitud") String numeroSolicitud, @WebParam(name = "estadoEvaluacion") String estadoEvaluacion, @WebParam(name = "comentarioAprobacion") String comentarioAprobacion) {
-        //TODO write your implementation code here:
-        return null;
+    public Respuesta invocaSiguienteEstado(@WebParam(name = "datosUser") DatosUsuario datosUser, @WebParam(name = "numeroSolicitud") String numeroSolicitud, @WebParam(name = "estadoEvaluacion") String estadoEvaluacion, @WebParam(name = "comentarioAprobacion") String comentarioAprobacion) {
+        Respuesta respuesta = new Respuesta (0, "ER", "cargado en el WS");
+        String metodo = "validarUsuarioParametroObjeto";
+        Beans.escribeLogs(metodo, respuesta.getReferencia());
+        if (datosUser == null) {
+            Beans.escribeLogs(metodo, "Parametro de entrada es nulo");
+            respuesta.setReferencia("Parametro de entrada es nulo");
+        } else {
+            String user = datosUser.getUser().toString().trim();
+            String pass = datosUser.getPass().toString().trim();
+            if ((user == null) || (pass == null) || (user.length() == 0) || (pass.length() == 0)) {
+                Beans.escribeLogs(metodo, "entro al if de datos nulos");
+                respuesta.setReferencia("Datos del objeto son nulos");
+            } else {
+                Beans.escribeLogs(metodo, "entro al else datos no son nulos");
+                if (Beans.validarLogin(user, pass)) {
+                    Beans.escribeLogs(metodo, "entro al if de datos correctos");
+                    
+                    respuesta.setCodigo(1);
+                    respuesta.setMensaje("OK");
+                    respuesta.setReferencia("Usuario valido");
+                } else {
+                    Beans.escribeLogs(metodo, "entro al if de datos erroneos");
+                    respuesta.setReferencia("Datos incorrectos.");
+                }
+            }    
+        }
+        return respuesta;
     }
 
     /**
@@ -250,22 +275,11 @@ public class Servicios {
             } else {
                 Beans.escribeLogs(metodo, "entro al else datos no son nulos");
                 if (Beans.validarLogin(user, pass)) {
-                   Beans.escribeLogs(metodo, "entro al if de datos correctos");
-                    Item item1 = new Item();
-                    item1.setTitle("2386");
-                    item1.setDescription("CREDITOS HASTA 5.000.000");
-                    lista.add(item1);
-                    Item item2 = new Item();
-                    item2.setTitle("2340");
-                    item2.setDescription("CREDITOS HASTA 15.000.000");
-                    lista.add(item2);
-                    Item item3 = new Item();
-                    item3.setTitle("2305");
-                    item3.setDescription("SOLICITUD DE TARJETA");
-                    lista.add(item3);
-
+                    Beans.escribeLogs(metodo, "entro al if de datos correctos");
+                    
+                    lista = Beans.retornaListaSolicitudes();
+        
                     //Item itemExtra = new Item(); itemExtra.setTitle("2333"); itemExtra.setDescription("SOLICITUD EXPLICITAMENTE PREPROCESADA"); lista.add(itemExtra);
-
                 } else {
                     Beans.escribeLogs(metodo, "entro al if de datos erroneos");
                     return null;
@@ -281,24 +295,12 @@ public class Servicios {
      */
     @WebMethod(operationName = "recuperaListaParametroRetornoEmpty")
     public ArrayList<Item> recuperaListaParametroRetornoEmpty() {
-        ArrayList<Item> lista = new ArrayList<Item>();
+        Item[] lista = new Item[0];
+        Beans.escribeLogs("recuperaListaParametroRetornoEmpty", "entro al metodo.");
+        lista = Beans.getUsers();
+        Beans.escribeLogs("recuperaListaParametroRetornoEmpty", "recupero lista.");
+        return null;
         
-        Item item1 = new Item();
-        item1.setTitle("2386");
-        item1.setDescription("CREDITOS HASTA 5.000.000");
-        Item item2 = new Item();
-        item2.setTitle("2340");
-        item2.setDescription("CREDITOS HASTA 15.000.000");
-        Item item3 = new Item();
-        item3.setTitle("2305");
-        item3.setDescription("SOLICITUD DE TARJETA");
-        
-        
-        lista.add(item1);
-        lista.add(item2);
-        lista.add(item3);
-
-        return lista;
     }
     
 }
