@@ -7,6 +7,7 @@ package ws.operations;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.jws.Oneway;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -112,10 +113,10 @@ public class Services {
      */
     @WebMethod(operationName = "recuperaTarea")
     public Tarea recuperaTarea(@WebParam(name = "datosUsuario") DatosUsuario datosUsuario, @WebParam(name = "numeroSolicitud") String numeroSolicitud) {
-        Tarea tarea = null;
+        Tarea tarea = new Tarea();
         Beans.escribeLogs("instanciaEntidades", "Inicio");
-        String metodo = "recuperaListaParametroObjeto";
-        Beans.escribeLogs(metodo, "invocado el metodo de recuperacion de listas");
+        String metodo = "recuperaTarea";
+        Beans.escribeLogs(metodo, "invocado el metodo de recuperacion de tareas");
         if (datosUsuario == null) {
             Beans.escribeLogs(metodo, "Parametro de entrada es nulo");
             return null;
@@ -130,19 +131,34 @@ public class Services {
                 if (Beans.validarLogin(user, pass)) {
                     Beans.escribeLogs(metodo, "entro al if de datos correctos");
                     
-                    /* MIENTRAS TANTO */
-                    if (numeroSolicitud.equals("2386")) {
-                        tarea = new Tarea ("12940","DARIO RAMON BOBADILLA COLMAN","18/06/2012 11:19","18473","83","CREDITOS HASTA 5.000.000",
-                        "8","7","DESEMBOLSO","Pendiente","28/06/2012 11:54","CBARRIOS","CYNTHIA BARRIOS","DESEMBOLSO","","");
-                    } else if (numeroSolicitud.equals("2340")) {
-                        tarea = new Tarea ("154047","MARIA DANIELA RIVERO DANIEL","15/06/2012 12:35","18339","8","CREDITOS HASTA 15.000.000",
-                        "1","27","APERTURA","Pendiente","8/01/2012 11:54","MEZAA","AGUSTIN MEZA","APERTURA","","");                
-                    } else if (numeroSolicitud.equals("2305")) {
-                        tarea = new Tarea ("140589","ARTURO FABIAN AYALA FARINHA","1/07/2012 10:19","18235","3","SOLICITUD DE TARJETA",
-                        "5","2","SOLICITUD","Pendiente","2/06/2012 11:54","VERAV","VERONICA VERA","SOLICITUD","","");                
+                    EntitiesInstance instanciaSolicitudes = new EntitiesInstance();
+                    List<Object[]> objetoRecuperado = instanciaSolicitudes.getTarea(numeroSolicitud);
+                    Beans.escribeLogs(metodo, "termino la ejecucion de instanciacion de entidad");
+                    if (objetoRecuperado == null) {
+                        Beans.escribeLogs(metodo, "tarea retorno null");
+                    } else {
+                        Beans.escribeLogs(metodo, "la tarea recuperada no es nula");
+                        for (Object[] a : objetoRecuperado) {
+                            tarea.setPersonaCodigo(a[0].toString());
+                            tarea.setPersonaNombre(a[1].toString());
+                            tarea.setSolicitudFechaInicio(a[2].toString());
+                            tarea.setSolicitudReferencia(a[3].toString());
+                            tarea.setSolicitudTipoCodigo(a[4].toString());
+                            tarea.setSolicitudTipoDescripcion(a[5].toString());
+                            tarea.setTareaNumero(a[6].toString());
+                            tarea.setTareaTipoCodigo(a[7].toString());
+                            tarea.setTareaTipoDescripcion(a[8].toString());
+                            tarea.setTareaEstado(a[9].toString());
+                            tarea.setTareaFechaAsignacion(a[10].toString());
+                            tarea.setTareaAsignadorCodigo(a[11].toString());
+                            tarea.setTareaAsignadorNombre(a[12].toString());
+                            tarea.setTareaDescripcion(a[13].toString());
+                            tarea.setTareaComentarioRecibido("");
+                            tarea.setTareaComentarioAdicional("");
+                        }
+                        Beans.escribeLogs("imprimeTarea", "recuperoTarea: " + tarea.getPersonaCodigo().toString());
+                        return tarea;
                     }
-                    
-                    
                 } else {
                     Beans.escribeLogs(metodo, "entro al if de datos erroneos");
                     return null;
@@ -150,6 +166,42 @@ public class Services {
                 }
             }    
         }
-        return tarea;
+        return null;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "dummy")
+    public Tarea dummy() {
+        EntitiesInstance instanciaSolicitudes = new EntitiesInstance();
+        List<Object[]> objetoRecuperado = instanciaSolicitudes.getTarea("2386");
+        if (objetoRecuperado == null) {
+            Beans.escribeLogs("instanciaEntidades", "solicitudes retorno null");
+        } else {
+            Tarea tarea = new Tarea();
+            for (Object[] a : objetoRecuperado) {
+                
+                tarea.setPersonaCodigo(a[0].toString());
+                tarea.setPersonaNombre(a[1].toString());
+                tarea.setSolicitudFechaInicio(a[2].toString());
+                tarea.setSolicitudReferencia(a[3].toString());
+                tarea.setSolicitudTipoCodigo(a[4].toString());
+                tarea.setSolicitudTipoDescripcion(a[5].toString());
+                tarea.setTareaNumero(a[6].toString());
+                tarea.setTareaTipoCodigo(a[7].toString());
+                tarea.setTareaTipoDescripcion(a[8].toString());
+                tarea.setTareaEstado(a[9].toString());
+                tarea.setTareaFechaAsignacion(a[10].toString());
+                tarea.setTareaAsignadorCodigo(a[11].toString());
+                tarea.setTareaAsignadorNombre(a[12].toString());
+                tarea.setTareaDescripcion(a[13].toString());
+                tarea.setTareaComentarioRecibido("");
+                tarea.setTareaComentarioAdicional("");
+            }
+            Beans.escribeLogs("imprimeTarea", "recuperoTarea: " + tarea.getPersonaCodigo().toString());
+            return tarea;
+        }            
+        return null;
     }
 }

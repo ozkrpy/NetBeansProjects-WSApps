@@ -53,4 +53,24 @@ public class EntitiesInstance {
         }
         return null;
     }
+    
+    public List<Object[]> getTarea(String numeroSolicitud) {
+        Beans.escribeLogs(TAG, "entro al metodo: getTarea para la solicitud: " + numeroSolicitud);
+        EntityManager em = getEntityManager();
+        Beans.escribeLogs(TAG, "ejecute el getEntityManager");
+
+        try {
+            Query query = em.createNamedQuery("Tareas.findBySolicitudNumeroTarea");
+            query.setParameter("solicitudNumero", numeroSolicitud);
+            List<Object[]> resultadoNamedQuery = query.getResultList();
+     
+            Beans.escribeLogs(TAG, "ejecuto el named query solicitudes, recupero:" + resultadoNamedQuery.toString());
+            return resultadoNamedQuery;
+        } catch (Exception ex) {
+            Beans.escribeLogs(TAG, "Exception: " + ex.toString());
+        } finally {
+            em.close();
+        }
+        return null;
+    }
 }

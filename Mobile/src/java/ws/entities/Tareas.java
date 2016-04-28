@@ -29,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Tareas.findAll", query = "SELECT t FROM Tareas t"),
     @NamedQuery(name = "Tareas.findBySolicitudNumero", query = "SELECT t FROM Tareas t WHERE t.solicitudNumero = :solicitudNumero"),
+    @NamedQuery(name = "Tareas.findBySolicitudNumeroTarea", query = "SELECT t.personaCodigo,t.personaNombre,t.solicitudFechaInicio,t.solicitudReferencia,t.solicitudTipoCodigo,t.solicitudTipoDescripcion,t.tareaNumero,t.tareaTipoCodigo,t.tareaTipoDescripcion,t.tareaEstado,t.tareaFechaAsignacion,t.tareaAsignadorCodigo,t.tareaAsignadorNombre,t.tareaDescripcion FROM Tareas t WHERE t.solicitudNumero = :solicitudNumero"),
     @NamedQuery(name = "Tareas.findByPersonaCodigo", query = "SELECT t FROM Tareas t WHERE t.personaCodigo = :personaCodigo"),
     @NamedQuery(name = "Tareas.findByPersonaNombre", query = "SELECT t FROM Tareas t WHERE t.personaNombre = :personaNombre"),
     @NamedQuery(name = "Tareas.findBySolicitudFechaInicio", query = "SELECT t FROM Tareas t WHERE t.solicitudFechaInicio = :solicitudFechaInicio"),
@@ -127,7 +128,7 @@ public class Tareas implements Serializable {
     @Column(name = "tarea_Comentario_Adicional")
     private String tareaComentarioAdicional;
     @JoinColumn(name = "solicitud_numero", referencedColumnName = "numero_solicitud", insertable = false, updatable = false)
-    @OneToOne(optional = false)
+    @OneToOne(optional = true)
     private Solicitudes solicitudes;
 
     public Tareas() {
@@ -319,7 +320,8 @@ public class Tareas implements Serializable {
 
     @Override
     public String toString() {
-        return "ws.entities.Tareas[ solicitudNumero=" + solicitudNumero + " ]";
+        return "solicitud_numero: " + solicitudNumero + "\n"
+               + "persona_codigo: " + personaCodigo;
     }
     
 }
