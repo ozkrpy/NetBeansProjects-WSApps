@@ -117,7 +117,7 @@ public class Services {
         Beans.escribeLogs("instanciaEntidades", "Inicio");
         String metodo = "recuperaTarea";
         Beans.escribeLogs(metodo, "invocado el metodo de recuperacion de tareas");
-        if (datosUsuario == null) {
+        if (datosUsuario == null || numeroSolicitud == null) {
             Beans.escribeLogs(metodo, "Parametro de entrada es nulo");
             return null;
         } else {
@@ -172,36 +172,64 @@ public class Services {
     /**
      * Web service operation
      */
+    @WebMethod(operationName = "actualizaEstadoSolicitud")
+    public Respuesta actualizaEstadoSolicitud(@WebParam(name = "datosUsuario") DatosUsuario datosUsuario, @WebParam(name = "numeroSolicitud") String numeroSolicitud, @WebParam(name = "estadoAprobacion") String estadoAprobacion) {
+        Respuesta respuesta = new Respuesta(0, "ER", "se inicializo correctamente en el WS");
+        String metodo = "actualizaEstadoSolicitud";
+        String usuarioNuevo = "";
+        Beans.escribeLogs(metodo, respuesta.getReferencia());
+        if (datosUsuario == null || numeroSolicitud == null || estadoAprobacion == null) {
+            Beans.escribeLogs(metodo, "Parametro de entrada es nulo");
+            respuesta.setReferencia("Parametro de entrada es nulo");
+        } else {
+            String user = datosUsuario.getUser().toString().trim();
+            String pass = datosUsuario.getPass().toString().trim();
+            if ((user == null) || (pass == null) || (user.length() == 0) || (pass.length() == 0)) {
+                Beans.escribeLogs(metodo, "entro al if de datos nulos");
+                respuesta.setReferencia("Datos del usuario son nulos");
+            } else {
+                Beans.escribeLogs(metodo, "entro al else datos no son nulos");
+                if (Beans.validarLogin(user, pass)) {
+                    Beans.escribeLogs(metodo, "entro al if de datos correctos");
+                    EntitiesInstance instanciaSolicitudes = new EntitiesInstance();
+                    Respuesta objetoRecuperado = new Respuesta(0, "ER", "Instancia inicial");
+                    if (user.equals("oscar")) {
+                        usuarioNuevo = "vero";
+                    } else {
+                        usuarioNuevo = "oscar";
+                    }
+                    objetoRecuperado = instanciaSolicitudes.updateSolicitud(numeroSolicitud,estadoAprobacion,usuarioNuevo);
+                    if (objetoRecuperado == null) {
+                        Beans.escribeLogs("instanciaEntidades", "solicitudes retorno null");
+                        respuesta.setReferencia("Se produjo un error al actualizar la solicitud");
+                    } else {
+                        Beans.escribeLogs("retorno", "estado: " + objetoRecuperado.getMensaje());
+                        respuesta.setCodigo(objetoRecuperado.getCodigo());
+                        respuesta.setMensaje(objetoRecuperado.getMensaje());
+                        respuesta.setReferencia(objetoRecuperado.getReferencia());
+                    }            
+                } else {
+                    Beans.escribeLogs(metodo, "entro al if de datos erroneos");
+                    respuesta.setReferencia("Datos incorrectos.");
+                }
+            }    
+        }
+        return respuesta;
+    }
+
+    /**
+     * Web service operation
+     */
     @WebMethod(operationName = "dummy")
-    public Tarea dummy() {
+    public Respuesta dummy() {
+        Respuesta objetoRecuperado = new Respuesta(0, "ER", "Instancia inicial");
         EntitiesInstance instanciaSolicitudes = new EntitiesInstance();
-        List<Object[]> objetoRecuperado = instanciaSolicitudes.getTarea("2386");
+        objetoRecuperado = instanciaSolicitudes.updateSolicitud("2305","UP","upd");
         if (objetoRecuperado == null) {
             Beans.escribeLogs("instanciaEntidades", "solicitudes retorno null");
         } else {
-            Tarea tarea = new Tarea();
-            for (Object[] a : objetoRecuperado) {
-                
-                tarea.setPersonaCodigo(a[0].toString());
-                tarea.setPersonaNombre(a[1].toString());
-                tarea.setSolicitudFechaInicio(a[2].toString());
-                tarea.setSolicitudReferencia(a[3].toString());
-                tarea.setSolicitudTipoCodigo(a[4].toString());
-                tarea.setSolicitudTipoDescripcion(a[5].toString());
-                tarea.setTareaNumero(a[6].toString());
-                tarea.setTareaTipoCodigo(a[7].toString());
-                tarea.setTareaTipoDescripcion(a[8].toString());
-                tarea.setTareaEstado(a[9].toString());
-                tarea.setTareaFechaAsignacion(a[10].toString());
-                tarea.setTareaAsignadorCodigo(a[11].toString());
-                tarea.setTareaAsignadorNombre(a[12].toString());
-                tarea.setTareaDescripcion(a[13].toString());
-                tarea.setTareaComentarioRecibido("");
-                tarea.setTareaComentarioAdicional("");
-            }
-            Beans.escribeLogs("imprimeTarea", "recuperoTarea: " + tarea.getPersonaCodigo().toString());
-            return tarea;
+            Beans.escribeLogs("retorno", "estado: " + objetoRecuperado.getMensaje());            
         }            
-        return null;
+        return objetoRecuperado;
     }
 }

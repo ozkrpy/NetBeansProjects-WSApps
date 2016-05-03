@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -40,7 +41,7 @@ public class EntitiesInstance {
         Beans.escribeLogs(TAG, "invoco al getEntityManager");
 
         try {
-            Query query = em.createNativeQuery("SELECT s.numero_solicitud, s.descripcion_solicitud FROM Solicitudes s WHERE s.usuario = '" + user + "'");
+            Query query = em.createNativeQuery("SELECT s.numero_solicitud, s.descripcion_solicitud FROM Solicitudes s WHERE s.estado_solicitud = 'PE' AND s.usuario = '" + user + "'");
             List<Object[]> resultadoNamedQuery = query.setParameter("usuario", user).getResultList();
             Beans.escribeLogs(TAG, "ejecuto el named query solicitudes");
             return resultadoNamedQuery;
@@ -72,5 +73,32 @@ public class EntitiesInstance {
             em.close();
         }
         return null;
+    }
+    
+    public Respuesta updateSolicitud(String numeroSolicitud, String nuevoEstado, String usuarioNuevo) {
+        Beans.escribeLogs(TAG, "entro al metodo: updateSolicitud para la solicitud: " + numeroSolicitud);
+        Respuesta respuesta = new Respuesta(0, "ER", "Inicializado en entidades");
+        EntityManager em = getEntityManager();
+        Beans.escribeLogs(TAG, "ejecute el getEntityManager");
+        
+        em.getTransaction().begin();
+        String queryTexto = "UPDATE Solicitudes s SET s.usuario = '" + usuarioNuevo + "', s.estadoSolicitud = '" + nuevoEstado + "' WHERE s.numeroSolicitud = '" + numeroSolicitud + "'";
+        Beans.escribeLogs(TAG, "QUERY: " + queryTexto);
+        try {
+            Query query = em.createQuery("UPDATE Solicitudes s SET s.usuario = '" + usuarioNuevo + "', s.estadoSolicitud = '" + nuevoEstado + "' WHERE s.numeroSolicitud = '" + numeroSolicitud + "'");
+            int updatedCount = query.executeUpdate();
+            if (updatedCount > 0) {
+                Beans.escribeLogs(TAG, "se actualizaron registros");
+                respuesta.setCodigo(1);
+                respuesta.setMensaje("OK");
+                respuesta.setReferencia("Se actualizo correctamente al usuario: " + usuarioNuevo);
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            Beans.escribeLogs("Excepcion", "Error: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+        return respuesta;
     }
 }
