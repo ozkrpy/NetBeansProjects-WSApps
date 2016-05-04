@@ -42,9 +42,13 @@ public class EntitiesInstance {
 
         try {
             Query query = em.createNativeQuery("SELECT s.numero_solicitud, s.descripcion_solicitud FROM Solicitudes s WHERE s.estado_solicitud = 'PE' AND s.usuario = '" + user + "'");
-            List<Object[]> resultadoNamedQuery = query.setParameter("usuario", user).getResultList();
+            List<Object[]> resultadoNamedQuery = query.getResultList();
             Beans.escribeLogs(TAG, "ejecuto el named query solicitudes");
-            return resultadoNamedQuery;
+            if (resultadoNamedQuery == null) {
+                return null;
+            } else {
+                return resultadoNamedQuery;
+            }
         } catch (EntityNotFoundException entityEx) {
             Beans.escribeLogs(TAG, "Entitty Exception: " + entityEx.toString());
         } catch (Exception ex) {

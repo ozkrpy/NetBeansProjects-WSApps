@@ -76,12 +76,12 @@ public class Services {
                 if (Beans.validarLogin(user, pass)) {
                     Beans.escribeLogs(metodo, "entro al if de datos correctos");
                     
-                    //lista = Beans.retornaListaSolicitudes();
                     try { 
                         EntitiesInstance instanciaSolicitudes = new EntitiesInstance();
                         List<Object[]> listaRecuperada = instanciaSolicitudes.getSolicitudes(user);
                         if (listaRecuperada == null) {
                             Beans.escribeLogs("instanciaEntidades", "solicitudes retorno null");
+                            return null;
                         } else {
                             for (Object[] a : listaRecuperada) {
                                 System.out.println("Numero Solicitud: " + a[0] + " Descripcion: " + a[1]);
