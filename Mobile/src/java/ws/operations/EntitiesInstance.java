@@ -1,17 +1,11 @@
 package ws.operations;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import ws.entities.Solicitudes;
-import ws.operations.Beans;
 
 /**
  *
@@ -95,7 +89,7 @@ public class EntitiesInstance {
                 Beans.escribeLogs(TAG, "se actualizaron registros");
                 respuesta.setCodigo(1);
                 respuesta.setMensaje("OK");
-                respuesta.setReferencia("Se actualizo correctamente al usuario: " + usuarioNuevo);
+                respuesta.setReferencia("Se actualizo correctamente la solicitud: " + numeroSolicitud);
             }
             em.getTransaction().commit();
         } catch (Exception e) {
