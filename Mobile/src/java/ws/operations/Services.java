@@ -194,7 +194,7 @@ public class Services {
                     EntitiesInstance instanciaSolicitudes = new EntitiesInstance();
                     Respuesta objetoRecuperado = new Respuesta(0, "ER", "Instancia inicial");
                     if (user.equals("oscar")) {
-                        usuarioNuevo = "vero";
+                        usuarioNuevo = "osvaldo";
                     } else {
                         usuarioNuevo = "oscar";
                     }

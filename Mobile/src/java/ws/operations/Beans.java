@@ -16,7 +16,7 @@ public class Beans {
     }
     
     public static boolean validarLogin(String usuario, String password) {
-        if ((usuario.equals("oscar") && password.equals("oscar")) || (usuario.equals("vero") && password.equals("vero"))) {
+        if ((usuario.equals("oscar") && password.equals("oscar")) || (usuario.equals("osvaldo") && password.equals("osvaldo"))) {
             return true;
         }
         return false;
