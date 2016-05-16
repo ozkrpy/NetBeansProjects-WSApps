@@ -28,6 +28,7 @@ public class Services {
         Respuesta respuesta = new Respuesta(0, "ER", "se inicializo correctamente en el WS");
         String metodo = "validarUsuario";
         Beans.escribeLogs(metodo, respuesta.getReferencia());
+        Beans.escribeLogs(metodo, "invocado el metodo de recuperacion de tareas. Parametros: datosUsuario " + datosUsuario.getUser());
         if (datosUsuario == null) {
             Beans.escribeLogs(metodo, "Parametro de entrada es nulo");
             respuesta.setReferencia("Parametro de entrada es nulo");
@@ -116,7 +117,7 @@ public class Services {
         Tarea tarea = new Tarea();
         Beans.escribeLogs("instanciaEntidades", "Inicio");
         String metodo = "recuperaTarea";
-        Beans.escribeLogs(metodo, "invocado el metodo de recuperacion de tareas");
+        Beans.escribeLogs(metodo, "invocado el metodo de recuperacion de tareas. Parametros: numeroSolicitud " + numeroSolicitud + " datosUsuario " + datosUsuario.getPass());
         if (datosUsuario == null || numeroSolicitud == null) {
             Beans.escribeLogs(metodo, "Parametro de entrada es nulo");
             return null;
