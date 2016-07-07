@@ -21,4 +21,8 @@ public class Beans {
         }
         return false;
     }
+    
+    public static boolean insertaLogsDatabase(String metodo, String operacion) {
+        return true; 
+    }
 }
