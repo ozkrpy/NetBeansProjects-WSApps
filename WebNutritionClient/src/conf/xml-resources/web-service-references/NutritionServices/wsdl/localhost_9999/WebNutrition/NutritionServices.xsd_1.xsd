@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://sources.ws/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://sources.ws/">
+
+<xs:element name="datosPaciente" type="tns:datosPaciente"/>
+
+<xs:element name="datosPacienteResponse" type="tns:datosPacienteResponse"/>
+
+<xs:element name="operation" type="tns:operation"/>
+
+<xs:element name="operationResponse" type="tns:operationResponse"/>
+
+<xs:complexType name="datosPaciente">
+<xs:sequence>
+<xs:element name="nombrePaciente" type="xs:string" minOccurs="0"/>
+<xs:element name="edad" type="xs:int"/>
+<xs:element name="sexo" type="xs:string" minOccurs="0"/>
+<xs:element name="pesoActual" type="xs:double"/>
+<xs:element name="pesoHabitual" type="xs:double"/>
+<xs:element name="talla" type="xs:double"/>
+<xs:element name="circunferenciaMunheca" type="xs:int"/>
+<xs:element name="circunferenciaCintura" type="xs:double"/>
+<xs:element name="diagnosticoMedico" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="datosPacienteResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="operation">
+<xs:sequence>
+<xs:element name="edad" type="xs:int"/>
+<xs:element name="sexo" type="xs:string" minOccurs="0"/>
+<xs:element name="talla" type="xs:double"/>
+<xs:element name="circunferenciaMunheca" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="operationResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

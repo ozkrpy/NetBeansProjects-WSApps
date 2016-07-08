@@ -13,8 +13,8 @@ import javax.jws.WebParam;
  *
  * @author ozkrp
  */
-@WebService(serviceName = "Servicios")
-public class Servicios {
+@WebService(serviceName = "NutritionServices")
+public class NutritionServices {
 
     @WebMethod(operationName = "datosPaciente")
     public String datosPaciente(@WebParam(name = "nombrePaciente") String nombrePaciente, @WebParam(name = "edad") int edad, @WebParam(name = "sexo") String sexo
@@ -55,9 +55,19 @@ public class Servicios {
                     contextura = "Mediana (Entre 9.6 y 10.4)";
                 else if (biotipo < 9.6) 
                     contextura = "Grande (Menor a 9.6)";
-            } else { 
+            } else if (sexo.equals("F")){ 
                 logger("entro al if de Femenino");
+                if (biotipo > 11) 
+                    contextura = "Pequeña (Mayor a 11)";  
+                else if (biotipo >= 10.1&& biotipo <= 11) 
+                    contextura = "Mediana (Entre 10.1 y 11)";
+                else if (biotipo < 10.1) 
+                    contextura = "Grande (Menor a 10.1)";
+            } else {
+                logger("sexo no valido");
+                return "Sexo ingresado no es valido";
             }
+            
         }
         logger(contextura);
         return "Contextura " + contextura;
@@ -66,8 +76,4 @@ public class Servicios {
     private void logger(String mensaje) {
         System.out.println("APPLOG " + mensaje);
     }
-
-
-    
-    
 }
