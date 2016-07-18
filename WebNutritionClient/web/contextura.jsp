@@ -9,7 +9,7 @@
             Sexo: <input type="text" name="sexo"/><br/>
             Talla: <input type="text" name="talla"/><br/>
             Cia. Muñeca: <input type="text" name="cia_muneca"/><br/>
-            <input type="submit" value="operation"/>
+            <input type="submit" value="Calcular"/>
         </form>
     </body> 
 </html>

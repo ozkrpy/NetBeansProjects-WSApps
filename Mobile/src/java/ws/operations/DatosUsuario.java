@@ -15,9 +15,9 @@ import java.util.Date;
  * 
  */
 public class DatosUsuario {
-    String user;
-    String pass;
-    String fecha;
+    private String user;
+    private String pass;
+    private String fecha;
 
     public DatosUsuario() {
     }

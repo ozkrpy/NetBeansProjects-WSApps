@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteGrafico" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8bcebe57-bf98-4cbd-84ef-14124ae645bf">
+	<property name="ireport.zoom" value="0.9090909090909096"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="consola" class="java.lang.String"/>
+	<group name="CONSOLAS">
+		<groupExpression><![CDATA[$F{consola}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="51" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="572" height="49" uuid="ce3e34e3-659b-4ba1-9161-ad9221d8ee24"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font size="32" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Venta de Consolas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement x="164" y="0" width="34" height="20" uuid="7820d089-4163-44a1-a9de-d87f14c6b0d6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="198" y="0" width="105" height="20" uuid="0edee96e-967b-4d1f-9e52-4f321ae5422a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Nombre Jugador]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="303" y="0" width="122" height="20" uuid="479e416e-a70e-4c3d-94a2-a43d1b131c4d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Consola]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="198" y="0" width="105" height="20" uuid="b6f76aef-53b8-4768-b050-1e7f6ddaede1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="164" y="0" width="34" height="20" uuid="13a256ec-3c4a-4534-93c1-6e76e1de87ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="303" y="0" width="122" height="20" uuid="c0cd1f44-a197-43a4-9220-2f3b99f5d499"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{consola}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="50" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="186" splitType="Stretch">
+			<pieChart>
+				<chart>
+					<reportElement x="0" y="0" width="572" height="186" uuid="cdb3e549-af33-4688-9320-1b44d52e4e86"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA["CONSOLAS"]]></keyExpression>
+					<valueExpression><![CDATA[$V{CONSOLAS_COUNT}]]></valueExpression>
+					<labelExpression><![CDATA[$F{consola} + " - " + $V{CONSOLAS_COUNT}]]></labelExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
+	</summary>
+</jasperReport>

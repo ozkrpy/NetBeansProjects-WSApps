@@ -13,6 +13,7 @@ public class Beans {
 
     public static void escribeLogs(String modulo, String mensaje) {
         System.out.println(modulo + "_LOG: " + mensaje);
+        insertaLogsDatabase(modulo, mensaje);
     }
     
     public static boolean validarLogin(String usuario, String password) {

@@ -11,9 +11,9 @@ import ws.operations.Beans;
 @WebService(serviceName = "Services")
 public class Services {
 
-    String user;
-    String pass;
-    String doingWhat;
+    private String user;
+    private String pass;
+    private String doingWhat;
             
     @WebMethod(operationName = "validarUsuario")
     public Respuesta validarUsuario(@WebParam(name = "datosUsuario") DatosUsuario datosUsuario) {
