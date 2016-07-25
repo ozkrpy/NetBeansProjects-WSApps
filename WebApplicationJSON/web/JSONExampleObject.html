@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <body>
+        <h2>Creacion de objetos con JSON</h2>
+        
+        <p id="persona"></p>
+        <p id="vistaLista"></p>
+        <p id="cambiaDatos"></p>
+        <p id="TextoJStoJSON"></p>
+        
+        <script>
+            var persona = '{"name":"Juan Perez","calle":"Calle principal, calle secundaria","telefono":"123456789"}';
+            var objeto = JSON.parse(persona);
+            document.getElementById("persona").innerHTML = 
+                    "<h3>Individual</h3>" +
+                    "input: " + persona + "<br>" +
+                    "Nombre: " + objeto.name + "<br>" + 
+                    "Direccion: " + objeto.calle + "<br>" + 
+                    "Telefono: " + objeto.telefono + "<br>";
+            var listaPersonas = [{"name":"Juan Perez1","calle":"Calle principal, calle secundaria","telefono":"123456789"},{"name":"Juan Perez2","calle":"Calle principal, calle secundaria","telefono":"123456789"},{"name":"Juan Perez3","calle":"Calle principal, calle secundaria","telefono":"123456789"}];
+            document.getElementById("vistaLista").innerHTML = 
+                    "<h3>Lista</h3>" +
+                    "input: " + listaPersonas + "<br>" +
+                    "Nombre: " + listaPersonas[0].name + "<br>" + 
+                    "Direccion: " + listaPersonas[0].calle + "<br>" + 
+                    "Telefono: " + listaPersonas[0].telefono + "<br><br>" +
+                    "Nombre: " + listaPersonas[1].name + "<br>" + 
+                    "Direccion: " + listaPersonas[1].calle + "<br>" + 
+                    "Telefono: " + listaPersonas[1].telefono + "<br><br>" +
+                    "Nombre: " + listaPersonas[2].name + "<br>" + 
+                    "Direccion: " + listaPersonas[2].calle + "<br>" + 
+                    "Telefono: " + listaPersonas[2].telefono + "<br>";
+            
+            listaPersonas[0].name = "Nuevo Nombre 1";
+            listaPersonas[1].name = "Nuevo Nombre 2";
+            listaPersonas[2].name = "Nuevo Nombre 3";
+            
+            document.getElementById("cambiaDatos").innerHTML = 
+                    "<h3>Cambio</h3>" +
+                    "input text: " + listaPersonas + "<br>" +
+                    "Nombre: " + listaPersonas[0].name + "<br>" + 
+                    "Direccion: " + listaPersonas[0].calle + "<br>" + 
+                    "Telefono: " + listaPersonas[0].telefono + "<br><br>" +
+                    "Nombre: " + listaPersonas[1].name + "<br>" + 
+                    "Direccion: " + listaPersonas[1].calle + "<br>" + 
+                    "Telefono: " + listaPersonas[1].telefono + "<br><br>" +
+                    "Nombre: " + listaPersonas[2].name + "<br>" + 
+                    "Direccion: " + listaPersonas[2].calle + "<br>" + 
+                    "Telefono: " + listaPersonas[2].telefono + "<br>";
+            
+                    var objetoTextoListaJS =  
+                                            '{ "employees" : [{ "firstName":"John" , "lastName":"Doe" },' +
+                                            '{ "firstName":"Anna" , "lastName":"Smith" },' +
+                                            '{ "firstName":"Pete" , "lastName":"Perez" }]}';
+            var objetoListaJS = JSON.parse(objetoTextoListaJS);                
+            document.getElementById("TextoJStoJSON").innerHTML = 
+                    "<h3>Convierte texto JavaScript a objetoLista JSON</h3>" +
+                    "input: " + objetoTextoListaJS + "<br>" +
+                    "Nombre: " + objetoListaJS.employees[0].firstName + " " + objetoListaJS.employees[0].lastName + "<br>" + 
+                    "Nombre: " + objetoListaJS.employees[1].firstName + " " + objetoListaJS.employees[1].lastName + "<br>" + 
+                    "Nombre: " + objetoListaJS.employees[2].firstName + " " + objetoListaJS.employees[2].lastName + "<br>"; 
+        </script>
+    </body>
+</html>
