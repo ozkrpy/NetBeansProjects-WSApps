@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="top">
+        Detalle Alimentos
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputText value="ID: "/><h:outputText value="#{alimentoBean.selected.codigoAlimento}" title="ID"/>
+                <h:outputText value="Tipo Alimento: "/><h:outputText value="#{alimentoBean.selected.tipoAlimento.descripcionTipoAlimento}" title="Tipo Alimento"/>
+                <h:outputText value="Descripcion: "/><h:outputText value="#{alimentoBean.selected.descripcionAlimento}" title="Descripcion"/>
+                <h:outputText value="Medida casera: "/><h:outputText value="#{alimentoBean.selected.medidaCasera} #{alimentoBean.selected.medidaCaseraUnidad}" title="MedidaCasera"/>
+                <h:outputText value="Medida estandarizada: "/><h:outputText value="#{alimentoBean.selected.medidaReal} #{alimentosBean.selected.medidaRealUnidad}" title="MedidaEstandarizada"/>
+                <h:outputText value="Medida estandarizada: "/><h:outputText value="#{alimentosBean.selected.medidaRealUnidad}" title="MedidaEstandarizada"/>
+                <h:outputText value="Hidratos Carbono: "/><h:outputText value="#{alimentoBean.selected.hidratosCarbono} #{alimentoBean.selected.unidadMedidaHidratosCarbono}" title="HidratosCarbono"/>
+                <h:outputText value="Proteina: "/><h:outputText value="#{alimentoBean.selected.proteina} #{alimentoBean.selected.unidadMedidaProteina}" title="Proteina"/>
+            </h:panelGrid>
+            <br/>
+            <br/>
+            <h:commandLink action="#{alimentoBean.prepareList}" value="Ver todos los alimentos"/>
+            <br/>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

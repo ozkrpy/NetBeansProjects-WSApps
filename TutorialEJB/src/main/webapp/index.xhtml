@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <style type="text/css">
+            .oddrow {
+                background-color: #ccc;
+            }
+            .evenrow {
+                background-color: #ff8;
+            }
+            .header {
+                background-color: #AFAFAF;
+                color: #fff;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h1>Titulo para tablas</h1>
+        <h:form>
+            <h:outputText value="LISTA"/>
+            <h:dataTable value="#{personaBean.personas}" var="singlePerson" border="1" rowClasses="oddrow, evenrow" headerClass="header">
+                <f:facet name="caption">Tabla de departamentos</f:facet>
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{singlePerson.id}
+                    <f:facet name="footer">Pie de la columna</f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Nombre</f:facet>
+                        #{singlePerson.nombre}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Departamento</f:facet>
+                        #{singlePerson.departamento}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Detalles</f:facet>
+                    <h:commandLink action="show" value="submit" />
+                </h:column>
+            </h:dataTable>
+
+        </h:form>
+    </h:body>
+</html>
+

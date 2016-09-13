@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 26, 2016 6:11:56 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="nutriciondb" name="entities.Alimentos" optimistic-lock="version" table="alimentos">
+    <id name="codigoAlimento" type="java.lang.Integer">
+      <column name="codigo_alimento"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="entities.TipoAlimento" fetch="select" name="tipoAlimento">
+      <column name="tipo_alimento" not-null="true"/>
+    </many-to-one>
+    <property name="descripcionAlimento" type="string">
+      <column length="100" name="descripcion_alimento" not-null="true"/>
+    </property>
+    <property name="medidaCasera" type="string">
+      <column length="10" name="medida_casera" not-null="true"/>
+    </property>
+    <property name="medidaCaseraUnidad" type="string">
+      <column length="20" name="medida_casera_unidad" not-null="true"/>
+    </property>
+    <property name="medidaReal" type="double">
+      <column name="medida_real" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="medidaRealUnidad" type="string">
+      <column length="3" name="medida_real_unidad" not-null="true"/>
+    </property>
+    <property name="hidratosCarbono" type="double">
+      <column name="hidratos_carbono" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaHidratosCarbono" type="string">
+      <column length="3" name="unidad_medida_hidratos_carbono" not-null="true"/>
+    </property>
+    <property name="proteina" type="double">
+      <column name="proteina" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaProteina" type="string">
+      <column length="3" name="unidad_medida_proteina" not-null="true"/>
+    </property>
+    <property name="grasa" type="double">
+      <column name="grasa" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaGrasa" type="string">
+      <column length="3" name="unidad_medida_grasa" not-null="true"/>
+    </property>
+    <property name="sodio" type="double">
+      <column name="sodio" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaSodio" type="string">
+      <column length="3" name="unidad_medida_sodio" not-null="true"/>
+    </property>
+    <property name="potasio" type="double">
+      <column name="potasio" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaPotasio" type="string">
+      <column length="3" name="unidad_medida_potasio" not-null="true"/>
+    </property>
+    <property name="fosforo" type="double">
+      <column name="fosforo" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaFosforo" type="string">
+      <column length="3" name="unidad_medida_fosforo" not-null="true"/>
+    </property>
+    <property name="calcio" type="double">
+      <column name="calcio" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaCalcio" type="string">
+      <column length="3" name="unidad_medida_calcio" not-null="true"/>
+    </property>
+    <property name="hierro" type="double">
+      <column name="hierro" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaHierro" type="string">
+      <column length="3" name="unidad_medida_hierro" not-null="true"/>
+    </property>
+    <property name="colesterol" type="double">
+      <column name="colesterol" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaColesterol" type="string">
+      <column length="3" name="unidad_medida_colesterol" not-null="true"/>
+    </property>
+    <property name="purinas" type="double">
+      <column name="purinas" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaPurinas" type="string">
+      <column length="3" name="unidad_medida_purinas" not-null="true"/>
+    </property>
+    <property name="fibra" type="double">
+      <column name="fibra" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaFibra" type="string">
+      <column length="3" name="unidad_medida_fibra" not-null="true"/>
+    </property>
+    <property name="agua" type="double">
+      <column name="agua" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="unidadMedidaAgua" type="string">
+      <column length="3" name="unidad_medida_agua" not-null="true"/>
+    </property>
+    <property name="calorias" type="double">
+      <column name="calorias" not-null="true" precision="22" scale="0"/>
+    </property>
+  </class>
+</hibernate-mapping>

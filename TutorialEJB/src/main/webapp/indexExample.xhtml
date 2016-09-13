@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h1>Ejemplo nro. 1</h1>
+
+        <!-- ejemplo de como obtener datos en la carga usando la etiqueta @postConstruct e invocar al bean usando un campo tipo texto de la lista. -->        
+        <br/>Lista: <h:outputText value="#{tipoAlimentoBean.listaCadena[0]}" /> 
+        
+        <!-- ejemplo de como obtener datos en la carga usando la etiqueta @postConstruct e invocar al bean usando parte de un mapeo. -->        
+        <br/>Mapeo: <h:outputText value="#{tipoAlimentoBean.mapeo['cadena2']}" />
+        
+        <!-- bean injection: dentro del bean tipo alimento, se instancia el siguiente bean mySessionBean -->
+        <br/>Bean injection: <h:outputText value="#{tipoAlimentoBean.mySessionBean.myNumber}" />
+        
+        <h:form prependId="false">
+            
+            <br/> Tipo de Alimento: <h:inputText id="tipoDeAlimento" value="#{tipoAlimentoBean.codigoTipoAlimento}"/>
+            
+            <br/> Descripcion: <h:inputText id="descripcionTipoAlimento" value="#{tipoAlimentoBean.descripcionTipoAlimento}"/><h:message for="descripcionTipoAlimento" />
+            
+            <!--Contraseña: <h:inputSecret id="password" value="#{tipoAlimentoBean.password}"/>
+            <br/>
+            Texto: <h:inputTextarea rows="5" cols="50" id="myText" value="#{tipoAlimentoBean.texto}"/>
+            <br/>
+            <h:inputHidden id="myHiddenText" />
+            <br/>
+            <h:outputText value="#{tipoAlimentoBean.codigoTipoAlimento}" /> 
+            <br/>
+            <h:outputFormat value="{0} es mayor que {1}">
+                <f:param value="equis"/>
+                <f:param value="ye"/>
+            </h:outputFormat>
+            <br/>
+            <h:graphicImage url="/images/WF.jpg" />  
+            
+            <br/>
+            CheckBox: <h:selectManyCheckbox value="#{tipoAlimentoBean.itemsSeleccionados}">
+                <f:selectItem itemValue="1" itemLabel="Uno"/>
+                <f:selectItem itemValue="2" itemLabel="Dos"/>
+                <f:selectItem itemValue="3" itemLabel="Tres"/>
+                <f:selectItem itemValue="4" itemLabel="Cuatro"/>
+                <f:selectItem itemValue="5" itemLabel="Cinco"/>
+                <f:selectItem itemValue="6" itemLabel="Seis"/>
+            </h:selectManyCheckbox>
+            
+            <br/>
+            Radio: <h:selectOneRadio value="#{tipoAlimentoBean.itemRadio}">
+                <f:selectItem itemValue="1" itemLabel="Uno"/>
+                <f:selectItem itemValue="2" itemLabel="Dos"/>
+                <f:selectItem itemValue="3" itemLabel="Tres"/>
+                <f:selectItem itemValue="4" itemLabel="Cuatro"/>
+                <f:selectItem itemValue="5" itemLabel="Cinco"/>
+                <f:selectItem itemValue="6" itemLabel="Seis"/>
+            </h:selectOneRadio>
+            
+            <br/>
+            One List Box: <h:selectOneListbox value="#{tipoAlimentoBean.itemListbox}">
+                <f:selectItem itemValue="1" itemLabel="Uno"/>
+                <f:selectItem itemValue="2" itemLabel="Dos"/>
+                <f:selectItem itemValue="3" itemLabel="Tres"/>
+                <f:selectItem itemValue="4" itemLabel="Cuatro"/>
+                <f:selectItem itemValue="5" itemLabel="Cinco"/>
+                <f:selectItem itemValue="6" itemLabel="Seis"/>
+            </h:selectOneListbox>
+            
+            <br/>
+            Many List Box: <h:selectManyListbox value="#{tipoAlimentoBean.itemsListbox}">
+                <f:selectItem itemValue="1" itemLabel="Uno"/>
+                <f:selectItem itemValue="2" itemLabel="Dos"/>
+                <f:selectItem itemValue="3" itemLabel="Tres"/>
+                <f:selectItem itemValue="4" itemLabel="Cuatro"/>
+                <f:selectItem itemValue="5" itemLabel="Cinco"/>
+                <f:selectItem itemValue="6" itemLabel="Seis"/>
+            </h:selectManyListbox>
+            
+            <br/>
+            One Menu: <h:selectOneMenu value="#{tipoAlimentoBean.oneMenu}">
+                <f:selectItem itemValue="1" itemLabel="Uno"/>
+                <f:selectItem itemValue="2" itemLabel="Dos"/>
+                <f:selectItem itemValue="3" itemLabel="Tres"/>
+                <f:selectItem itemValue="4" itemLabel="Cuatro"/>
+                <f:selectItem itemValue="5" itemLabel="Cinco"/>
+                <f:selectItem itemValue="6" itemLabel="Seis"/>
+            </h:selectOneMenu>
+
+            <br/>
+            One Menu poblado externamente: <h:selectOneMenu value="#{tipoAlimentoBean.oneMenu}">
+                <f:selectItems value="#{tipoAlimentoBean.listaPersonas}" var="p" itemLabel="#{p.nombre}" itemValue="#{p.id}"/>
+            </h:selectOneMenu>            -->
+            
+            <br/> Boolean: <h:selectBooleanCheckbox value="#{tipoAlimentoBean.booleano}" />
+            
+            <br/> <h:commandButton id="NoAction" value="No action" />
+            <br/> <h:commandButton id="submitButton" value="submit" action="#{tipoAlimentoBean.guardarDatos(5)}"/>
+            <br/> <h:commandButton id="VerTodos" value="Ver todo" action="all"/>
+        </h:form>
+        <br/> Tipo Alimento seleccionado: <h:outputText value="#{tipoAlimentoBean.codigoTipoAlimento}" /> 
+        <br/> Descripcion Alimento seleccionado: <h:outputText value="#{tipoAlimentoBean.descripcionTipoAlimento}" />   
+        <br/> Bean injection: <h:outputText value="#{tipoAlimentoBean.mySessionBean.myNumber}" />
+        <br/> Descripcion Alimento seleccionado: <h:outputText rendered="#{tipoAlimentoBean.descripcionTipoAlimento > 0.0}" value="#{tipoAlimentoBean.descripcionTipoAlimento * 100}" /> 
+        
+<!--        <br/> Booleano seleccionado: <h:outputText value="#{tipoAlimentoBean.booleano}" />
+        <br/> Items seleccionados: <h:outputText value="#{tipoAlimentoBean.itemRadio}" />   
+        <br/> Radio seleccionado: <h:outputText value="#{tipoAlimentoBean.itemRadio}" />   
+        <br/> ListBox seleccionado: <h:outputText value="#{tipoAlimentoBean.itemListbox}" />   
+        <br/> Many ListBox seleccionado: <h:outputText value="#{tipoAlimentoBean.itemsListbox}" />   
+        
+        <br/> One Menu seleccionado: <h:outputText value="#{tipoAlimentoBean.oneMenu}" />-->
+    </h:body>
+</html>
+

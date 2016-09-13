@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 26, 2016 6:11:56 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="nutriciondb" name="entities.TipoAlimento" optimistic-lock="version" table="tipo_alimento">
+    <id name="codigoTipoAlimento" type="java.lang.Integer">
+      <column name="codigo_tipo_alimento"/>
+      <generator class="identity"/>
+    </id>
+    <property name="descripcionTipoAlimento" type="string">
+      <column length="100" name="descripcion_tipo_alimento" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="alimentoses" table="alimentos">
+      <key>
+        <column name="tipo_alimento" not-null="true"/>
+      </key>
+      <one-to-many class="entities.Alimentos"/>
+    </set>
+  </class>
+</hibernate-mapping>

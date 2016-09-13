@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns="http://www.w3.org/1999/xhtml">
+
+    <ui:define name="top">
+        Detalle de Paciente
+    </ui:define>
+
+    <ui:define name="body">
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputText value="Identificador: "/>
+                <h:outputText value="#{pacienteBean.selected.idpaciente}" title="Identificador"/>
+                <h:outputText value="Nombre: "/>
+                <h:outputText value="#{pacienteBean.selected.nombre}" title="Nombre"/>
+                <h:outputText value="Apellido: "/>
+                <h:outputText value="#{pacienteBean.selected.apellido}" title="Apellido"/>
+                <h:outputText value="Edad: "/>
+                <h:outputText value="#{pacienteBean.selected.edad}" title="Edad"/>
+                <h:outputText value="Sexo: "/>
+                <h:outputText value="#{pacienteBean.selected.sexo}" title="Sexo"/>
+            </h:panelGrid>
+            <br/>
+            <br/>
+            <h:commandLink action="#{pacienteBean.prepareList}" value="Ver todos los pacientes"/>
+            <br/>
+        </h:form>
+    </ui:define>
+</ui:composition>

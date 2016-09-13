@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 26, 2016 6:11:56 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="nutriciondb" name="entities.Paciente" optimistic-lock="version" table="paciente">
+    <id name="idpaciente" type="int">
+      <column name="idpaciente"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="nombre" type="string">
+      <column length="45" name="nombre"/>
+    </property>
+    <property name="apellido" type="string">
+      <column length="45" name="apellido"/>
+    </property>
+    <property name="edad" type="java.lang.Integer">
+      <column name="edad"/>
+    </property>
+    <property name="sexo" type="string">
+      <column length="1" name="sexo"/>
+    </property>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="myForm" prependId="false">
+            <br/>ID: <h:inputText id="idPaciente" value="#{pacienteBean.id}" required="true">
+                <!--<f:ajax event="blur" execute="idPaciente" render="messageIdPaciente"/>-->
+                <!-- this para que se ejecute con el elemento superior, @form para que recargue todo el form nuevamente-->
+                <f:ajax event="blur" execute="@this" render="@form"/>
+            </h:inputText><h:message id="messageIdPaciente" for="idPaciente"/>   
+            <br/>NOMBRE: <h:inputText id="nombre" value="#{pacienteBean.nombre}"/>
+            <br/>APELLIDO: <h:inputText id="apellido" value="#{pacienteBean.apellido}"/>
+            
+            <br/><h:commandButton id="submit" action="#{pacienteBean.confirmar}" value="Confirmar">
+                <!--<f:ajax event="click" execute="@form" render="@form"/>-->
+            </h:commandButton>
+<!--            <h:button outcome="getParameterPage" value="Ver paciente">
+                <f:param name="nombre" value="oscar"/>
+                <f:param name="apellido" value="ruffinelli"/>
+                
+            </h:button>-->
+
+            <br/>Paciente: <h:outputText value="#{pacienteBean.nombre} #{pacienteBean.apellido}"/>
+        </h:form>
+    </h:body>
+</html>
+

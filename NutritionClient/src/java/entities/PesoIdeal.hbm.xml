@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 26, 2016 6:11:56 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="nutriciondb" name="entities.PesoIdeal" optimistic-lock="version" table="peso_ideal">
+    <id name="tallaCm" type="int">
+      <column name="talla_cm"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="edad1516" type="double">
+      <column name="edad15_16" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="edad1719" type="double">
+      <column name="edad17_19" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="edad2024" type="double">
+      <column name="edad20_24" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="edad2529" type="double">
+      <column name="edad25_29" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="edad3039" type="double">
+      <column name="edad30_39" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="edad4049" type="double">
+      <column name="edad40_49" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="edad5059" type="double">
+      <column name="edad50_59" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="edad6069" type="double">
+      <column name="edad60_69" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="contexturaPequenaIni" type="double">
+      <column name="contextura_pequena_ini" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="contexturaPequenaFin" type="double">
+      <column name="contextura_pequena_fin" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="contexturaMedianaIni" type="double">
+      <column name="contextura_mediana_ini" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="contexturaMedianaFin" type="double">
+      <column name="contextura_mediana_fin" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="contexturaGrandeIni" type="double">
+      <column name="contextura_grande_ini" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="contexturaGrandeFin" type="double">
+      <column name="contextura_grande_fin" not-null="true" precision="22" scale="0"/>
+    </property>
+    <property name="sexo" type="string">
+      <column length="1" name="sexo" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>
