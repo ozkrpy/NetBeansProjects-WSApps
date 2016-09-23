@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      >
+    <h:head>
+        <title>Dietas</title>
+        <link rel="stylesheet" href="resources/css/style.css" type="text/css"/>
+        
+    </h:head>
+    <h:body>
+        <h:form>
+            <h1><h:outputText value="Calcular" /></h1>
+            <h:panelGrid columns="6" border="1" >
+                <h:outputText value="Elemento"/>
+                <h:outputText value="Valor"/>
+                <h:outputText value="Minimo"/>
+                <h:outputText value="Maximo"/>
+                <h:outputText value="Segun Alimentos"/>
+                <h:outputText value="Kcal. Total"/>
+
+
+                <h:outputText value="HC"/>
+                <h:inputText value="#{tablaAlimentosBean.HC}">
+                    <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="@form" />
+                </h:inputText>
+                <h:outputText value="#{tablaAlimentosBean.minHC}" />
+                <h:outputText value="#{tablaAlimentosBean.maxHC}" />
+                <h:outputText value="#{tablaAlimentosBean.sumatoriaHidratosCarbono}" />
+                <h:outputText value="#{tablaAlimentosBean.kcalHC}" />
+
+                <h:outputText value="Proteina"/>
+                <h:inputText value="#{tablaAlimentosBean.proteina}" >
+                    <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="@form" />
+                </h:inputText>
+                <h:outputText value="#{tablaAlimentosBean.minProteina}" />
+                <h:outputText value="#{tablaAlimentosBean.maxProteina}" />
+                <h:outputText value="#{tablaAlimentosBean.sumatoriaProteina}" />
+                <h:outputText value="#{tablaAlimentosBean.kcalProteina}" />
+
+                <h:outputText value="Grasas"/>
+                <h:inputText value="#{tablaAlimentosBean.grasa}" >
+                    <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="@form" />
+                </h:inputText>
+                <h:outputText value="#{tablaAlimentosBean.minGrasa}" />
+                <h:outputText value="#{tablaAlimentosBean.maxGrasa}" />
+                <h:outputText value="#{tablaAlimentosBean.sumatoriaGrasa}" />
+                <h:outputText value="#{tablaAlimentosBean.kcalGrasa}" />
+
+                <h:outputText value="Fibra"/>
+                <h:inputText value="#{tablaAlimentosBean.fibra}" >
+                    <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="@form" />
+                </h:inputText>
+                <h:outputText value="#{tablaAlimentosBean.minFibra}" />
+                <h:outputText value="#{tablaAlimentosBean.maxFibra}" />
+                <h:outputText value="#{tablaAlimentosBean.sumatoriaFibra}" />
+                <h:outputText value="#{tablaAlimentosBean.kcalFibra}" />            
+
+            </h:panelGrid>
+
+        </h:form>
+        <br/>
+        <h:form>
+            <h1><h:outputText value="Alimentos" /></h1>
+            <h:outputText value="Codigo Identificador: "/>
+            <h:selectOneMenu id="idDieta" value="#{tablaAlimentosBean.codigoDieta}" rendered="true">
+                <f:selectItem itemLabel="Nueva Dieta" itemValue="0" />
+                <f:selectItems value="#{tablaAlimentosBean.listaDesplegableDietas}" var="itemDieta" itemLabel="#{itemDieta}" itemValue="#{itemDieta}"/>
+                <f:ajax listener="#{tablaAlimentosBean.changeListenerCodigoDieta}" render="@all" execute="change" />
+            </h:selectOneMenu><br/><br/>
+            <h:outputText value="Cantidad: "/>
+            <h:selectOneMenu value="#{tablaAlimentosBean.cantidadNuevoAlimento}">
+                <f:selectItem itemLabel="Cantidad" itemValue="0" />
+                <f:selectItem itemLabel="1" itemValue="1" />
+                <f:selectItem itemLabel="2" itemValue="2" />
+                <f:selectItem itemLabel="3" itemValue="3" />
+                <f:selectItem itemLabel="4" itemValue="4" />
+                <f:selectItem itemLabel="5" itemValue="5" />
+            </h:selectOneMenu>
+            <h:selectOneMenu value="#{tablaAlimentosBean.codigoAlimentoSeleccionado}">
+                <f:selectItem itemLabel="Seleccionar Alimento" itemValue="0" />
+                <f:selectItems value="#{tablaAlimentosBean.listaDesplegableAlimentos}" var="listaAlimento" itemLabel="#{listaAlimento.descripcionAlimento}" itemValue="#{listaAlimento.codigoAlimento}" />
+            </h:selectOneMenu>
+            <h:commandButton action="#{tablaAlimentosBean.agregarAlimentoDieta}" value="Agregar Alimento" rendered="true"/>
+        </h:form>
+        <br/>
+        <h:form>
+            <h:dataTable value="#{tablaAlimentosBean.tablaAlimentos}" 
+                         var="item" 
+                         border="1" 
+                         style="font-size: 10px">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Cantidad"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosDieta.dietaPK.cantidadAlimento}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="DescripcionAlimento"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.descripcionAlimento}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="TipoAlimento"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.tipoAlimento.descripcionTipoAlimento}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="MedidaCasera"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.medidaCasera} #{item.datosAlimento.medidaCaseraUnidad}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="MedidaReal"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.medidaReal} #{item.datosAlimento.medidaRealUnidad}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="HidratosCarbono"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.hidratosCarbono} #{item.datosAlimento.unidadMedidaHidratosCarbono}"/>
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaHidratosCarbono} #{item.datosAlimento.unidadMedidaHidratosCarbono}"/>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Proteina"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.proteina} #{item.datosAlimento.unidadMedidaProteina}"/>
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaProteina} #{item.datosAlimento.unidadMedidaProteina}"/>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Grasa"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.grasa} #{item.datosAlimento.unidadMedidaGrasa}"/>
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaGrasa} #{item.datosAlimento.unidadMedidaGrasa}"/>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Sodio"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.sodio} #{item.datosAlimento.unidadMedidaSodio}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Potasio"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.potasio} #{item.datosAlimento.unidadMedidaPotasio}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fosforo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.fosforo} #{item.datosAlimento.unidadMedidaFosforo}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Calcio"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.calcio} #{item.datosAlimento.unidadMedidaCalcio}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Hierro"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.hierro} #{item.datosAlimento.unidadMedidaHierro}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Colesterol"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.colesterol} #{item.datosAlimento.unidadMedidaColesterol}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Purinas"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.purinas} #{item.datosAlimento.unidadMedidaPurinas}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Fibra"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.fibra} #{item.datosAlimento.unidadMedidaFibra}"/>
+                    <f:facet name="footer">
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaFibra} #{item.datosAlimento.unidadMedidaFibra}"/>
+                    </f:facet>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Agua"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.agua} #{item.datosAlimento.unidadMedidaAgua}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="Calorias"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosAlimento.calorias}"/>
+                </h:column>
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
+
