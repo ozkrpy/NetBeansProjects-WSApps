@@ -6,6 +6,8 @@
 package entities;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -22,16 +25,20 @@ import javax.persistence.Table;
 @Table(name = "dieta")
 @NamedQueries({
     @NamedQuery(name = "Dieta.findAll", query = "SELECT d FROM Dieta d"),
-    @NamedQuery(name = "Dieta.maxCodigoDieta", query = "SELECT MAX(d.dietaPK.codigoDieta) FROM Dieta d"),
     @NamedQuery(name = "Dieta.findAllCodigoDieta", query = "SELECT DISTINCT(d.dietaPK.codigoDieta) FROM Dieta d ORDER BY d.dietaPK.codigoDieta"),
+    @NamedQuery(name = "Dieta.maxCodigoDieta", query = "SELECT MAX(d.dietaPK.codigoDieta) FROM Dieta d ORDER BY d.dietaPK.codigoDieta"),
     @NamedQuery(name = "Dieta.findByCodigoDieta", query = "SELECT d FROM Dieta d WHERE d.dietaPK.codigoDieta = :codigoDieta"),
     @NamedQuery(name = "Dieta.findByCodigoAlimento", query = "SELECT d FROM Dieta d WHERE d.dietaPK.codigoAlimento = :codigoAlimento"),
-    @NamedQuery(name = "Dieta.findByCantidadAlimento", query = "SELECT d FROM Dieta d WHERE d.dietaPK.cantidadAlimento = :cantidadAlimento")})
+    @NamedQuery(name = "Dieta.findByCantidadAlimento", query = "SELECT d FROM Dieta d WHERE d.cantidadAlimento = :cantidadAlimento")})
 public class Dieta implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected DietaPK dietaPK;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cantidad_alimento")
+    private int cantidadAlimento;
     @JoinColumn(name = "codigo_alimento", referencedColumnName = "codigo_alimento", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Alimentos alimentos;
@@ -46,8 +53,13 @@ public class Dieta implements Serializable {
         this.dietaPK = dietaPK;
     }
 
-    public Dieta(int codigoDieta, int codigoAlimento, int cantidadAlimento) {
-        this.dietaPK = new DietaPK(codigoDieta, codigoAlimento, cantidadAlimento);
+    public Dieta(DietaPK dietaPK, int cantidadAlimento) {
+        this.dietaPK = dietaPK;
+        this.cantidadAlimento = cantidadAlimento;
+    }
+
+    public Dieta(int codigoDieta, int codigoAlimento) {
+        this.dietaPK = new DietaPK(codigoDieta, codigoAlimento);
     }
 
     public DietaPK getDietaPK() {
@@ -56,6 +68,14 @@ public class Dieta implements Serializable {
 
     public void setDietaPK(DietaPK dietaPK) {
         this.dietaPK = dietaPK;
+    }
+
+    public int getCantidadAlimento() {
+        return cantidadAlimento;
+    }
+
+    public void setCantidadAlimento(int cantidadAlimento) {
+        this.cantidadAlimento = cantidadAlimento;
     }
 
     public Alimentos getAlimentos() {

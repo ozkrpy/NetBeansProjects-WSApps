@@ -8,6 +8,7 @@ package ManagerBeans;
 import entities.AlimentoBasico;
 import entities.Alimentos;
 import entities.Dieta;
+import entities.DietaPK;
 import entities.Paciente;
 import java.util.List;
 import javax.ejb.Local;
@@ -22,8 +23,10 @@ public interface ManagerBeanLocal {
     List<Paciente> listadoPacientes(); 
     List<Alimentos> listadoAlimentos(); 
     Alimentos detalleAlimento(int codigo);
-    List<AlimentoBasico> nombreAlimentos();
+    List<AlimentoBasico> nombreAlimentosPAVB();
     int agregarAlimentoDieta(int codigoDieta, int codigoAlimento, int cantidad, int codigoPaciente);
     List listadoDietas();
     List<Dieta> detalleDieta(int codigoDieta);
+    void borrarAlimentoDieta(int codigoDieta, int codigoAlimento, int cantidad);
+    void actualizarDieta(DietaPK dietaModificar, int nuevaCantidad);
 }

@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author ozkrp
+ * @author Oscar
  */
 @Entity
 @Table(name = "alimentos")

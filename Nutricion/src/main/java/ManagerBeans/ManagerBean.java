@@ -43,11 +43,15 @@ public class ManagerBean implements ManagerBeanLocal {
     }
 
     @Override
-    public List<AlimentoBasico> nombreAlimentos() {
+    public List<AlimentoBasico> nombreAlimentosPAVB() {
+        int codigoAlimentoRetorno;
+        String descripcionAlimentoRetorno;
         List<Alimentos> alimentosNombre = em.createNamedQuery("Alimentos.findAll", Alimentos.class).getResultList();
         List<AlimentoBasico> listadoNombreAlimento = new ArrayList<AlimentoBasico>();
         for (int i = 0; i < alimentosNombre.size(); i++) {
-            listadoNombreAlimento.add(new AlimentoBasico(alimentosNombre.get(i).getCodigoAlimento(), alimentosNombre.get(i).getDescripcionAlimento()));
+            codigoAlimentoRetorno = alimentosNombre.get(i).getCodigoAlimento();
+            descripcionAlimentoRetorno = alimentosNombre.get(i).getDescripcionAlimento() + " (" + alimentosNombre.get(i).getMedidaCaseraUnidad() + ")";
+            listadoNombreAlimento.add(new AlimentoBasico(codigoAlimentoRetorno, descripcionAlimentoRetorno));
         }
         return listadoNombreAlimento;
     }
@@ -63,26 +67,26 @@ public class ManagerBean implements ManagerBeanLocal {
                 codigoDieta = codigoDietaTemp + 1;
                 System.out.println(ManagerBean.class.getSimpleName() + " el codigo de la dieta es CERO, y se reseteo a " + codigoDieta);
             }
-            
+
             System.out.println(ManagerBean.class.getSimpleName() + " invoco agregarAlimentoDieta con los parametros - alimento: " + codigoAlimento + ", cantidad: " + cantidad + ", paciente: " + codigoPaciente + ", codigoDieta: " + codigoDieta);
-            
+
             DietaPK dietaPk = new DietaPK();
             dietaPk.setCodigoDieta(codigoDieta);
-            dietaPk.setCantidadAlimento(cantidad);
             dietaPk.setCodigoAlimento(codigoAlimento);
-            
+
             Dieta dieta = new Dieta();
             dieta.setDietaPK(dietaPk);
             dieta.setCodigoPaciente(paciente);
+            dieta.setCantidadAlimento(cantidad);
             
             em.persist(dieta);
-            
+
             System.out.println(ManagerBean.class.getSimpleName() + " datos persistidos: " + dieta.toString());
-            
+
         } catch (Exception e) {
             throw new UnsupportedOperationException("No se pudo insertar Dieta.");
         }
-        
+
         return codigoDieta;
     }
 
@@ -98,6 +102,26 @@ public class ManagerBean implements ManagerBeanLocal {
         List<Dieta> listadoDietas = em.createNamedQuery("Dieta.findByCodigoDieta", Dieta.class).setParameter("codigoDieta", codigoDieta).getResultList();
         System.out.println(ManagerBean.class.getSimpleName() + " detalleDieta() recupero dietas: " + listadoDietas.toString());
         return listadoDietas;
+    }
+
+    @Override
+    public void borrarAlimentoDieta(int codigoDieta, int codigoAlimento, int cantidad) {
+        DietaPK pk = new DietaPK(codigoDieta, codigoAlimento);
+        Dieta dieta = em.find(Dieta.class, pk);
+        if (dieta != null) {
+            em.remove(dieta);
+        }
+    }
+
+    @Override
+    public void actualizarDieta(DietaPK dietaModificar, int nuevaCantidad) {
+        System.out.println("EJB intento actualizar");
+        Dieta dieta = em.find(Dieta.class, dietaModificar);
+        if (dieta != null) {
+            dieta.setCantidadAlimento(nuevaCantidad);
+            em.persist(dieta);
+
+        }
     }
 
 }
