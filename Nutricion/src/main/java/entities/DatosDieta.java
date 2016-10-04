@@ -5,7 +5,9 @@
  */
 package entities;
 
-public class DatosDieta {
+import java.io.Serializable;
+
+public class DatosDieta implements Serializable{
 
     private Dieta datosDieta;
     private Alimentos datosAlimento;

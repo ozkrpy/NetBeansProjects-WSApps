@@ -7,12 +7,28 @@
     <h:head>
         <title>Dietas</title>
         <link rel="stylesheet" href="resources/css/style.css" type="text/css"/>
-
     </h:head>
     <h:body>
-        <h:form prependId="false" id="formularioCalculos">
-            <h1><h:outputText value="Calcular" /></h1>
-            <h:panelGrid columns="6" border="1">
+        <h:form prependId="false" id="formularioAntropometria" style="font-size: 10px">
+            <h1><h:outputText value="Antropometria - Evaluacion Nutricional" /></h1>
+            <h:panelGrid columns="2">
+                <h:panelGrid columns="2">
+                    <h:outputText value="Paciente: "/>
+                    <h:selectOneMenu id="idPaciente" value="#{tablaAlimentosBean.codigoPaciente}" style="font-size: 10px">
+                        <f:selectItem itemLabel="Seleccionar paciente." itemValue="0" />
+                        <f:selectItems value="#{tablaAlimentosBean.listaDesplegablePacientes}" var="itemPaciente" itemLabel="#{itemPaciente.descripcionAlimento}" itemValue="#{itemPaciente.codigoAlimento}"/>
+                        <f:ajax listener="#{tablaAlimentosBean.changeListenerCodigoPaciente}" 
+                                render="idPaciente" 
+                                execute="change" />
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="nuevoPaciente" value="Agregar nuevo paciente." style="font-size: 10px"/>
+            </h:panelGrid>
+
+        </h:form>
+        <h:form prependId="false" id="formularioCalculos" style="font-size: 10px">
+            <h1><h:outputText value="Distribucion de alimento" /></h1>
+            <h:panelGrid columns="6" border="1" >
                 <h:outputText value="Elemento"/>
                 <h:outputText value="Valor"/>
                 <h:outputText value="Minimo"/>
@@ -20,9 +36,8 @@
                 <h:outputText value="Segun Alimentos"/>
                 <h:outputText value="Kcal. Total"/>
 
-
                 <h:outputText value="HC"/>
-                <p:inputText value="#{tablaAlimentosBean.HC}" style="width: 50px;" >
+                <p:inputText value="#{tablaAlimentosBean.HC}" style="width: 50px; font-size: 10px" >
                     <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="outMinHC : outMaxHC : outCalculoHC"/>
                 </p:inputText>
                 <h:outputText id="outMinHC" value="#{tablaAlimentosBean.minHC}" style="#{tablaAlimentosBean.cambiaColorHCmin() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"/>
@@ -35,7 +50,7 @@
                 </h:outputText>
 
                 <h:outputText value="Proteina"/>
-                <p:inputText value="#{tablaAlimentosBean.proteina}" style="width: 50px">
+                <p:inputText value="#{tablaAlimentosBean.proteina}" style="width: 50px; font-size: 10px">
                     <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="outMinProteina : outMaxProteina : outCalculoProteina" />
                 </p:inputText>
                 <h:outputText id="outMinProteina" value="#{tablaAlimentosBean.minProteina}" style="#{tablaAlimentosBean.cambiaColorProteinaMin() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"/>
@@ -48,7 +63,7 @@
                 </h:outputText>
 
                 <h:outputText value="Grasas"/>
-                <p:inputText value="#{tablaAlimentosBean.grasa}" style="width: 50px">
+                <p:inputText value="#{tablaAlimentosBean.grasa}" style="width: 50px; font-size: 10px">
                     <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="outMinGrasa : outMaxGrasa : outCalculoGrasa" />
                 </p:inputText>
                 <h:outputText id="outMinGrasa" value="#{tablaAlimentosBean.minGrasa}" style="#{tablaAlimentosBean.cambiaColorGrasaMin() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"/>
@@ -61,11 +76,11 @@
                 </h:outputText>
 
                 <h:outputText value="Fibra"/>
-                <p:inputText value="#{tablaAlimentosBean.fibra}" style="width: 50px">
+                <p:inputText value="#{tablaAlimentosBean.fibra}" style="width: 50px; font-size: 10px">
                     <f:ajax listener="#{tablaAlimentosBean.changeListenerCampos}" event="change" render="outMinFibra : outMaxFibra : outCalculoFibra" />
                 </p:inputText>
-                <h:outputText id="outMinFibra" value="#{tablaAlimentosBean.minFibra}" style="#{tablaAlimentosBean.cambiaColorFibraMin() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"/>
-                <h:outputText id="outMaxFibra" value="#{tablaAlimentosBean.maxFibra}" style="#{tablaAlimentosBean.cambiaColorFibraMin() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"/>
+                <h:outputText id="outMinFibra" value="#{tablaAlimentosBean.minFibra}" style="#{tablaAlimentosBean.cambiaColorFibraMin() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"><f:convertNumber pattern="#.00" /></h:outputText>
+                <h:outputText id="outMaxFibra" value="#{tablaAlimentosBean.maxFibra}" style="#{tablaAlimentosBean.cambiaColorFibraMax() eq true ? 'color: #D20005; background: #ffcccc' : 'color: #000; background: #ffffff'}"><f:convertNumber pattern="#.00" /></h:outputText>
                 <h:outputText id="outCalculoFibra" value="#{tablaAlimentosBean.sumatoriaFibra}" style="#{tablaAlimentosBean.cambiaColorFibraCalculado() eq true ? 'color: #009900; background: #99ff99' : 'color: #000; background: #ffffff'}">
                     <f:convertNumber pattern="#.00" />
                 </h:outputText>
@@ -77,21 +92,21 @@
 
         </h:form>
         <br/>
-        <h:form prependId="false" id="formularioAlimentos">
+        <h:form prependId="false" id="formularioAlimentos" style="font-size: 10px">
             <h1><h:outputText value="Alimentos" /></h1>
             <h:outputText value="Dieta nro.: "/>
-            <h:selectOneMenu id="idDieta" value="#{tablaAlimentosBean.codigoDieta}">
+            <h:selectOneMenu id="idDieta" value="#{tablaAlimentosBean.codigoDieta}" style="font-size: 10px">
                 <f:selectItem itemLabel="Nueva Dieta" itemValue="0" />
                 <f:selectItems value="#{tablaAlimentosBean.listaDesplegableDietas}" var="itemDieta" itemLabel="#{itemDieta}" itemValue="#{itemDieta}"/>
                 <f:ajax listener="#{tablaAlimentosBean.changeListenerCodigoDieta}" 
-                        render="formularioDetalleDietaPAVB : formularioDetalleDietaNoPAVB : formularioCalculos" 
+                        render="formularioDetalleDietaPAVB : formularioDetalleDietaNoPAVB : formularioCalculos : formularioAntropometria : nombrePaciente" 
                         execute="change" />
             </h:selectOneMenu>
-            <h:outputText value=" Paciente: " style="padding: 2px"/>
-            <h:outputText value="#{tablaAlimentosBean.paciente.nombre} #{tablaAlimentosBean.paciente.apellido}" />
+            <h:outputText value=" Paciente: " style="font-size: 10px"/>
+            <h:outputText id="nombrePaciente" value="#{tablaAlimentosBean.paciente.nombre} #{tablaAlimentosBean.paciente.apellido}" />
             <br/>
             <h:outputText value="Cantidad: "/>
-            <h:selectOneMenu value="#{tablaAlimentosBean.cantidadNuevoAlimentoPAVB}">
+            <h:selectOneMenu value="#{tablaAlimentosBean.cantidadNuevoAlimentoPAVB}" style="font-size: 10px">
                 <f:selectItem itemLabel="Cantidad" itemValue="0" />
                 <f:selectItem itemLabel="1" itemValue="1" />
                 <f:selectItem itemLabel="2" itemValue="2" />
@@ -99,11 +114,11 @@
                 <f:selectItem itemLabel="4" itemValue="4" />
                 <f:selectItem itemLabel="5" itemValue="5" />
             </h:selectOneMenu>
-            <h:selectOneMenu value="#{tablaAlimentosBean.codigoAlimentoSeleccionado}">
+            <h:selectOneMenu value="#{tablaAlimentosBean.codigoAlimentoSeleccionado}" style="font-size: 10px">
                 <f:selectItem itemLabel="Seleccionar Alimento" itemValue="0" />
                 <f:selectItems value="#{tablaAlimentosBean.listaDesplegableAlimentosPAVB}" var="listaAlimento" itemLabel="#{listaAlimento.descripcionAlimento}" itemValue="#{listaAlimento.codigoAlimento}" />
             </h:selectOneMenu>
-            <h:commandButton action="#{tablaAlimentosBean.agregarAlimentoDieta}" value="Agregar Alimento"/>
+            <h:commandButton action="#{tablaAlimentosBean.agregarAlimentoDieta}" value="Agregar Alimento" style="font-size: 10px"/>
         </h:form>
         <h:form prependId="false" id="formularioDetalleDietaPAVB">
             <h4><h:outputText value="Alimentos PAVB"/></h4>
@@ -116,13 +131,24 @@
                         <h:outputText value="Unidad"/>
                     </f:facet>
                     <h:outputText rendered="#{tablaAlimentosBean.modificarDieta ne item}" value="#{item.datosDieta.cantidadAlimento}"/>
-                    <h:inputText rendered="#{tablaAlimentosBean.modificarDieta eq item}" value="#{tablaAlimentosBean.cantidadAlimentoModificado}"/>
+                    <h:inputText id="cantidadModificada" 
+                                 rendered="#{tablaAlimentosBean.modificarDieta eq item}" 
+                                 value="#{tablaAlimentosBean.cantidadAlimentoModificado}"
+                                 style="font-size: 10px">
+                        <f:validateDoubleRange minimum="1" />
+                    </h:inputText><h:message for="cantidadModificada"  />
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         <h:outputText value="Descripcion"/>
                     </f:facet>
                     <h:outputText value="#{item.datosAlimento.descripcionAlimento}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="item"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosDieta.dietaPK.numeroItem}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
@@ -148,9 +174,7 @@
                     </f:facet>
                     <h:outputText value="#{item.datosAlimento.hidratosCarbono} #{item.datosAlimento.unidadMedidaHidratosCarbono}"/>
                     <f:facet name="footer">
-                        <h:outputText value="#{tablaAlimentosBean.sumatoriaHidratosCarbonoPAVB} #{item.datosAlimento.unidadMedidaHidratosCarbono}">
-                            <f:convertNumber pattern="#.00" />
-                        </h:outputText>
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaHidratosCarbonoPAVB} #{item.datosAlimento.unidadMedidaHidratosCarbono}"><f:convertNumber pattern="#.00" /></h:outputText>
                     </f:facet>
                 </h:column>
                 <h:column>
@@ -159,9 +183,7 @@
                     </f:facet>
                     <h:outputText value="#{item.datosAlimento.proteina} #{item.datosAlimento.unidadMedidaProteina}"/>
                     <f:facet name="footer">
-                        <h:outputText value="#{tablaAlimentosBean.sumatoriaProteinaPAVB} #{item.datosAlimento.unidadMedidaProteina}">
-                            <f:convertNumber pattern="#.00" />
-                        </h:outputText>
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaProteinaPAVB} #{item.datosAlimento.unidadMedidaProteina}"><f:convertNumber pattern="#.00" /></h:outputText>
                     </f:facet>
                 </h:column>
                 <h:column>
@@ -170,9 +192,7 @@
                     </f:facet>
                     <h:outputText value="#{item.datosAlimento.grasa} #{item.datosAlimento.unidadMedidaGrasa}"/>
                     <f:facet name="footer">
-                        <h:outputText value="#{tablaAlimentosBean.sumatoriaGrasaPAVB} #{item.datosAlimento.unidadMedidaGrasa}">
-                            <f:convertNumber pattern="#.00" />
-                        </h:outputText>
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaGrasaPAVB} #{item.datosAlimento.unidadMedidaGrasa}"><f:convertNumber pattern="#.00" /></h:outputText>
                     </f:facet>
                 </h:column>
                 <h:column>
@@ -223,9 +243,7 @@
                     </f:facet>
                     <h:outputText value="#{item.datosAlimento.fibra} #{item.datosAlimento.unidadMedidaFibra}"/>
                     <f:facet name="footer">
-                        <h:outputText value="#{tablaAlimentosBean.sumatoriaFibraPAVB} #{item.datosAlimento.unidadMedidaFibra}">
-                            <f:convertNumber pattern="#.00" />
-                        </h:outputText>
+                        <h:outputText value="#{tablaAlimentosBean.sumatoriaFibraPAVB} #{item.datosAlimento.unidadMedidaFibra}"><f:convertNumber pattern="#.00" /></h:outputText>
                     </f:facet>
                 </h:column>
                 <h:column>
@@ -252,7 +270,7 @@
                                      action="#{tablaAlimentosBean.editarAlimentoDieta}" 
                                      value="Guardar"
                                      style="font-size: 10px"/>
-                    <h:commandButton action="#{tablaAlimentosBean.borrarAlimentoDieta(item.datosDieta.dietaPK.codigoDieta, item.datosDieta.dietaPK.codigoAlimento, item.datosDieta.cantidadAlimento)}" 
+                    <h:commandButton action="#{tablaAlimentosBean.borrarAlimentoDieta(item.datosDieta.dietaPK.codigoDieta, item.datosDieta.dietaPK.numeroItem)}" 
                                      value="Eliminar"
                                      style="font-size: 10px"/>
                 </h:column>
@@ -269,13 +287,19 @@
                         <h:outputText value="Unidad"/>
                     </f:facet>
                     <h:outputText rendered="#{tablaAlimentosBean.modificarDieta ne item}" value="#{item.datosDieta.cantidadAlimento}"/>
-                    <h:inputText rendered="#{tablaAlimentosBean.modificarDieta eq item}" value="#{tablaAlimentosBean.cantidadAlimentoModificado}"/>
+                    <h:inputText rendered="#{tablaAlimentosBean.modificarDieta eq item}" value="#{tablaAlimentosBean.cantidadAlimentoModificado}" style="font-size: 10px"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
                         <h:outputText value="Descripcion"/>
                     </f:facet>
                     <h:outputText value="#{item.datosAlimento.descripcionAlimento}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputText value="item"/>
+                    </f:facet>
+                    <h:outputText value="#{item.datosDieta.dietaPK.numeroItem}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">
@@ -405,7 +429,7 @@
                                      action="#{tablaAlimentosBean.editarAlimentoDieta}" 
                                      value="Guardar"
                                      style="font-size: 10px"/>
-                    <h:commandButton action="#{tablaAlimentosBean.borrarAlimentoDieta(item.datosDieta.dietaPK.codigoDieta, item.datosDieta.dietaPK.codigoAlimento, item.datosDieta.cantidadAlimento)}" 
+                    <h:commandButton action="#{tablaAlimentosBean.borrarAlimentoDieta(item.datosDieta.dietaPK.codigoDieta, item.datosDieta.dietaPK.numeroItem)}" 
                                      value="Eliminar"
                                      style="font-size: 10px"/>
                 </h:column>

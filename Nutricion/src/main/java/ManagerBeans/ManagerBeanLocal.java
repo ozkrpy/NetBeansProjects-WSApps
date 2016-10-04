@@ -5,7 +5,7 @@
  */
 package ManagerBeans;
 
-import entities.AlimentoBasico;
+import entities.ElementoListaBasico;
 import entities.Alimentos;
 import entities.Dieta;
 import entities.DietaPK;
@@ -23,10 +23,16 @@ public interface ManagerBeanLocal {
     List<Paciente> listadoPacientes(); 
     List<Alimentos> listadoAlimentos(); 
     Alimentos detalleAlimento(int codigo);
-    List<AlimentoBasico> nombreAlimentosPAVB();
-    int agregarAlimentoDieta(int codigoDieta, int codigoAlimento, int cantidad, int codigoPaciente);
+    List<ElementoListaBasico> nombreAlimentosPAVB();
+    int agregarAlimentoDieta(int codigoDieta, int numeroItem, int codigoAlimento, int cantidad, int codigoPaciente);
     List listadoDietas();
     List<Dieta> detalleDieta(int codigoDieta);
-    void borrarAlimentoDieta(int codigoDieta, int codigoAlimento, int cantidad);
-    void actualizarDieta(DietaPK dietaModificar, int nuevaCantidad);
+    int siguienteItem(int codigoDieta);
+    void borrarAlimentoDieta(int codigoDieta, int numeroItem);
+    void actualizarDieta(DietaPK dietaModificar, double nuevaCantidad);
+    List<ElementoListaBasico> nombrePacientes();
+    Paciente detallePaciente(int codigoPaciente);
+    void registrarPaciente(Paciente nuevo);
+    double calcularPI(int edad, String sexo, int talla, String biotipo);
+    
 }

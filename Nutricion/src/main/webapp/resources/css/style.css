@@ -12,7 +12,7 @@ h1{
     color: #000; 
     background-color: #cccccc;
     font-size: 24px;
-    text-align: center;
+    
 }
 
 #middle {
@@ -26,3 +26,16 @@ input[type="text"] {
 }
 
 .resizedTextbox {width: 20px; height: 20px}
+
+.ui-inputfield {
+    border-radius:0px;
+    box-shadow: none;
+}
+
+.calendarClass input {
+    width: 50px !important
+}
+
+.claseCentrar {
+    align-content: center;
+}

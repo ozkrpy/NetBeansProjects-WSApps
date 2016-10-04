@@ -25,7 +25,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Oscar
+ * @author ozkrp
  */
 @Entity
 @Table(name = "alimentos")
@@ -209,7 +209,7 @@ public class Alimentos implements Serializable {
     @JoinColumn(name = "tipo_alimento", referencedColumnName = "codigo_tipo_alimento")
     @ManyToOne(optional = false)
     private TipoAlimento tipoAlimento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "alimentos")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoAlimento")
     private List<Dieta> dietaList;
 
     public Alimentos() {

@@ -24,15 +24,15 @@ public class DietaPK implements Serializable {
     private int codigoDieta;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "codigo_alimento")
-    private int codigoAlimento;
+    @Column(name = "numero_item")
+    private int numeroItem;
 
     public DietaPK() {
     }
 
-    public DietaPK(int codigoDieta, int codigoAlimento) {
+    public DietaPK(int codigoDieta, int numeroItem) {
         this.codigoDieta = codigoDieta;
-        this.codigoAlimento = codigoAlimento;
+        this.numeroItem = numeroItem;
     }
 
     public int getCodigoDieta() {
@@ -43,19 +43,19 @@ public class DietaPK implements Serializable {
         this.codigoDieta = codigoDieta;
     }
 
-    public int getCodigoAlimento() {
-        return codigoAlimento;
+    public int getNumeroItem() {
+        return numeroItem;
     }
 
-    public void setCodigoAlimento(int codigoAlimento) {
-        this.codigoAlimento = codigoAlimento;
+    public void setNumeroItem(int numeroItem) {
+        this.numeroItem = numeroItem;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) codigoDieta;
-        hash += (int) codigoAlimento;
+        hash += (int) numeroItem;
         return hash;
     }
 
@@ -69,7 +69,7 @@ public class DietaPK implements Serializable {
         if (this.codigoDieta != other.codigoDieta) {
             return false;
         }
-        if (this.codigoAlimento != other.codigoAlimento) {
+        if (this.numeroItem != other.numeroItem) {
             return false;
         }
         return true;
@@ -77,7 +77,7 @@ public class DietaPK implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.DietaPK[ codigoDieta=" + codigoDieta + ", codigoAlimento=" + codigoAlimento + " ]";
+        return "entities.DietaPK[ codigoDieta=" + codigoDieta + ", numeroItem=" + numeroItem + " ]";
     }
     
 }

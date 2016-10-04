@@ -8,13 +8,12 @@ package entities;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -24,7 +23,12 @@ import javax.validation.constraints.Size;
 @Table(name = "peso_ideal")
 @NamedQueries({
     @NamedQuery(name = "PesoIdeal.findAll", query = "SELECT p FROM PesoIdeal p"),
-    @NamedQuery(name = "PesoIdeal.findByTallaCm", query = "SELECT p FROM PesoIdeal p WHERE p.tallaCm = :tallaCm"),
+    @NamedQuery(name = "PesoIdeal.findByTallaCm", query = "SELECT p FROM PesoIdeal p WHERE p.pesoIdealPK.tallaCm = :tallaCm"),
+    @NamedQuery(name = "PesoIdeal.findByTallaInicial", query = "SELECT p.edad1719 FROM PesoIdeal p WHERE p.pesoIdealPK.tallaCm = :tallaCm AND p.pesoIdealPK.sexo = :sexo"),
+    @NamedQuery(name = "PesoIdeal.findByTalla24", query = "SELECT p.edad2024 FROM PesoIdeal p WHERE p.pesoIdealPK.tallaCm = :tallaCm AND p.pesoIdealPK.sexo = :sexo"),
+    @NamedQuery(name = "PesoIdeal.findByTallaPequena", query = "SELECT (p.contexturaPequenaIni+p.contexturaPequenaFin)/2 FROM PesoIdeal p WHERE p.pesoIdealPK.tallaCm = :tallaCm AND p.pesoIdealPK.sexo = :sexo"),
+    @NamedQuery(name = "PesoIdeal.findByTallaMediana", query = "SELECT (p.contexturaMedianaIni+p.contexturaMedianaFin)/2 FROM PesoIdeal p WHERE p.pesoIdealPK.tallaCm = :tallaCm AND p.pesoIdealPK.sexo = :sexo"),
+    @NamedQuery(name = "PesoIdeal.findByTallaGrande", query = "SELECT (p.contexturaGrandeIni+p.contexturaGrandeFin)/2 FROM PesoIdeal p WHERE p.pesoIdealPK.tallaCm = :tallaCm AND p.pesoIdealPK.sexo = :sexo"),
     @NamedQuery(name = "PesoIdeal.findByEdad1516", query = "SELECT p FROM PesoIdeal p WHERE p.edad1516 = :edad1516"),
     @NamedQuery(name = "PesoIdeal.findByEdad1719", query = "SELECT p FROM PesoIdeal p WHERE p.edad1719 = :edad1719"),
     @NamedQuery(name = "PesoIdeal.findByEdad2024", query = "SELECT p FROM PesoIdeal p WHERE p.edad2024 = :edad2024"),
@@ -39,15 +43,12 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "PesoIdeal.findByContexturaMedianaFin", query = "SELECT p FROM PesoIdeal p WHERE p.contexturaMedianaFin = :contexturaMedianaFin"),
     @NamedQuery(name = "PesoIdeal.findByContexturaGrandeIni", query = "SELECT p FROM PesoIdeal p WHERE p.contexturaGrandeIni = :contexturaGrandeIni"),
     @NamedQuery(name = "PesoIdeal.findByContexturaGrandeFin", query = "SELECT p FROM PesoIdeal p WHERE p.contexturaGrandeFin = :contexturaGrandeFin"),
-    @NamedQuery(name = "PesoIdeal.findBySexo", query = "SELECT p FROM PesoIdeal p WHERE p.sexo = :sexo")})
+    @NamedQuery(name = "PesoIdeal.findBySexo", query = "SELECT p FROM PesoIdeal p WHERE p.pesoIdealPK.sexo = :sexo")})
 public class PesoIdeal implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "talla_cm")
-    private Integer tallaCm;
+    @EmbeddedId
+    protected PesoIdealPK pesoIdealPK;
     @Basic(optional = false)
     @NotNull
     @Column(name = "edad15_16")
@@ -104,21 +105,16 @@ public class PesoIdeal implements Serializable {
     @NotNull
     @Column(name = "contextura_grande_fin")
     private double contexturaGrandeFin;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1)
-    @Column(name = "sexo")
-    private String sexo;
 
     public PesoIdeal() {
     }
 
-    public PesoIdeal(Integer tallaCm) {
-        this.tallaCm = tallaCm;
+    public PesoIdeal(PesoIdealPK pesoIdealPK) {
+        this.pesoIdealPK = pesoIdealPK;
     }
 
-    public PesoIdeal(Integer tallaCm, double edad1516, double edad1719, double edad2024, double edad2529, double edad3039, double edad4049, double edad5059, double edad6069, double contexturaPequenaIni, double contexturaPequenaFin, double contexturaMedianaIni, double contexturaMedianaFin, double contexturaGrandeIni, double contexturaGrandeFin, String sexo) {
-        this.tallaCm = tallaCm;
+    public PesoIdeal(PesoIdealPK pesoIdealPK, double edad1516, double edad1719, double edad2024, double edad2529, double edad3039, double edad4049, double edad5059, double edad6069, double contexturaPequenaIni, double contexturaPequenaFin, double contexturaMedianaIni, double contexturaMedianaFin, double contexturaGrandeIni, double contexturaGrandeFin) {
+        this.pesoIdealPK = pesoIdealPK;
         this.edad1516 = edad1516;
         this.edad1719 = edad1719;
         this.edad2024 = edad2024;
@@ -133,15 +129,18 @@ public class PesoIdeal implements Serializable {
         this.contexturaMedianaFin = contexturaMedianaFin;
         this.contexturaGrandeIni = contexturaGrandeIni;
         this.contexturaGrandeFin = contexturaGrandeFin;
-        this.sexo = sexo;
     }
 
-    public Integer getTallaCm() {
-        return tallaCm;
+    public PesoIdeal(int tallaCm, String sexo) {
+        this.pesoIdealPK = new PesoIdealPK(tallaCm, sexo);
     }
 
-    public void setTallaCm(Integer tallaCm) {
-        this.tallaCm = tallaCm;
+    public PesoIdealPK getPesoIdealPK() {
+        return pesoIdealPK;
+    }
+
+    public void setPesoIdealPK(PesoIdealPK pesoIdealPK) {
+        this.pesoIdealPK = pesoIdealPK;
     }
 
     public double getEdad1516() {
@@ -256,18 +255,10 @@ public class PesoIdeal implements Serializable {
         this.contexturaGrandeFin = contexturaGrandeFin;
     }
 
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (tallaCm != null ? tallaCm.hashCode() : 0);
+        hash += (pesoIdealPK != null ? pesoIdealPK.hashCode() : 0);
         return hash;
     }
 
@@ -278,7 +269,7 @@ public class PesoIdeal implements Serializable {
             return false;
         }
         PesoIdeal other = (PesoIdeal) object;
-        if ((this.tallaCm == null && other.tallaCm != null) || (this.tallaCm != null && !this.tallaCm.equals(other.tallaCm))) {
+        if ((this.pesoIdealPK == null && other.pesoIdealPK != null) || (this.pesoIdealPK != null && !this.pesoIdealPK.equals(other.pesoIdealPK))) {
             return false;
         }
         return true;
@@ -286,7 +277,7 @@ public class PesoIdeal implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.PesoIdeal[ tallaCm=" + tallaCm + " ]";
+        return "entities.PesoIdeal[ pesoIdealPK=" + pesoIdealPK + " ]";
     }
     
 }

@@ -26,10 +26,11 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "Dieta.findAll", query = "SELECT d FROM Dieta d"),
     @NamedQuery(name = "Dieta.findAllCodigoDieta", query = "SELECT DISTINCT(d.dietaPK.codigoDieta) FROM Dieta d ORDER BY d.dietaPK.codigoDieta"),
-    @NamedQuery(name = "Dieta.maxCodigoDieta", query = "SELECT MAX(d.dietaPK.codigoDieta) FROM Dieta d ORDER BY d.dietaPK.codigoDieta"),
+    @NamedQuery(name = "Dieta.maxCodigoDieta", query = "SELECT MAX(d.dietaPK.codigoDieta) FROM Dieta d"),
     @NamedQuery(name = "Dieta.findByCodigoDieta", query = "SELECT d FROM Dieta d WHERE d.dietaPK.codigoDieta = :codigoDieta"),
-    @NamedQuery(name = "Dieta.findByCodigoAlimento", query = "SELECT d FROM Dieta d WHERE d.dietaPK.codigoAlimento = :codigoAlimento"),
-    @NamedQuery(name = "Dieta.findByCantidadAlimento", query = "SELECT d FROM Dieta d WHERE d.cantidadAlimento = :cantidadAlimento")})
+    @NamedQuery(name = "Dieta.findByCodigoDietaMaxItem", query = "SELECT MAX(d.dietaPK.numeroItem) FROM Dieta d WHERE d.dietaPK.codigoDieta = :codigoDieta"),
+    @NamedQuery(name = "Dieta.findByCantidadAlimento", query = "SELECT d FROM Dieta d WHERE d.cantidadAlimento = :cantidadAlimento"),
+    @NamedQuery(name = "Dieta.findByNumeroItem", query = "SELECT d FROM Dieta d WHERE d.dietaPK.numeroItem = :numeroItem")})
 public class Dieta implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,12 +39,12 @@ public class Dieta implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "cantidad_alimento")
-    private int cantidadAlimento;
-    @JoinColumn(name = "codigo_alimento", referencedColumnName = "codigo_alimento", insertable = false, updatable = false)
+    private double cantidadAlimento;
+    @JoinColumn(name = "codigo_alimento", referencedColumnName = "codigo_alimento")
     @ManyToOne(optional = false)
-    private Alimentos alimentos;
+    private Alimentos codigoAlimento;
     @JoinColumn(name = "codigo_paciente", referencedColumnName = "codigo_paciente")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Paciente codigoPaciente;
 
     public Dieta() {
@@ -53,13 +54,13 @@ public class Dieta implements Serializable {
         this.dietaPK = dietaPK;
     }
 
-    public Dieta(DietaPK dietaPK, int cantidadAlimento) {
+    public Dieta(DietaPK dietaPK, double cantidadAlimento) {
         this.dietaPK = dietaPK;
         this.cantidadAlimento = cantidadAlimento;
     }
 
-    public Dieta(int codigoDieta, int codigoAlimento) {
-        this.dietaPK = new DietaPK(codigoDieta, codigoAlimento);
+    public Dieta(int codigoDieta, int numeroItem) {
+        this.dietaPK = new DietaPK(codigoDieta, numeroItem);
     }
 
     public DietaPK getDietaPK() {
@@ -70,20 +71,20 @@ public class Dieta implements Serializable {
         this.dietaPK = dietaPK;
     }
 
-    public int getCantidadAlimento() {
+    public double getCantidadAlimento() {
         return cantidadAlimento;
     }
 
-    public void setCantidadAlimento(int cantidadAlimento) {
+    public void setCantidadAlimento(double cantidadAlimento) {
         this.cantidadAlimento = cantidadAlimento;
     }
 
-    public Alimentos getAlimentos() {
-        return alimentos;
+    public Alimentos getCodigoAlimento() {
+        return codigoAlimento;
     }
 
-    public void setAlimentos(Alimentos alimentos) {
-        this.alimentos = alimentos;
+    public void setCodigoAlimento(Alimentos codigoAlimento) {
+        this.codigoAlimento = codigoAlimento;
     }
 
     public Paciente getCodigoPaciente() {

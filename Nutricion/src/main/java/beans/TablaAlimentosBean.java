@@ -6,10 +6,11 @@
 package beans;
 
 import ManagerBeans.ManagerBeanLocal;
-import entities.AlimentoBasico;
+import entities.ElementoListaBasico;
 import entities.Alimentos;
 import entities.DatosDieta;
 import entities.Dieta;
+import entities.DietaPK;
 import entities.Paciente;
 import entities.ReferenciasDieta;
 import javax.inject.Named;
@@ -32,13 +33,14 @@ public class TablaAlimentosBean implements Serializable {
      * FIELDS FOR INPUT
      */
     private int codigoDieta;
+    private int numeroItemDieta;
     private int cantidadNuevoAlimentoPAVB;
     private int cantidadNuevoAlimentoNoPAVB;
-    private List<AlimentoBasico> listaDesplegableAlimentosPAVB;
-    //private List<AlimentoBasico> listaDesplegableAlimentosNoPAVB;
+    private List<ElementoListaBasico> listaDesplegableAlimentosPAVB;
+    private List<ElementoListaBasico> listaDesplegablePacientes;
     private List listaDesplegableDietas;
     private int codigoAlimentoSeleccionado;
-    private int codigoPaciente = 1;
+    private int codigoPaciente;
     private List<DatosDieta> tablaAlimentos = new ArrayList<DatosDieta>();
     private List<DatosDieta> tablaAlimentosNoPAVB = new ArrayList<DatosDieta>();
     private ReferenciasDieta referencias;
@@ -48,7 +50,7 @@ public class TablaAlimentosBean implements Serializable {
     /**
      * FIELDS FOR OUTPUT
      */
-    private int cantidadAlimentoModificado;
+    private double cantidadAlimentoModificado = 1;
     private double sumatoriaHidratosCarbono;
     private double sumatoriaHidratosCarbonoPAVB;
     private double sumatoriaProteina;
@@ -59,6 +61,11 @@ public class TablaAlimentosBean implements Serializable {
     private double sumatoriaFibraPAVB;
     private double sumatoriaCalorias;
     private double sumatoriaCaloriasPAVB;
+    private boolean mostrarFormularioPaciente;
+    private boolean mostrarFormularioCalculo;
+    private boolean mostrarFormularioAlimentos;
+    
+    
 
     /**
      * CAMPOS PARA CALCULOS
@@ -82,7 +89,7 @@ public class TablaAlimentosBean implements Serializable {
     private double minFibra;
     private double maxFibra;
     private double kcalFibra;
-
+    
     @EJB
     private ManagerBeanLocal managerBeanLocal;
 
@@ -98,12 +105,21 @@ public class TablaAlimentosBean implements Serializable {
     @PostConstruct
     public void init() {
         listaDesplegableAlimentosPAVB = managerBeanLocal.nombreAlimentosPAVB();
+        listaDesplegablePacientes = managerBeanLocal.nombrePacientes();
         listaDesplegableDietas = managerBeanLocal.listadoDietas();
+    }
+
+    public List<ElementoListaBasico> getListaDesplegablePacientes() {
+        return listaDesplegablePacientes;
     }
 
     /**
      * GETTERs & SETTERs
      */
+    public void setListaDesplegablePacientes(List<ElementoListaBasico> listaDesplegablePacientes) {
+        this.listaDesplegablePacientes = listaDesplegablePacientes;
+    }
+
     public int getCodigoAlimentoSeleccionado() {
         return codigoAlimentoSeleccionado;
     }
@@ -120,11 +136,11 @@ public class TablaAlimentosBean implements Serializable {
         this.cantidadNuevoAlimentoPAVB = cantidadNuevoAlimentoPAVB;
     }
 
-    public List<AlimentoBasico> getListaDesplegableAlimentosPAVB() {
+    public List<ElementoListaBasico> getListaDesplegableAlimentosPAVB() {
         return listaDesplegableAlimentosPAVB;
     }
 
-    public void setListaDesplegableAlimentosPAVB(List<AlimentoBasico> listaDesplegableAlimentosPAVB) {
+    public void setListaDesplegableAlimentosPAVB(List<ElementoListaBasico> listaDesplegableAlimentosPAVB) {
         this.listaDesplegableAlimentosPAVB = listaDesplegableAlimentosPAVB;
     }
 
@@ -368,11 +384,11 @@ public class TablaAlimentosBean implements Serializable {
         this.modificarDieta = modificarDieta;
     }
 
-    public int getCantidadAlimentoModificado() {
+    public double getCantidadAlimentoModificado() {
         return cantidadAlimentoModificado;
     }
 
-    public void setCantidadAlimentoModificado(int cantidadAlimentoModificado) {
+    public void setCantidadAlimentoModificado(double cantidadAlimentoModificado) {
         this.cantidadAlimentoModificado = cantidadAlimentoModificado;
     }
 
@@ -431,15 +447,48 @@ public class TablaAlimentosBean implements Serializable {
     public void setSumatoriaHidratosCarbonoPAVB(double sumatoriaHidratosCarbonoPAVB) {
         this.sumatoriaHidratosCarbonoPAVB = sumatoriaHidratosCarbonoPAVB;
     }
+
+    public boolean isMostrarFormularioPaciente() {
+        return mostrarFormularioPaciente;
+    }
+
+    public void setMostrarFormularioPaciente(boolean mostrarFormularioPaciente) {
+        this.mostrarFormularioPaciente = mostrarFormularioPaciente;
+    }
+
+    public boolean isMostrarFormularioCalculo() {
+        return mostrarFormularioCalculo;
+    }
+
+    public void setMostrarFormularioCalculo(boolean mostrarFormularioCalculo) {
+        this.mostrarFormularioCalculo = mostrarFormularioCalculo;
+    }
+
+    public boolean isMostrarFormularioAlimentos() {
+        return mostrarFormularioAlimentos;
+    }
+
+    public void setMostrarFormularioAlimentos(boolean mostrarFormularioAlimentos) {
+        this.mostrarFormularioAlimentos = mostrarFormularioAlimentos;
+    }
+
+    public int getNumeroItemDieta() {
+        return numeroItemDieta;
+    }
+
+    public void setNumeroItemDieta(int numeroItemDieta) {
+        this.numeroItemDieta = numeroItemDieta;
+    }
     
     /**
      * METHODS
      */
     public String agregarAlimentoDieta() {
-        System.out.println(TablaAlimentosBean.class.getSimpleName() + " invoco agregarAlimentoDieta");
+        System.out.println(TablaAlimentosBean.class.getSimpleName() + " invoco agregarAlimentoDieta para paciente: " + codigoPaciente);
         if (codigoAlimentoSeleccionado != 0 && cantidadNuevoAlimentoPAVB != 0 && codigoPaciente != 0) {
             System.out.println(TablaAlimentosBean.class.getSimpleName() + " if distinto a cero");
-            int codigoDietaAfterInsert = managerBeanLocal.agregarAlimentoDieta(codigoDieta, codigoAlimentoSeleccionado, cantidadNuevoAlimentoPAVB, codigoPaciente);
+            numeroItemDieta = managerBeanLocal.siguienteItem(codigoDieta);
+            int codigoDietaAfterInsert = managerBeanLocal.agregarAlimentoDieta(codigoDieta, numeroItemDieta, codigoAlimentoSeleccionado, cantidadNuevoAlimentoPAVB, codigoPaciente);
             System.out.println(TablaAlimentosBean.class.getSimpleName() + " tras la insercion retorno codigo dieta: " + codigoDietaAfterInsert);
             codigoDieta = codigoDietaAfterInsert;
             listaDesplegableDietas = managerBeanLocal.listadoDietas();
@@ -458,14 +507,14 @@ public class TablaAlimentosBean implements Serializable {
         sumatoriaGrasaPAVB = 0;
         sumatoriaFibra = 0;
         sumatoriaFibraPAVB = 0;
-        int cantidadAlimentoDieta;
+        double cantidadAlimentoDieta;
 
         tablaAlimentos.removeAll(tablaAlimentos);
         tablaAlimentosNoPAVB.removeAll(tablaAlimentosNoPAVB);
         List<Dieta> recuperaDietasPorCodigo = managerBeanLocal.detalleDieta(codigoDieta);
         for (Dieta detalle : recuperaDietasPorCodigo) {
             cantidadAlimentoDieta = detalle.getCantidadAlimento();
-            Alimentos alimento = managerBeanLocal.detalleAlimento(detalle.getDietaPK().getCodigoAlimento());
+            Alimentos alimento = managerBeanLocal.detalleAlimento(detalle.getCodigoAlimento().getCodigoAlimento());
             double tempMedidaCasera = (Double.valueOf(alimento.getMedidaCasera())) * cantidadAlimentoDieta;
             alimento.setMedidaCasera(String.valueOf(tempMedidaCasera));
             alimento.setMedidaReal(alimento.getMedidaReal() * cantidadAlimentoDieta);
@@ -489,13 +538,20 @@ public class TablaAlimentosBean implements Serializable {
 
             agregaNuevaFila(nuevaFilaDieta, alimento);
 
-            paciente = detalle.getCodigoPaciente();
+            codigoPaciente = detalle.getCodigoPaciente().getCodigoPaciente();
         }
     }
 
     public void changeListenerCodigoDieta() {
         if (codigoDieta != 0) {
                 actualizaListaAlimentos(codigoDieta);
+                paciente = managerBeanLocal.detallePaciente(codigoPaciente);
+        }
+    }
+
+    public void changeListenerCodigoPaciente() {
+        if (codigoPaciente != 0) {
+                System.out.println("Se cambio de paciente al numero: " + codigoPaciente);
         }
     }
 
@@ -583,14 +639,15 @@ public class TablaAlimentosBean implements Serializable {
         return false;
     }
 
-    public void borrarAlimentoDieta(int codigoDietaBorrar, int codigoAlimentoBorrar, int cantidadBorrar) {
-        managerBeanLocal.borrarAlimentoDieta(codigoDietaBorrar, codigoAlimentoBorrar, cantidadBorrar);
+    public void borrarAlimentoDieta(int codigoDietaBorrar, int numeroItemDietaBorrar) {
+        System.out.println("TABLAALIMENTODIETA borrarAlimentoDieta con datos, codigoDieta: " + codigoDietaBorrar + ", numeroItem: " + numeroItemDietaBorrar);
+        managerBeanLocal.borrarAlimentoDieta(codigoDietaBorrar, numeroItemDietaBorrar);
         actualizaListaAlimentos(codigoDieta);
         listaDesplegableDietas = managerBeanLocal.listadoDietas();
     }
 
     public String seleccionarAlimentoDieta(DatosDieta dietaSeleccionada) {
-
+        System.out.println("TABLAALIMENTODIETA seleccionarAlimentoDieta con datos, codigoDieta: " + dietaSeleccionada.getDatosDieta().getDietaPK().getCodigoDieta());
         modificarDieta = dietaSeleccionada;
         return null;
     }
@@ -599,7 +656,7 @@ public class TablaAlimentosBean implements Serializable {
         try {
             managerBeanLocal.actualizarDieta(modificarDieta.getDatosDieta().getDietaPK(), cantidadAlimentoModificado);
             modificarDieta = null;
-            cantidadAlimentoModificado = 0;
+            cantidadAlimentoModificado = 1;
             actualizaListaAlimentos(codigoDieta);
         } catch (Exception e) {
             System.err.println("ERROR al intentar modificar :" + e.getMessage());
@@ -628,5 +685,4 @@ public class TablaAlimentosBean implements Serializable {
         kcalGrasa = sumatoriaGrasa * 9;
         kcalFibra = kcalGrasa + kcalHC + kcalProteina;
     }
-
 }

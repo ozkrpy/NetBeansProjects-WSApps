@@ -11,15 +11,15 @@ import java.io.Serializable;
  *
  * @author ozkrp
  */
-public class AlimentoBasico implements Serializable {
+public class ElementoListaBasico implements Serializable {
     
     private int codigoAlimento;
     private String descripcionAlimento;
 
-    public AlimentoBasico() {
+    public ElementoListaBasico() {
     }
 
-    public AlimentoBasico(int codigoAlimento, String descripcionAlimento) {
+    public ElementoListaBasico(int codigoAlimento, String descripcionAlimento) {
         this.codigoAlimento = codigoAlimento;
         this.descripcionAlimento = descripcionAlimento;
     }
