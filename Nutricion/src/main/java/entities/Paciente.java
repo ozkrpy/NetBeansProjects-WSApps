@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -99,23 +101,23 @@ public class Paciente implements Serializable {
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Max(value=500)  @Min(value=1)
     @Column(name = "peso_actual")
-    private Double pesoActual;
+    private Float pesoActual;
     @Column(name = "peso_habitual")
-    private Double pesoHabitual;
+    private Float pesoHabitual;
     @Column(name = "peso_ajusta")
-    private Double pesoAjusta;
+    private Float pesoAjusta;
     @Column(name = "peso_saludable")
-    private Double pesoSaludable;
+    private Float pesoSaludable;
     @Column(name = "porcentaje_peso_ideal")
-    private Double porcentajePesoIdeal;
+    private Float porcentajePesoIdeal;
     @Column(name = "imc")
-    private Double imc;
+    private Float imc;
     @Column(name = "cia_muneca")
-    private Double ciaMuneca;
+    private Float ciaMuneca;
     @Column(name = "cia_brazo")
-    private Double ciaBrazo;
+    private Float ciaBrazo;
     @Size(max = 45)
     @Column(name = "biotipo")
     private String biotipo;
@@ -137,49 +139,49 @@ public class Paciente implements Serializable {
     @Column(name = "diagnostico_nutricional")
     private String diagnosticoNutricional;
     @Column(name = "laboratorio_glicemia_basal")
-    private Double laboratorioGlicemiaBasal;
+    private Float laboratorioGlicemiaBasal;
     @Column(name = "laboratorio_creatinina")
-    private Double laboratorioCreatinina;
+    private Float laboratorioCreatinina;
     @Column(name = "laboratorio_proteinas_totales")
-    private Double laboratorioProteinasTotales;
+    private Float laboratorioProteinasTotales;
     @Column(name = "laboratorio_urea")
-    private Double laboratorioUrea;
+    private Float laboratorioUrea;
     @Column(name = "laboratorio_acido_urico")
-    private Double laboratorioAcidoUrico;
+    private Float laboratorioAcidoUrico;
     @Column(name = "laboratorio_proteinuria")
-    private Double laboratorioProteinuria;
+    private Float laboratorioProteinuria;
     @Column(name = "laboratorio_albumina")
-    private Double laboratorioAlbumina;
+    private Float laboratorioAlbumina;
     @Column(name = "laboratorio_triglicerios")
-    private Double laboratorioTriglicerios;
+    private Float laboratorioTriglicerios;
     @Column(name = "laboratorio_colesterol_total")
-    private Double laboratorioColesterolTotal;
+    private Float laboratorioColesterolTotal;
     @Column(name = "laboratorio_ldl")
-    private Double laboratorioLdl;
+    private Float laboratorioLdl;
     @Column(name = "laboratorio_hdl")
-    private Double laboratorioHdl;
+    private Float laboratorioHdl;
     @Column(name = "laboratorio_glucosa")
-    private Double laboratorioGlucosa;
+    private Float laboratorioGlucosa;
     @Column(name = "laboratorio_hb")
-    private Double laboratorioHb;
+    private Float laboratorioHb;
     @Column(name = "laboratorio_hematocrito")
-    private Double laboratorioHematocrito;
+    private Float laboratorioHematocrito;
     @Column(name = "laboratorio_globulos_rojos")
-    private Double laboratorioGlobulosRojos;
+    private Float laboratorioGlobulosRojos;
     @Column(name = "laboratorio_potasio")
-    private Double laboratorioPotasio;
+    private Float laboratorioPotasio;
     @Column(name = "laboratorio_ci")
-    private Double laboratorioCi;
+    private Float laboratorioCi;
     @Column(name = "laboratorio_na")
-    private Double laboratorioNa;
+    private Float laboratorioNa;
     @Column(name = "laboratorio_globulos_blancos")
-    private Double laboratorioGlobulosBlancos;
+    private Float laboratorioGlobulosBlancos;
     @Column(name = "laboratorio_hba")
-    private Double laboratorioHba;
+    private Float laboratorioHba;
     @Column(name = "cia_cintura1")
-    private Double ciaCintura1;
+    private Float ciaCintura1;
     @Column(name = "cia_cintura2")
-    private Double ciaCintura2;
+    private Float ciaCintura2;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoPaciente")
     private List<Dieta> dietaList;
 
@@ -246,67 +248,67 @@ public class Paciente implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Double getPesoActual() {
+    public Float getPesoActual() {
         return pesoActual;
     }
 
-    public void setPesoActual(Double pesoActual) {
+    public void setPesoActual(Float pesoActual) {
         this.pesoActual = pesoActual;
     }
 
-    public Double getPesoHabitual() {
+    public Float getPesoHabitual() {
         return pesoHabitual;
     }
 
-    public void setPesoHabitual(Double pesoHabitual) {
+    public void setPesoHabitual(Float pesoHabitual) {
         this.pesoHabitual = pesoHabitual;
     }
 
-    public Double getPesoAjusta() {
+    public Float getPesoAjusta() {
         return pesoAjusta;
     }
 
-    public void setPesoAjusta(Double pesoAjusta) {
+    public void setPesoAjusta(Float pesoAjusta) {
         this.pesoAjusta = pesoAjusta;
     }
 
-    public Double getPesoSaludable() {
+    public Float getPesoSaludable() {
         return pesoSaludable;
     }
 
-    public void setPesoSaludable(Double pesoSaludable) {
+    public void setPesoSaludable(Float pesoSaludable) {
         this.pesoSaludable = pesoSaludable;
     }
 
-    public Double getPorcentajePesoIdeal() {
+    public Float getPorcentajePesoIdeal() {
         return porcentajePesoIdeal;
     }
 
-    public void setPorcentajePesoIdeal(Double porcentajePesoIdeal) {
+    public void setPorcentajePesoIdeal(Float porcentajePesoIdeal) {
         this.porcentajePesoIdeal = porcentajePesoIdeal;
     }
 
-    public Double getImc() {
+    public Float getImc() {
         return imc;
     }
 
-    public void setImc(Double imc) {
+    public void setImc(Float imc) {
         this.imc = imc;
     }
 
-    public Double getCiaMuneca() {
+    public Float getCiaMuneca() {
         return ciaMuneca;
     }
 
-    public void setCiaMuneca(Double ciaMuneca) {
+    public void setCiaMuneca(Float ciaMuneca) {
         this.ciaMuneca = ciaMuneca;
     }
 
-    public Double getCiaBrazo() {
+    public Float getCiaBrazo() {
         return ciaBrazo;
     }
 
-    public void setCiaBrazo(Double ciaBrazo) {
+    public void setCiaBrazo(Float ciaBrazo) {
         this.ciaBrazo = ciaBrazo;
     }
 
@@ -374,179 +376,179 @@ public class Paciente implements Serializable {
         this.diagnosticoNutricional = diagnosticoNutricional;
     }
 
-    public Double getLaboratorioGlicemiaBasal() {
+    public Float getLaboratorioGlicemiaBasal() {
         return laboratorioGlicemiaBasal;
     }
 
-    public void setLaboratorioGlicemiaBasal(Double laboratorioGlicemiaBasal) {
+    public void setLaboratorioGlicemiaBasal(Float laboratorioGlicemiaBasal) {
         this.laboratorioGlicemiaBasal = laboratorioGlicemiaBasal;
     }
 
-    public Double getLaboratorioCreatinina() {
+    public Float getLaboratorioCreatinina() {
         return laboratorioCreatinina;
     }
 
-    public void setLaboratorioCreatinina(Double laboratorioCreatinina) {
+    public void setLaboratorioCreatinina(Float laboratorioCreatinina) {
         this.laboratorioCreatinina = laboratorioCreatinina;
     }
 
-    public Double getLaboratorioProteinasTotales() {
+    public Float getLaboratorioProteinasTotales() {
         return laboratorioProteinasTotales;
     }
 
-    public void setLaboratorioProteinasTotales(Double laboratorioProteinasTotales) {
+    public void setLaboratorioProteinasTotales(Float laboratorioProteinasTotales) {
         this.laboratorioProteinasTotales = laboratorioProteinasTotales;
     }
 
-    public Double getLaboratorioUrea() {
+    public Float getLaboratorioUrea() {
         return laboratorioUrea;
     }
 
-    public void setLaboratorioUrea(Double laboratorioUrea) {
+    public void setLaboratorioUrea(Float laboratorioUrea) {
         this.laboratorioUrea = laboratorioUrea;
     }
 
-    public Double getLaboratorioAcidoUrico() {
+    public Float getLaboratorioAcidoUrico() {
         return laboratorioAcidoUrico;
     }
 
-    public void setLaboratorioAcidoUrico(Double laboratorioAcidoUrico) {
+    public void setLaboratorioAcidoUrico(Float laboratorioAcidoUrico) {
         this.laboratorioAcidoUrico = laboratorioAcidoUrico;
     }
 
-    public Double getLaboratorioProteinuria() {
+    public Float getLaboratorioProteinuria() {
         return laboratorioProteinuria;
     }
 
-    public void setLaboratorioProteinuria(Double laboratorioProteinuria) {
+    public void setLaboratorioProteinuria(Float laboratorioProteinuria) {
         this.laboratorioProteinuria = laboratorioProteinuria;
     }
 
-    public Double getLaboratorioAlbumina() {
+    public Float getLaboratorioAlbumina() {
         return laboratorioAlbumina;
     }
 
-    public void setLaboratorioAlbumina(Double laboratorioAlbumina) {
+    public void setLaboratorioAlbumina(Float laboratorioAlbumina) {
         this.laboratorioAlbumina = laboratorioAlbumina;
     }
 
-    public Double getLaboratorioTriglicerios() {
+    public Float getLaboratorioTriglicerios() {
         return laboratorioTriglicerios;
     }
 
-    public void setLaboratorioTriglicerios(Double laboratorioTriglicerios) {
+    public void setLaboratorioTriglicerios(Float laboratorioTriglicerios) {
         this.laboratorioTriglicerios = laboratorioTriglicerios;
     }
 
-    public Double getLaboratorioColesterolTotal() {
+    public Float getLaboratorioColesterolTotal() {
         return laboratorioColesterolTotal;
     }
 
-    public void setLaboratorioColesterolTotal(Double laboratorioColesterolTotal) {
+    public void setLaboratorioColesterolTotal(Float laboratorioColesterolTotal) {
         this.laboratorioColesterolTotal = laboratorioColesterolTotal;
     }
 
-    public Double getLaboratorioLdl() {
+    public Float getLaboratorioLdl() {
         return laboratorioLdl;
     }
 
-    public void setLaboratorioLdl(Double laboratorioLdl) {
+    public void setLaboratorioLdl(Float laboratorioLdl) {
         this.laboratorioLdl = laboratorioLdl;
     }
 
-    public Double getLaboratorioHdl() {
+    public Float getLaboratorioHdl() {
         return laboratorioHdl;
     }
 
-    public void setLaboratorioHdl(Double laboratorioHdl) {
+    public void setLaboratorioHdl(Float laboratorioHdl) {
         this.laboratorioHdl = laboratorioHdl;
     }
 
-    public Double getLaboratorioGlucosa() {
+    public Float getLaboratorioGlucosa() {
         return laboratorioGlucosa;
     }
 
-    public void setLaboratorioGlucosa(Double laboratorioGlucosa) {
+    public void setLaboratorioGlucosa(Float laboratorioGlucosa) {
         this.laboratorioGlucosa = laboratorioGlucosa;
     }
 
-    public Double getLaboratorioHb() {
+    public Float getLaboratorioHb() {
         return laboratorioHb;
     }
 
-    public void setLaboratorioHb(Double laboratorioHb) {
+    public void setLaboratorioHb(Float laboratorioHb) {
         this.laboratorioHb = laboratorioHb;
     }
 
-    public Double getLaboratorioHematocrito() {
+    public Float getLaboratorioHematocrito() {
         return laboratorioHematocrito;
     }
 
-    public void setLaboratorioHematocrito(Double laboratorioHematocrito) {
+    public void setLaboratorioHematocrito(Float laboratorioHematocrito) {
         this.laboratorioHematocrito = laboratorioHematocrito;
     }
 
-    public Double getLaboratorioGlobulosRojos() {
+    public Float getLaboratorioGlobulosRojos() {
         return laboratorioGlobulosRojos;
     }
 
-    public void setLaboratorioGlobulosRojos(Double laboratorioGlobulosRojos) {
+    public void setLaboratorioGlobulosRojos(Float laboratorioGlobulosRojos) {
         this.laboratorioGlobulosRojos = laboratorioGlobulosRojos;
     }
 
-    public Double getLaboratorioPotasio() {
+    public Float getLaboratorioPotasio() {
         return laboratorioPotasio;
     }
 
-    public void setLaboratorioPotasio(Double laboratorioPotasio) {
+    public void setLaboratorioPotasio(Float laboratorioPotasio) {
         this.laboratorioPotasio = laboratorioPotasio;
     }
 
-    public Double getLaboratorioCi() {
+    public Float getLaboratorioCi() {
         return laboratorioCi;
     }
 
-    public void setLaboratorioCi(Double laboratorioCi) {
+    public void setLaboratorioCi(Float laboratorioCi) {
         this.laboratorioCi = laboratorioCi;
     }
 
-    public Double getLaboratorioNa() {
+    public Float getLaboratorioNa() {
         return laboratorioNa;
     }
 
-    public void setLaboratorioNa(Double laboratorioNa) {
+    public void setLaboratorioNa(Float laboratorioNa) {
         this.laboratorioNa = laboratorioNa;
     }
 
-    public Double getLaboratorioGlobulosBlancos() {
+    public Float getLaboratorioGlobulosBlancos() {
         return laboratorioGlobulosBlancos;
     }
 
-    public void setLaboratorioGlobulosBlancos(Double laboratorioGlobulosBlancos) {
+    public void setLaboratorioGlobulosBlancos(Float laboratorioGlobulosBlancos) {
         this.laboratorioGlobulosBlancos = laboratorioGlobulosBlancos;
     }
 
-    public Double getLaboratorioHba() {
+    public Float getLaboratorioHba() {
         return laboratorioHba;
     }
 
-    public void setLaboratorioHba(Double laboratorioHba) {
+    public void setLaboratorioHba(Float laboratorioHba) {
         this.laboratorioHba = laboratorioHba;
     }
 
-    public Double getCiaCintura1() {
+    public Float getCiaCintura1() {
         return ciaCintura1;
     }
 
-    public void setCiaCintura1(Double ciaCintura1) {
+    public void setCiaCintura1(Float ciaCintura1) {
         this.ciaCintura1 = ciaCintura1;
     }
 
-    public Double getCiaCintura2() {
+    public Float getCiaCintura2() {
         return ciaCintura2;
     }
 
-    public void setCiaCintura2(Double ciaCintura2) {
+    public void setCiaCintura2(Float ciaCintura2) {
         this.ciaCintura2 = ciaCintura2;
     }
 

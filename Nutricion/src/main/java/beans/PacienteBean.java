@@ -40,19 +40,18 @@ public class PacienteBean implements Serializable {
     private String apellido;
     private String sexo = "M";
     private Integer talla;
-    private double meters;
     private String estadoCivil;
     private Date fechaNacimiento;
-    private double pesoActual;
-    private double pesoHabitual;
-    private double pesoAjusta;
-    private double pesoSaludable;
-    private double porcentajePesoIdeal;
-    private double imc;
+    private float pesoActual;
+    private float pesoHabitual;
+    private float pesoAjusta;
+    private float pesoSaludable;
+    private float porcentajePesoIdeal;
+    private float imc;
     private String imcTipo;
     private String porcentajePesoIdealTipo;
-    private double ciaMuneca;
-    private double ciaBrazo;
+    private float ciaMuneca;
+    private float ciaBrazo;
     private String biotipo;
     private Boolean antecedenteObesidad;
     private Boolean antecedenteCardiopatias;
@@ -61,34 +60,34 @@ public class PacienteBean implements Serializable {
     private String medicacion;
     private String diagnosticoMedico;
     private String diagnosticoNutricional;
-    private double laboratorioGlicemiaBasal;
-    private double laboratorioCreatinina;
-    private double laboratorioProteinasTotales;
-    private double laboratorioUrea;
-    private double laboratorioAcidoUrico;
-    private double laboratorioProteinuria;
-    private double laboratorioAlbumina;
-    private double laboratorioTriglicerios;
-    private double laboratorioColesterolTotal;
-    private double laboratorioLdl;
-    private double laboratorioHdl;
-    private double laboratorioGlucosa;
-    private double laboratorioHb;
-    private double laboratorioHematocrito;
-    private double laboratorioGlobulosRojos;
-    private double laboratorioPotasio;
-    private double laboratorioCi;
-    private double laboratorioNa;
-    private double laboratorioGlobulosBlancos;
-    private double laboratorioHba;
+    private float laboratorioGlicemiaBasal;
+    private float laboratorioCreatinina;
+    private float laboratorioProteinasTotales;
+    private float laboratorioUrea;
+    private float laboratorioAcidoUrico;
+    private float laboratorioProteinuria;
+    private float laboratorioAlbumina;
+    private float laboratorioTriglicerios;
+    private float laboratorioColesterolTotal;
+    private float laboratorioLdl;
+    private float laboratorioHdl;
+    private float laboratorioGlucosa;
+    private float laboratorioHb;
+    private float laboratorioHematocrito;
+    private float laboratorioGlobulosRojos;
+    private float laboratorioPotasio;
+    private float laboratorioCi;
+    private float laboratorioNa;
+    private float laboratorioGlobulosBlancos;
+    private float laboratorioHba;
 
     @EJB
     private ManagerBeanLocal manager;
     private int edad;
     private Date fechaMinima = new Date();
-    private double pesoIdeal;
-    private double ciaCintura1;
-    private double ciaCintura2;
+    private float pesoIdeal;
+    private float ciaCintura1;
+    private float ciaCintura2;
 
     /**
      * Creates a new instance of PacienteBean
@@ -177,51 +176,51 @@ public class PacienteBean implements Serializable {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public double getPesoActual() {
+    public float getPesoActual() {
         return pesoActual;
     }
 
-    public void setPesoActual(double pesoActual) {
+    public void setPesoActual(float pesoActual) {
         this.pesoActual = pesoActual;
     }
 
-    public double getPesoHabitual() {
+    public float getPesoHabitual() {
         return pesoHabitual;
     }
 
-    public void setPesoHabitual(double pesoHabitual) {
+    public void setPesoHabitual(float pesoHabitual) {
         this.pesoHabitual = pesoHabitual;
     }
 
-    public double getPesoAjusta() {
+    public float getPesoAjusta() {
         return pesoAjusta;
     }
 
-    public void setPesoAjusta(double pesoAjusta) {
+    public void setPesoAjusta(float pesoAjusta) {
         this.pesoAjusta = pesoAjusta;
     }
 
-    public double getPesoSaludable() {
+    public float getPesoSaludable() {
         return pesoSaludable;
     }
 
-    public void setPesoSaludable(double pesoSaludable) {
+    public void setPesoSaludable(float pesoSaludable) {
         this.pesoSaludable = pesoSaludable;
     }
 
-    public double getPorcentajePesoIdeal() {
+    public float getPorcentajePesoIdeal() {
         return porcentajePesoIdeal;
     }
 
-    public void setPorcentajePesoIdeal(double porcentajePesoIdeal) {
+    public void setPorcentajePesoIdeal(float porcentajePesoIdeal) {
         this.porcentajePesoIdeal = porcentajePesoIdeal;
     }
 
-    public double getImc() {
+    public float getImc() {
         return imc;
     }
 
-    public void setImc(double imc) {
+    public void setImc(float imc) {
         this.imc = imc;
     }
 
@@ -233,19 +232,19 @@ public class PacienteBean implements Serializable {
         this.imcTipo = imcTipo;
     }
 
-    public double getCiaMuneca() {
+    public float getCiaMuneca() {
         return ciaMuneca;
     }
 
-    public void setCiaMuneca(double ciaMuneca) {
+    public void setCiaMuneca(float ciaMuneca) {
         this.ciaMuneca = ciaMuneca;
     }
 
-    public double getCiaBrazo() {
+    public float getCiaBrazo() {
         return ciaBrazo;
     }
 
-    public void setCiaBrazo(double ciaBrazo) {
+    public void setCiaBrazo(float ciaBrazo) {
         this.ciaBrazo = ciaBrazo;
     }
 
@@ -313,172 +312,164 @@ public class PacienteBean implements Serializable {
         this.diagnosticoNutricional = diagnosticoNutricional;
     }
 
-    public double getLaboratorioGlicemiaBasal() {
+    public float getLaboratorioGlicemiaBasal() {
         return laboratorioGlicemiaBasal;
     }
 
-    public void setLaboratorioGlicemiaBasal(double laboratorioGlicemiaBasal) {
+    public void setLaboratorioGlicemiaBasal(float laboratorioGlicemiaBasal) {
         this.laboratorioGlicemiaBasal = laboratorioGlicemiaBasal;
     }
 
-    public double getLaboratorioCreatinina() {
+    public float getLaboratorioCreatinina() {
         return laboratorioCreatinina;
     }
 
-    public void setLaboratorioCreatinina(double laboratorioCreatinina) {
+    public void setLaboratorioCreatinina(float laboratorioCreatinina) {
         this.laboratorioCreatinina = laboratorioCreatinina;
     }
 
-    public double getLaboratorioProteinasTotales() {
+    public float getLaboratorioProteinasTotales() {
         return laboratorioProteinasTotales;
     }
 
-    public void setLaboratorioProteinasTotales(double laboratorioProteinasTotales) {
+    public void setLaboratorioProteinasTotales(float laboratorioProteinasTotales) {
         this.laboratorioProteinasTotales = laboratorioProteinasTotales;
     }
 
-    public double getLaboratorioUrea() {
+    public float getLaboratorioUrea() {
         return laboratorioUrea;
     }
 
-    public void setLaboratorioUrea(double laboratorioUrea) {
+    public void setLaboratorioUrea(float laboratorioUrea) {
         this.laboratorioUrea = laboratorioUrea;
     }
 
-    public double getLaboratorioAcidoUrico() {
+    public float getLaboratorioAcidoUrico() {
         return laboratorioAcidoUrico;
     }
 
-    public void setLaboratorioAcidoUrico(double laboratorioAcidoUrico) {
+    public void setLaboratorioAcidoUrico(float laboratorioAcidoUrico) {
         this.laboratorioAcidoUrico = laboratorioAcidoUrico;
     }
 
-    public double getLaboratorioProteinuria() {
+    public float getLaboratorioProteinuria() {
         return laboratorioProteinuria;
     }
 
-    public void setLaboratorioProteinuria(double laboratorioProteinuria) {
+    public void setLaboratorioProteinuria(float laboratorioProteinuria) {
         this.laboratorioProteinuria = laboratorioProteinuria;
     }
 
-    public double getLaboratorioAlbumina() {
+    public float getLaboratorioAlbumina() {
         return laboratorioAlbumina;
     }
 
-    public void setLaboratorioAlbumina(double laboratorioAlbumina) {
+    public void setLaboratorioAlbumina(float laboratorioAlbumina) {
         this.laboratorioAlbumina = laboratorioAlbumina;
     }
 
-    public double getLaboratorioTriglicerios() {
+    public float getLaboratorioTriglicerios() {
         return laboratorioTriglicerios;
     }
 
-    public void setLaboratorioTriglicerios(double laboratorioTriglicerios) {
+    public void setLaboratorioTriglicerios(float laboratorioTriglicerios) {
         this.laboratorioTriglicerios = laboratorioTriglicerios;
     }
 
-    public double getLaboratorioColesterolTotal() {
+    public float getLaboratorioColesterolTotal() {
         return laboratorioColesterolTotal;
     }
 
-    public void setLaboratorioColesterolTotal(double laboratorioColesterolTotal) {
+    public void setLaboratorioColesterolTotal(float laboratorioColesterolTotal) {
         this.laboratorioColesterolTotal = laboratorioColesterolTotal;
     }
 
-    public double getLaboratorioLdl() {
+    public float getLaboratorioLdl() {
         return laboratorioLdl;
     }
 
-    public void setLaboratorioLdl(double laboratorioLdl) {
+    public void setLaboratorioLdl(float laboratorioLdl) {
         this.laboratorioLdl = laboratorioLdl;
     }
 
-    public double getLaboratorioHdl() {
+    public float getLaboratorioHdl() {
         return laboratorioHdl;
     }
 
-    public void setLaboratorioHdl(double laboratorioHdl) {
+    public void setLaboratorioHdl(float laboratorioHdl) {
         this.laboratorioHdl = laboratorioHdl;
     }
 
-    public double getLaboratorioGlucosa() {
+    public float getLaboratorioGlucosa() {
         return laboratorioGlucosa;
     }
 
-    public void setLaboratorioGlucosa(double laboratorioGlucosa) {
+    public void setLaboratorioGlucosa(float laboratorioGlucosa) {
         this.laboratorioGlucosa = laboratorioGlucosa;
     }
 
-    public double getLaboratorioHb() {
+    public float getLaboratorioHb() {
         return laboratorioHb;
     }
 
-    public void setLaboratorioHb(double laboratorioHb) {
+    public void setLaboratorioHb(float laboratorioHb) {
         this.laboratorioHb = laboratorioHb;
     }
 
-    public double getLaboratorioHematocrito() {
+    public float getLaboratorioHematocrito() {
         return laboratorioHematocrito;
     }
 
-    public void setLaboratorioHematocrito(double laboratorioHematocrito) {
+    public void setLaboratorioHematocrito(float laboratorioHematocrito) {
         this.laboratorioHematocrito = laboratorioHematocrito;
     }
 
-    public double getLaboratorioGlobulosRojos() {
+    public float getLaboratorioGlobulosRojos() {
         return laboratorioGlobulosRojos;
     }
 
-    public void setLaboratorioGlobulosRojos(double laboratorioGlobulosRojos) {
+    public void setLaboratorioGlobulosRojos(float laboratorioGlobulosRojos) {
         this.laboratorioGlobulosRojos = laboratorioGlobulosRojos;
     }
 
-    public double getLaboratorioPotasio() {
+    public float getLaboratorioPotasio() {
         return laboratorioPotasio;
     }
 
-    public void setLaboratorioPotasio(double laboratorioPotasio) {
+    public void setLaboratorioPotasio(float laboratorioPotasio) {
         this.laboratorioPotasio = laboratorioPotasio;
     }
 
-    public double getLaboratorioCi() {
+    public float getLaboratorioCi() {
         return laboratorioCi;
     }
 
-    public void setLaboratorioCi(double laboratorioCi) {
+    public void setLaboratorioCi(float laboratorioCi) {
         this.laboratorioCi = laboratorioCi;
     }
 
-    public double getLaboratorioNa() {
+    public float getLaboratorioNa() {
         return laboratorioNa;
     }
 
-    public void setLaboratorioNa(double laboratorioNa) {
+    public void setLaboratorioNa(float laboratorioNa) {
         this.laboratorioNa = laboratorioNa;
     }
 
-    public double getLaboratorioGlobulosBlancos() {
+    public float getLaboratorioGlobulosBlancos() {
         return laboratorioGlobulosBlancos;
     }
 
-    public void setLaboratorioGlobulosBlancos(double laboratorioGlobulosBlancos) {
+    public void setLaboratorioGlobulosBlancos(float laboratorioGlobulosBlancos) {
         this.laboratorioGlobulosBlancos = laboratorioGlobulosBlancos;
     }
 
-    public double getLaboratorioHba() {
+    public float getLaboratorioHba() {
         return laboratorioHba;
     }
 
-    public void setLaboratorioHba(double laboratorioHba) {
+    public void setLaboratorioHba(float laboratorioHba) {
         this.laboratorioHba = laboratorioHba;
-    }
-
-    public double getMeters() {
-        return meters;
-    }
-
-    public void setMeters(double meters) {
-        this.meters = meters;
     }
 
     public int getEdad() {
@@ -497,11 +488,11 @@ public class PacienteBean implements Serializable {
         this.fechaMinima = fechaMinima;
     }
 
-    public double getPesoIdeal() {
+    public float getPesoIdeal() {
         return pesoIdeal;
     }
 
-    public void setPesoIdeal(double pesoIdeal) {
+    public void setPesoIdeal(float pesoIdeal) {
         this.pesoIdeal = pesoIdeal;
     }
 
@@ -513,19 +504,19 @@ public class PacienteBean implements Serializable {
         this.porcentajePesoIdealTipo = porcentajePesoIdealTipo;
     }
 
-    public double getCiaCintura1() {
+    public float getCiaCintura1() {
         return ciaCintura1;
     }
 
-    public void setCiaCintura1(double ciaCintura1) {
+    public void setCiaCintura1(float ciaCintura1) {
         this.ciaCintura1 = ciaCintura1;
     }
 
-    public double getCiaCintura2() {
+    public float getCiaCintura2() {
         return ciaCintura2;
     }
 
-    public void setCiaCintura2(double ciaCintura2) {
+    public void setCiaCintura2(float ciaCintura2) {
         this.ciaCintura2 = ciaCintura2;
     }
 
@@ -596,16 +587,16 @@ public class PacienteBean implements Serializable {
     }
 
     public void changeListenerCalculos() {
-        meters = (double) talla / 100;
-        System.out.println("changeListenerCalculos talla (cm): " + talla + " (m): " + meters + " sexo: " + sexo);
         if ((pesoActual != 0) && (ciaMuneca != 0) && (talla != 0) && (edad != 0) && (sexo != null)) {
             System.out.println("changeListenerCalculos pesoActual: " + pesoActual + " ciaMuneca: " + ciaMuneca + " edad: " + edad);
-            imc = (pesoActual / (Math.pow(meters, 2)));
-            calcularTipoImc();
-            calcularBiotipo();
-            calcularPesoIdeal();
-            calcularPesoAjustado();
-            calcularPorcentajePesoIdeal();
+            
+            imc = calcularImc(pesoActual, talla);
+            imcTipo = calcularTipoImc(imc);
+            biotipo = calcularBiotipo(edad, talla, ciaMuneca, sexo);
+            pesoIdeal = calcularPesoIdeal(edad, sexo, talla, biotipo);
+            pesoAjusta = calcularPesoAjustado(pesoActual, pesoIdeal);
+            porcentajePesoIdeal = calcularPorcentajePesoIdeal(pesoActual, pesoIdeal);
+            porcentajePesoIdealTipo = calcularTipoPorcentajePI();
             pesoSaludable = pesoIdeal;
         }
     }
@@ -621,36 +612,36 @@ public class PacienteBean implements Serializable {
         System.out.println("Calculada: " + edad);
     }
 
-    private void calcularTipoImc() {
+    private String calcularTipoImc(float imcParam) {
         String tipo;
-        if (imc < 18.5) {
+        if (imcParam < 18.5) {
             tipo = "Delgadez";
-        } else if ((imc >= 18.5) && (imc <= 24.9)) {
+        } else if ((imcParam >= 18.5) && (imcParam <= 24.9)) {
             tipo = "Normal o sano";
-        } else if ((imc >= 25) && (imc <= 29.9)) {
+        } else if ((imcParam >= 25) && (imcParam <= 29.9)) {
             tipo = "Sobrepeso";
-        } else if ((imc >= 30) && (imc <= 34.9)) {
+        } else if ((imcParam >= 30) && (imcParam <= 34.9)) {
             tipo = "Obesidad Grado I";
-        } else if ((imc >= 35) && (imc <= 39.9)) {
+        } else if ((imcParam >= 35) && (imcParam <= 39.9)) {
             tipo = "Obesidad Grado II";
-        } else if (imc >= 40) {
+        } else if (imcParam >= 40) {
             tipo = "Obesidad morbida";
         } else {
             tipo = " ";
         }
-        imcTipo = tipo;
-        System.out.println("calcularTipoImc " + imcTipo);
-
+        System.out.println("calcularTipoImc " + tipo);
+        return tipo;
+        
     }
 
-    public void calcularBiotipo() {
+    private String calcularBiotipo(int edadParam, int tallaParam, float ciaMunecaParam, String sexoParam) {
         String contextura = "no calculada (Menor a 25 años)";
-        if (edad >= 25) {
+        if (edadParam >= 25) {
             System.out.println("entro al if de mayor a 25");
-            double biotipoCalculado;
-            biotipoCalculado = (talla / ciaMuneca);
+            float biotipoCalculado;
+            biotipoCalculado = (tallaParam / ciaMunecaParam);
             /*M: Hombre F: Mujer*/
-            switch (sexo) {
+            switch (sexoParam) {
                 case "M":
                     contextura = calculoContexturaHombre(biotipoCalculado);
                     break;
@@ -663,10 +654,10 @@ public class PacienteBean implements Serializable {
             }
         }
         String retorno = contextura;
-        biotipo = retorno;
+        return retorno;
     }
 
-    private String calculoContexturaHombre(double biotipoParametro) {
+    private String calculoContexturaHombre(float biotipoParametro) {
         String contexturaCalculada = null;
         System.out.println("entro al if de Masculino");
         if (biotipoParametro > 0) {
@@ -683,7 +674,7 @@ public class PacienteBean implements Serializable {
         return contexturaCalculada;
     }
 
-    private String calculoContexturaMujer(double biotipoParametro) {
+    private String calculoContexturaMujer(float biotipoParametro) {
         String contexturaCalculada = null;
         System.out.println("entro al if de Femenino");
         if (biotipoParametro > 0) {
@@ -714,27 +705,28 @@ public class PacienteBean implements Serializable {
         return edadCalculada;
     }
 
-    private void calcularPesoAjustado() {
-        if ((pesoActual != 0) && (pesoIdeal != 0)) {
-            pesoAjusta = (pesoActual - pesoIdeal) * 0.25 + pesoIdeal;
+    private float calcularPesoAjustado(float pesoActualParam, float pesoIdealParam) {
+        if ((pesoActualParam != 0) && (pesoIdealParam != 0)) {
             System.out.println("calcularPesoAjustado datos entrada - peso actual: " + pesoActual + " peso ideal: " + pesoIdeal + " peso ajustado: " + pesoAjusta);
-        
+            return (float) ((pesoActualParam - pesoIdealParam) * 0.25 + pesoIdealParam);        
         }
+        return 0;
     }
 
-    private void calcularPesoIdeal() {
+    private float calcularPesoIdeal(int edadParam, String sexoParam, int tallaParam, String biotipoParam) {
         System.out.println("calcularPesoIdeal datos entrada - edad: " + edad + " talla: " + talla + " cia. munheca: " + ciaMuneca + " sexo: " + sexo + " biotipo: " + biotipo);
         if (edad != 0 && sexo != null && talla != 0 && biotipo != null) {
-            pesoIdeal = manager.calcularPI(edad, sexo, talla, biotipo);
+            return (float) manager.calcularPI(edad, sexo, talla, biotipo);
         }
+        return 0;
     }
 
-    private void calcularPorcentajePesoIdeal() {
+    private float calcularPorcentajePesoIdeal(float pesoActualParam, float pesoIdealParam) {
         System.out.println("calcularPorcentajePesoIdeal datos entrada - peso actual: " + pesoActual + " peso ideal: " + pesoIdeal);
-        if ((pesoActual != 0) && (pesoIdeal != 0)) {
-            porcentajePesoIdeal = (pesoActual / pesoIdeal) * 100;
-            porcentajePesoIdealTipo = calcularTipoPorcentajePI();
+        if ((pesoActualParam != 0) && (pesoIdealParam != 0)) {
+            return (pesoActual / pesoIdeal) * 100;            
         }
+        return 0;
     }
 
     private String calcularTipoPorcentajePI() {
@@ -765,7 +757,6 @@ public class PacienteBean implements Serializable {
         apellido = null;
         sexo = "M";
         talla = 0;
-        meters = 0;
         estadoCivil = null;
         fechaNacimiento = null;
         pesoActual = 0;
@@ -811,5 +802,10 @@ public class PacienteBean implements Serializable {
         ciaCintura1 = 0;
         ciaCintura2 = 0;
         return null;
+    }
+
+    private float calcularImc(float pesoActualParam, Integer tallaParam) {
+        float meters = (float) tallaParam / 100;
+        return (float) (pesoActualParam / (Math.pow(meters, 2)));
     }
 }

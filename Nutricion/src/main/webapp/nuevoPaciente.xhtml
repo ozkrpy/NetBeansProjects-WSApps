@@ -78,22 +78,24 @@
                                 <h:panelGrid columns="4">
                                     <h:outputLabel value="Peso ideal: " for="pesoIdeal" />
                                     <h:outputText id="pesoIdeal" value="#{pacienteBean.pesoIdeal} Kg." style="font-style: italic">
-                                        <f:convertNumber pattern="#.00" />
+                                        <f:convertNumber pattern="###.##" />
                                     </h:outputText>
                                     <h:outputLabel value="Imc:" for="imc" />
                                     <h:outputText id="imc" value="#{pacienteBean.imc} (#{pacienteBean.imcTipo})" title="Imc" style="font-style: italic" >
-                                        <f:convertNumber type="currency" locale="en_US" />
+                                        <f:convertNumber pattern="###.##" />
                                     </h:outputText>
                                     <h:outputLabel value="Peso Ajustado:" for="pesoAjusta" />
                                     <h:outputText id="pesoAjusta" value="#{pacienteBean.pesoAjusta} Kg." title="PesoAjusta" style="font-style: italic" >
-                                        <f:convertNumber maxFractionDigits="2"/>
+                                        <f:convertNumber pattern="###.##" />
                                     </h:outputText>
                                     <h:outputLabel value="P.I.(%):" for="porcentajePesoIdeal" />
                                     <h:outputText id="porcentajePesoIdeal" value="#{pacienteBean.porcentajePesoIdeal} % #{pacienteBean.porcentajePesoIdealTipo}" title="PorcentajePesoIdeal" style="font-style: italic" >
-                                        <f:convertNumber pattern="#.00" />
+                                        <f:convertNumber pattern="###.##" />
                                     </h:outputText>
                                     <h:outputLabel value="Peso Saludable:" for="pesoSaludable" />
-                                    <h:outputText id="pesoSaludable" value="#{pacienteBean.pesoSaludable} Kg." title="PesoSaludable" style="font-style: italic" />
+                                    <h:outputText id="pesoSaludable" value="#{pacienteBean.pesoSaludable} Kg." title="PesoSaludable" style="font-style: italic" >
+                                        <f:convertNumber pattern="###.##" />
+                                    </h:outputText>
                                     <h:outputLabel value="Biotipo:" for="biotipo" />
                                     <h:outputText id="biotipo" value="Contextura #{pacienteBean.biotipo}" style="font-style: italic" /> 
                                 </h:panelGrid>

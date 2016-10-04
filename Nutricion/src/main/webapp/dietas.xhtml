@@ -19,10 +19,13 @@
                         <f:selectItems value="#{tablaAlimentosBean.listaDesplegablePacientes}" var="itemPaciente" itemLabel="#{itemPaciente.descripcionAlimento}" itemValue="#{itemPaciente.codigoAlimento}"/>
                         <f:ajax listener="#{tablaAlimentosBean.changeListenerCodigoPaciente}" 
                                 render="idPaciente" 
-                                execute="change" />
+                                execute="onClick" />
                     </h:selectOneMenu>
                 </h:panelGrid>
                 <h:commandLink action="nuevoPaciente" value="Agregar nuevo paciente." style="font-size: 10px"/>
+            </h:panelGrid>
+            <h:panelGrid columns="1">
+                
             </h:panelGrid>
 
         </h:form>

@@ -552,6 +552,8 @@ public class TablaAlimentosBean implements Serializable {
     public void changeListenerCodigoPaciente() {
         if (codigoPaciente != 0) {
                 System.out.println("Se cambio de paciente al numero: " + codigoPaciente);
+                listaDesplegablePacientes = managerBeanLocal.nombrePacientes();
+                
         }
     }
 
