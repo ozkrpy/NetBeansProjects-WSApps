@@ -18,14 +18,45 @@
                         <f:selectItem itemLabel="Seleccionar paciente." itemValue="0" />
                         <f:selectItems value="#{tablaAlimentosBean.listaDesplegablePacientes}" var="itemPaciente" itemLabel="#{itemPaciente.descripcionAlimento}" itemValue="#{itemPaciente.codigoAlimento}"/>
                         <f:ajax listener="#{tablaAlimentosBean.changeListenerCodigoPaciente}" 
-                                render="idPaciente" 
+                                render="@form" 
                                 execute="onClick" />
                     </h:selectOneMenu>
                 </h:panelGrid>
                 <h:commandLink action="nuevoPaciente" value="Agregar nuevo paciente." style="font-size: 10px"/>
             </h:panelGrid>
-            <h:panelGrid columns="1">
-                
+            <h:panelGrid id="datosDetallePaciente" columns="1" rendered="#{tablaAlimentosBean.codigoPaciente ne 0}">
+                <h:panelGrid columns="4" >
+                    <b>Nombre:</b> <h:outputText value="#{tablaAlimentosBean.paciente.nombre} #{tablaAlimentosBean.paciente.apellido}"/>
+                    <b>Edad:</b> <h:outputText value="#{tablaAlimentosBean.edad} años"/>
+                    <b>Peso actual:</b> <h:outputText value="#{tablaAlimentosBean.paciente.pesoActual} Kg." />
+                    <b>Peso ajustado:</b> <h:outputText value="#{tablaAlimentosBean.paciente.pesoAjusta} Kg." />
+                    <b>Peso ideal:</b> <h:outputText value="#{tablaAlimentosBean.paciente.pesoSaludable} Kg."/>
+                    <b>Peso Ideal (%):</b> 
+                    <h:panelGrid columns="2"> 
+                        <h:outputText value="#{tablaAlimentosBean.paciente.porcentajePesoIdeal}">
+                            <f:convertNumber pattern="###0.00" />
+                        </h:outputText>
+                        <h:outputText value="% (#{tablaAlimentosBean.tipoPorcentajePI})"/>
+                    </h:panelGrid>
+                    <b>IMC:</b> 
+                    <h:panelGrid columns="2"> 
+                        <h:outputText value="#{tablaAlimentosBean.paciente.imc}">
+                            <f:convertNumber pattern="###0.00" />
+                        </h:outputText>
+                        <h:outputText value="(#{tablaAlimentosBean.tipoImc})"/>
+                    </h:panelGrid>
+                    <b>Biotipo:</b> <h:outputText value="Contextura #{tablaAlimentosBean.paciente.biotipo}"/>
+                </h:panelGrid>
+                <h:panelGrid columns="4"> 
+                    <b>Antecedentes Cardiopatias:</b> <h:outputText value="#{tablaAlimentosBean.paciente.antecedenteCardiopatias ? 'SI' : 'NO'}" />
+                    <b>Antecedentes Diabetes:</b> <h:outputText value="#{tablaAlimentosBean.paciente.antecedenteDiabetes ? 'SI' : 'NO'}" />
+                    <b>Antecedentes Obesidad:</b> <h:outputText value="#{tablaAlimentosBean.paciente.antecedenteObesidad ? 'SI' : 'NO'}" />
+                    <b>Antecedentes HTA:</b> <h:outputText value="#{tablaAlimentosBean.paciente.antecedenteHta ? 'SI' : 'NO'}" />
+                </h:panelGrid>
+                <h:panelGrid columns="2"> 
+                    <b>Dx. Medico</b> <h:outputText value="#{tablaAlimentosBean.paciente.diagnosticoMedico}"/>
+                    <b>Dx. Nutricional</b> <h:outputText value="#{tablaAlimentosBean.paciente.diagnosticoNutricional}"/>
+                </h:panelGrid>
             </h:panelGrid>
 
         </h:form>
@@ -105,9 +136,6 @@
                         render="formularioDetalleDietaPAVB : formularioDetalleDietaNoPAVB : formularioCalculos : formularioAntropometria : nombrePaciente" 
                         execute="change" />
             </h:selectOneMenu>
-            <h:outputText value=" Paciente: " style="font-size: 10px"/>
-            <h:outputText id="nombrePaciente" value="#{tablaAlimentosBean.paciente.nombre} #{tablaAlimentosBean.paciente.apellido}" />
-            <br/>
             <h:outputText value="Cantidad: "/>
             <h:selectOneMenu value="#{tablaAlimentosBean.cantidadNuevoAlimentoPAVB}" style="font-size: 10px">
                 <f:selectItem itemLabel="Cantidad" itemValue="0" />

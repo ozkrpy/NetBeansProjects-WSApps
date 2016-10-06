@@ -65,7 +65,7 @@
                                 <p:inputText id="ciaMuneca" value="#{pacienteBean.ciaMuneca}" title="CiaMuneca" style="width: 30px; font-size: 10px">
                                     <f:ajax listener="#{pacienteBean.changeListenerCalculos}" 
                                             event="change" 
-                                            render="talla : pesoActual : ciaMuneca : imc : imcTipo : biotipo : pesoIdeal : pesoAjusta : porcentajePesoIdeal : porcentajePITipo : pesoSaludable" />
+                                            render="talla : pesoActual : ciaMuneca : imc : imcTipo : biotipo : pesoIdeal : pesoAjusta : porcentajePesoIdeal : porcentajePITipo : pesoSaludable : outputTipoImc" />
                                 </p:inputText>
                                 <h:outputLabel value="Cia. Brazo (cm):" for="ciaBrazo" />
                                 <p:inputText id="ciaBrazo" value="#{pacienteBean.ciaBrazo}" title="CiaBrazo" style="width: 30px; font-size: 10px" />
@@ -76,26 +76,47 @@
                             </h:panelGrid>
                             <h:panelGrid columns="2">
                                 <h:panelGrid columns="4">
+
                                     <h:outputLabel value="Peso ideal: " for="pesoIdeal" />
-                                    <h:outputText id="pesoIdeal" value="#{pacienteBean.pesoIdeal} Kg." style="font-style: italic">
-                                        <f:convertNumber pattern="###.##" />
-                                    </h:outputText>
+                                    <h:panelGrid columns="2">
+                                        <h:outputText id="pesoIdeal" value="#{pacienteBean.pesoIdeal}" style="font-style: italic">
+                                            <f:convertNumber pattern="###.##" />
+                                        </h:outputText>
+                                        <h:outputText value="Kg."/>
+                                    </h:panelGrid>
+
                                     <h:outputLabel value="Imc:" for="imc" />
-                                    <h:outputText id="imc" value="#{pacienteBean.imc} (#{pacienteBean.imcTipo})" title="Imc" style="font-style: italic" >
-                                        <f:convertNumber pattern="###.##" />
-                                    </h:outputText>
+                                    <h:panelGrid columns="2">
+                                        <h:outputText id="imc" value="#{pacienteBean.imc}" title="Imc" style="font-style: italic" >
+                                            <f:convertNumber pattern="###.##" />
+                                        </h:outputText>
+                                        <h:outputText value="(#{pacienteBean.imcTipo})" />
+                                    </h:panelGrid>
+
                                     <h:outputLabel value="Peso Ajustado:" for="pesoAjusta" />
-                                    <h:outputText id="pesoAjusta" value="#{pacienteBean.pesoAjusta} Kg." title="PesoAjusta" style="font-style: italic" >
-                                        <f:convertNumber pattern="###.##" />
-                                    </h:outputText>
+                                    <h:panelGrid columns="2">
+                                        <h:outputText id="pesoAjusta" value="#{pacienteBean.pesoAjusta}" title="PesoAjusta" style="font-style: italic" >
+                                            <f:convertNumber pattern="###.##" />
+                                        </h:outputText>
+                                        <h:outputText value="Kg."/>
+                                    </h:panelGrid>
+
                                     <h:outputLabel value="P.I.(%):" for="porcentajePesoIdeal" />
-                                    <h:outputText id="porcentajePesoIdeal" value="#{pacienteBean.porcentajePesoIdeal} % #{pacienteBean.porcentajePesoIdealTipo}" title="PorcentajePesoIdeal" style="font-style: italic" >
-                                        <f:convertNumber pattern="###.##" />
-                                    </h:outputText>
+                                    <h:panelGrid columns="2">
+                                        <h:outputText id="porcentajePesoIdeal" value="#{pacienteBean.porcentajePesoIdeal}" title="PorcentajePesoIdeal" style="font-style: italic" >
+                                            <f:convertNumber pattern="###.##" />
+                                        </h:outputText>
+                                        <h:outputText value="% (#{pacienteBean.porcentajePesoIdealTipo})"/>
+                                    </h:panelGrid>
+
                                     <h:outputLabel value="Peso Saludable:" for="pesoSaludable" />
-                                    <h:outputText id="pesoSaludable" value="#{pacienteBean.pesoSaludable} Kg." title="PesoSaludable" style="font-style: italic" >
-                                        <f:convertNumber pattern="###.##" />
-                                    </h:outputText>
+                                    <h:panelGrid columns="2">
+                                        <h:outputText id="pesoSaludable" value="#{pacienteBean.pesoSaludable}" title="PesoSaludable" style="font-style: italic" >
+                                            <f:convertNumber pattern="###.##" />
+                                        </h:outputText>
+                                        <h:outputText value="Kg."/>
+                                    </h:panelGrid>
+
                                     <h:outputLabel value="Biotipo:" for="biotipo" />
                                     <h:outputText id="biotipo" value="Contextura #{pacienteBean.biotipo}" style="font-style: italic" /> 
                                 </h:panelGrid>
@@ -129,45 +150,155 @@
                         <h1><h:outputText value="Datos Laboratoriales"/></h1>
                         <h:panelGrid columns="10">
                             <h:outputLabel value="GlicemiaBasal:" for="GlicemiaBasal" />
-                            <p:inputText id="GlicemiaBasal" value="#{pacienteBean.laboratorioGlicemiaBasal}" title="GlicemiaBasal" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="GlicemiaBasal" value="#{pacienteBean.laboratorioGlicemiaBasal}" title="GlicemiaBasal" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioGlicemiaBasal(pacienteBean.laboratorioGlicemiaBasal)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="mg/dl" />
+                            </h:panelGrid>
+
                             <h:outputLabel value="Creatinina:" for="Creatinina" />
-                            <p:inputText id="Creatinina" value="#{pacienteBean.laboratorioCreatinina}" title="Creatinina" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Creatinina" value="#{pacienteBean.laboratorioCreatinina}" title="Creatinina" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioCreatinina(pacienteBean.laboratorioCreatinina)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="Creatinina" />
+                                </p:inputText>
+                                <h:outputText value="mg/dl" />
+                            </h:panelGrid>
+
                             <h:outputLabel value="ProteinasTotales:" for="ProteinasTotales" />
-                            <p:inputText id="ProteinasTotales" value="#{pacienteBean.laboratorioProteinasTotales}" title="ProteinasTotales" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="ProteinasTotales" value="#{pacienteBean.laboratorioProteinasTotales}" title="ProteinasTotales" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioProteinasTotales(pacienteBean.laboratorioProteinasTotales)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="mg/dl" />
+                            </h:panelGrid>
+
                             <h:outputLabel value="Urea:" for="Urea" />
-                            <p:inputText id="Urea" value="#{pacienteBean.laboratorioUrea}" title="Urea" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Urea" value="#{pacienteBean.laboratorioUrea}" title="Urea" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioUrea(pacienteBean.laboratorioUrea)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="mg/dl" />
+                            </h:panelGrid>
+
                             <h:outputLabel value="AcidoUrico:" for="AcidoUrico" />
-                            <p:inputText id="AcidoUrico" value="#{pacienteBean.laboratorioAcidoUrico}" title="AcidoUrico" style="width: 25px; ont-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="AcidoUrico" value="#{pacienteBean.laboratorioAcidoUrico}" title="AcidoUrico" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioAcidoUrico(pacienteBean.laboratorioAcidoUrico, pacienteBean.sexo)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="Gramos/24hs" />
+                            </h:panelGrid>
+
                             <h:outputLabel value="Proteinuria:" for="Proteinuria" />
-                            <p:inputText id="Proteinuria" value="#{pacienteBean.laboratorioProteinuria}" title="Proteinuria" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Proteinuria" value="#{pacienteBean.laboratorioProteinuria}" title="Proteinuria" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioProteinuria(pacienteBean.laboratorioProteinuria)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="" />
+                            </h:panelGrid>
+
                             <h:outputLabel value="Albumina:" for="Albumina" />
-                            <p:inputText id="Albumina" value="#{pacienteBean.laboratorioAlbumina}" title="Albumina" style="width: 25px; ont-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Albumina" value="#{pacienteBean.laboratorioAlbumina}" title="Albumina" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioAlbumina(pacienteBean.laboratorioAlbumina)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="gramos %" />
+                            </h:panelGrid>
+
                             <h:outputLabel value="Triglicerios:" for="Triglicerios" />
-                            <p:inputText id="Triglicerios" value="#{pacienteBean.laboratorioTriglicerios}" title="Triglicerios" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Triglicerios" value="#{pacienteBean.laboratorioTriglicerios}" title="Triglicerios" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioTriglicerios(pacienteBean.laboratorioTriglicerios)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="mg/dl" />
+                            </h:panelGrid>
+
                             <h:outputLabel value="ColesterolTotal:" for="ColesterolTotal" />
-                            <p:inputText id="ColesterolTotal" value="#{pacienteBean.laboratorioColesterolTotal}" title="ColesterolTotal" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="ColesterolTotal" value="#{pacienteBean.laboratorioColesterolTotal}" title="ColesterolTotal" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioColesterolTotal(pacienteBean.laboratorioColesterolTotal)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="mg/dl" />
+                            </h:panelGrid>
+
                             <h:outputLabel value="Ldl:" for="Ldl" />
-                            <p:inputText id="Ldl" value="#{pacienteBean.laboratorioLdl}" title="Ldl" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Ldl" value="#{pacienteBean.laboratorioLdl}" title="Ldl" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioLdl(pacienteBean.laboratorioLdl)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="mg/dl" />
+                            </h:panelGrid>
                             <h:outputLabel value="Hdl:" for="Hdl" />
-                            <p:inputText id="Hdl" value="#{pacienteBean.laboratorioHdl}" title="Hdl" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Hdl" value="#{pacienteBean.laboratorioHdl}" title="Hdl" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioHdl(pacienteBean.laboratorioHdl)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="mg/dl" />
+                            </h:panelGrid>
                             <h:outputLabel value="Glucosa:" for="Glucosa" />
-                            <p:inputText id="Glucosa" value="#{pacienteBean.laboratorioGlucosa}" title="Glucosa" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Glucosa" value="#{pacienteBean.laboratorioGlucosa}" title="Glucosa" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioGlucosa(pacienteBean.laboratorioGlucosa)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="mg/24hs" />
+                            </h:panelGrid>
                             <h:outputLabel value="Hb:" for="Hb" />
-                            <p:inputText id="Hb" value="#{pacienteBean.laboratorioHb}" title="Hb" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Hb" value="#{pacienteBean.laboratorioHb}" title="Hb" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioHb(pacienteBean.laboratorioHb, pacienteBean.sexo)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="gramos/100ml" />
+                            </h:panelGrid>
                             <h:outputLabel value="Hematocrito:" for="Hematocrito" />
-                            <p:inputText id="Hematocrito" value="#{pacienteBean.laboratorioHematocrito}" title="Hematocrito" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Hematocrito" value="#{pacienteBean.laboratorioHematocrito}" title="Hematocrito" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioHematocrito(pacienteBean.laboratorioHematocrito, pacienteBean.sexo)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="%" />
+                            </h:panelGrid>
                             <h:outputLabel value="GlobulosRojos:" for="GlobulosRojos" />
-                            <p:inputText id="GlobulosRojos" value="#{pacienteBean.laboratorioGlobulosRojos}" title="GlobulosRojos" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="GlobulosRojos" value="#{pacienteBean.laboratorioGlobulosRojos}" title="GlobulosRojos" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioGlobulosRojos(pacienteBean.laboratorioGlobulosRojos, pacienteBean.sexo)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="millones x mm3" />
+                            </h:panelGrid>
+
                             <h:outputLabel value="Potasio:" for="Potasio" />
-                            <p:inputText id="Potasio" value="#{pacienteBean.laboratorioPotasio}" title="Potasio" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Potasio" value="#{pacienteBean.laboratorioPotasio}" title="Potasio" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioPotasio(pacienteBean.laboratorioPotasio)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="mEq/l" />
+                            </h:panelGrid>
                             <h:outputLabel value="Ci:" for="Ci" />
-                            <p:inputText id="Ci" value="#{pacienteBean.laboratorioCi}" title="Ci" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Ci" value="#{pacienteBean.laboratorioCi}" title="Ci" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioCi(pacienteBean.laboratorioCi)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="mEq/l" />
+                            </h:panelGrid>
                             <h:outputLabel value="Na:" for="Na" />
-                            <p:inputText id="Na" value="#{pacienteBean.laboratorioNa}" title="Na" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Na" value="#{pacienteBean.laboratorioNa}" title="Na" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioNa(pacienteBean.laboratorioNa)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="mEq/l" />
+                            </h:panelGrid>
                             <h:outputLabel value="GlobulosBlancos:" for="GlobulosBlancos" />
-                            <p:inputText id="GlobulosBlancos" value="#{pacienteBean.laboratorioGlobulosBlancos}" title="GlobulosBlancos" style="width: 25px; ont-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="GlobulosBlancos" value="#{pacienteBean.laboratorioGlobulosBlancos}" title="GlobulosBlancos" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioGlobulosBlancos(pacienteBean.laboratorioGlobulosBlancos)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="" />
+                            </h:panelGrid>
                             <h:outputLabel value="Hba:" for="Hba" />
-                            <p:inputText id="Hba" value="#{pacienteBean.laboratorioHba}" title="Hba" style="width: 25px; font-size: 10px" />
+                            <h:panelGrid columns="2">
+                                <p:inputText id="Hba" value="#{pacienteBean.laboratorioHba}" title="Hba" style="width: 25px; font-size: 10px; #{datosLaboratorialesBean.laboratorioHba(pacienteBean.laboratorioHba)}" >
+                                    <f:ajax listener="#{pacienteBean.changeListenerLaboratorio}" event="change" render="GlicemiaBasal" />
+                                </p:inputText>
+                                <h:outputText value="" />
+                            </h:panelGrid>
                         </h:panelGrid>
                         <h:commandButton action="#{pacienteBean.guardarDatos}" value="Registrar Paciente" type="submit"/>
                         <h:commandButton action="#{pacienteBean.cancelar}" value="Volver"/>

@@ -16,7 +16,13 @@ import entities.ReferenciasDieta;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -64,8 +70,9 @@ public class TablaAlimentosBean implements Serializable {
     private boolean mostrarFormularioPaciente;
     private boolean mostrarFormularioCalculo;
     private boolean mostrarFormularioAlimentos;
-    
-    
+    private int edad;
+    private String tipoImc;
+    private String tipoPorcentajePI;
 
     /**
      * CAMPOS PARA CALCULOS
@@ -89,7 +96,7 @@ public class TablaAlimentosBean implements Serializable {
     private double minFibra;
     private double maxFibra;
     private double kcalFibra;
-    
+
     @EJB
     private ManagerBeanLocal managerBeanLocal;
 
@@ -479,7 +486,31 @@ public class TablaAlimentosBean implements Serializable {
     public void setNumeroItemDieta(int numeroItemDieta) {
         this.numeroItemDieta = numeroItemDieta;
     }
-    
+
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edad) {
+        this.edad = edad;
+    }
+
+    public String getTipoImc() {
+        return tipoImc;
+    }
+
+    public void setTipoImc(String tipoImc) {
+        this.tipoImc = tipoImc;
+    }
+
+    public String getTipoPorcentajePI() {
+        return tipoPorcentajePI;
+    }
+
+    public void setTipoPorcentajePI(String tipoPorcentajePI) {
+        this.tipoPorcentajePI = tipoPorcentajePI;
+    }
+
     /**
      * METHODS
      */
@@ -544,17 +575,38 @@ public class TablaAlimentosBean implements Serializable {
 
     public void changeListenerCodigoDieta() {
         if (codigoDieta != 0) {
-                actualizaListaAlimentos(codigoDieta);
-                paciente = managerBeanLocal.detallePaciente(codigoPaciente);
+            actualizaListaAlimentos(codigoDieta);
+
         }
     }
 
     public void changeListenerCodigoPaciente() {
         if (codigoPaciente != 0) {
-                System.out.println("Se cambio de paciente al numero: " + codigoPaciente);
-                listaDesplegablePacientes = managerBeanLocal.nombrePacientes();
-                
+            listaDesplegablePacientes = managerBeanLocal.nombrePacientes();
+            paciente = managerBeanLocal.detallePaciente(codigoPaciente);
+            System.out.println("Se cambio de paciente al numero: " + codigoPaciente + " detalles: " + paciente.getFechaNacimiento());
+            edad = calcularEdad(paciente.getFechaNacimiento());
+            tipoImc = calcularTipoImc(paciente.getImc());
+            tipoPorcentajePI = calcularTipoPorcentajePI(paciente.getPorcentajePesoIdeal());
+
         }
+    }
+
+    private int calcularEdad(Date fechaNacimiento) {
+        Instant instant = Instant.ofEpochMilli(fechaNacimiento.getTime());
+        
+        int edadCalculada = 0;
+        
+        LocalDate birthDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
+        LocalDate currentDate = LocalDate.now();
+        
+        System.out.println("birthDate: " + birthDate.toString());
+        System.out.println("currentDate: " + currentDate.toString());
+
+        edadCalculada = Period.between(birthDate, currentDate).getYears();
+        System.out.println("edad: " + edadCalculada);
+
+        return edadCalculada;
     }
 
     public boolean cambiaColorHCmin() {
@@ -686,5 +738,50 @@ public class TablaAlimentosBean implements Serializable {
         kcalProteina = sumatoriaProteina * 4;
         kcalGrasa = sumatoriaGrasa * 9;
         kcalFibra = kcalGrasa + kcalHC + kcalProteina;
+    }
+    
+    private String calcularTipoImc(float imcParam) {
+        String tipo;
+        if (imcParam < 18.5) {
+            tipo = "Delgadez";
+        } else if ((imcParam >= 18.5) && (imcParam <= 24.9)) {
+            tipo = "Normal o sano";
+        } else if ((imcParam >= 25) && (imcParam <= 29.9)) {
+            tipo = "Sobrepeso";
+        } else if ((imcParam >= 30) && (imcParam <= 34.9)) {
+            tipo = "Obesidad Grado I";
+        } else if ((imcParam >= 35) && (imcParam <= 39.9)) {
+            tipo = "Obesidad Grado II";
+        } else if (imcParam >= 40) {
+            tipo = "Obesidad morbida";
+        } else {
+            tipo = " ";
+        }
+        System.out.println("calcularTipoImc " + tipo);
+        return tipo;
+        
+    }
+    
+    private String calcularTipoPorcentajePI(float porcentajePesoIdeal) {
+        System.out.println("calcularPorcentajePesoIdeal datos entrada - porcentaje peso ideal: " + porcentajePesoIdeal);
+        String retorno = "No calculado";
+        if (porcentajePesoIdeal > 180) {
+            retorno = "Obesidad morbida";
+        } else if (porcentajePesoIdeal >= 140 && porcentajePesoIdeal <= 179) {
+            retorno = "Obesidad II";
+        } else if (porcentajePesoIdeal >= 120 && porcentajePesoIdeal <= 139) {
+            retorno = "Obesidad I";
+        } else if (porcentajePesoIdeal >= 110 && porcentajePesoIdeal <= 119) {
+            retorno = "Sobrepeso";
+        } else if (porcentajePesoIdeal >= 90 && porcentajePesoIdeal <= 109) {
+            retorno = "Normal";
+        } else if (porcentajePesoIdeal >= 84 && porcentajePesoIdeal <= 89) {
+            retorno = "Desnutricion leve";
+        } else if (porcentajePesoIdeal >= 75 && porcentajePesoIdeal <= 84) {
+            retorno = "Desnutricion moderada";
+        } else if (porcentajePesoIdeal < 75) {
+            retorno = "Desnutricion severa";
+        }
+        return retorno;
     }
 }

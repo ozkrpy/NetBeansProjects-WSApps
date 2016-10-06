@@ -635,7 +635,7 @@ public class PacienteBean implements Serializable {
     }
 
     private String calcularBiotipo(int edadParam, int tallaParam, float ciaMunecaParam, String sexoParam) {
-        String contextura = "no calculada (Menor a 25 años)";
+        String contextura = "N/C (Menor a 25 años)";
         if (edadParam >= 25) {
             System.out.println("entro al if de mayor a 25");
             float biotipoCalculado;
@@ -807,5 +807,10 @@ public class PacienteBean implements Serializable {
     private float calcularImc(float pesoActualParam, Integer tallaParam) {
         float meters = (float) tallaParam / 100;
         return (float) (pesoActualParam / (Math.pow(meters, 2)));
+    }
+    
+    public void changeListenerLaboratorio() {
+        
+        System.out.println("cambio valor laboratorio glicemia basal " + laboratorioGlicemiaBasal);
     }
 }
