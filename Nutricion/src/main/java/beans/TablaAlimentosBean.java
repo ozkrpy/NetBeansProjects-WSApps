@@ -508,18 +508,15 @@ public class TablaAlimentosBean implements Serializable {
     public void changeListenerCodigoDieta() {
         if (codigoDieta != 0) {
             actualizaListaAlimentos(codigoDieta);
-
+            cargarDatosPaciente();
         }
     }
 
     public void changeListenerCodigoPaciente() {
         if (codigoPaciente != 0) {
             listaDesplegablePacientes = managerBeanLocal.nombrePacientes();
-            paciente = managerBeanLocal.detallePaciente(codigoPaciente);
-            //System.out.println("Se cambio de paciente al numero: " + codigoPaciente + " detalles: " + paciente.getFechaNacimiento());
-            edad = calcularEdad(paciente.getFechaNacimiento());
-            tipoImc = calcularTipoImc(paciente.getImc());
-            tipoPorcentajePI = calcularTipoPorcentajePI(paciente.getPorcentajePesoIdeal());
+            cargarDatosPaciente();
+            resetAllValues();
         }
         cargarListaDietas();
     }
@@ -784,6 +781,15 @@ public class TablaAlimentosBean implements Serializable {
             listaDesplegableDietas = managerBeanLocal.listadoDietas();
         } else {
             listaDesplegableDietas = managerBeanLocal.dietasPorPaciente(codigoPaciente);
+        }
+    }
+
+    private void cargarDatosPaciente() {
+        if (codigoPaciente != 0) {
+            paciente = managerBeanLocal.detallePaciente(codigoPaciente);
+            edad = calcularEdad(paciente.getFechaNacimiento());
+            tipoImc = calcularTipoImc(paciente.getImc());
+            tipoPorcentajePI = calcularTipoPorcentajePI(paciente.getPorcentajePesoIdeal());
         }
     }
 }

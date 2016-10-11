@@ -18,7 +18,7 @@
                         <f:selectItem itemLabel="Seleccionar paciente." itemValue="0" />
                         <f:selectItems value="#{tablaAlimentosBean.listaDesplegablePacientes}" var="itemPaciente" itemLabel="#{itemPaciente.descripcionAlimento}" itemValue="#{itemPaciente.codigoAlimento}"/>
                         <f:ajax listener="#{tablaAlimentosBean.changeListenerCodigoPaciente}" 
-                                render="formularioAntropometria : idDieta" 
+                                render="formularioAntropometria : idDieta : formularioDetalleDietaPAVB : formularioDetalleDietaNoPAVB" 
                                 execute="onClick" />
                     </h:selectOneMenu>
                 </h:panelGrid>
