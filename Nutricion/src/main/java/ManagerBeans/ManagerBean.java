@@ -100,6 +100,15 @@ public class ManagerBean implements ManagerBeanLocal {
         List recuperaDietas = em.createNamedQuery("Dieta.findAllCodigoDieta").getResultList();
         System.out.println("manager recuepero datos: " + recuperaDietas);
         return recuperaDietas;
+    } 
+
+    @Override
+    public List dietasPorPaciente(int codigoPaciente) {
+        System.out.println("Ingreso al MANAGERBEAN dietasPorPaciente");
+        //@NamedQuery(name = "Dieta.findAllCodigoDieta", query = "SELECT DISTINCT(d.dietaPK.codigoDieta) FROM Dieta d ORDER BY d.dietaPK.codigoDieta"),
+        List recuperaDietas = em.createNamedQuery("Dieta.findAllByCodigoPaciente").setParameter("codigoPaciente", codigoPaciente).getResultList();
+        System.out.println("manager recuepero datos: " + recuperaDietas);
+        return recuperaDietas;
     }
 
     @Override

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportTest" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ad1d82e-d48b-46f5-9526-357e1e1b8e94">
+	<property name="ireport.zoom" value="2.357947691000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString>
+		<![CDATA[SELECT
+     paciente.`codigo_paciente` AS paciente_codigo_paciente,
+     paciente.`nombre` AS paciente_nombre,
+     paciente.`apellido` AS paciente_apellido,
+     paciente.`sexo` AS paciente_sexo,
+     paciente.`talla` AS paciente_talla,
+     paciente.`estado_civil` AS paciente_estado_civil,
+     paciente.`fecha_nacimiento` AS paciente_fecha_nacimiento,
+     paciente.`peso_actual` AS paciente_peso_actual,
+     paciente.`peso_habitual` AS paciente_peso_habitual,
+     paciente.`peso_ajusta` AS paciente_peso_ajusta,
+     paciente.`peso_saludable` AS paciente_peso_saludable,
+     paciente.`porcentaje_peso_ideal` AS paciente_porcentaje_peso_ideal,
+     paciente.`imc` AS paciente_imc
+FROM
+     `paciente` paciente]]>
+	</queryString>
+	<field name="paciente_codigo_paciente" class="java.lang.Integer"/>
+	<field name="paciente_nombre" class="java.lang.String"/>
+	<field name="paciente_apellido" class="java.lang.String"/>
+	<field name="paciente_sexo" class="java.lang.String"/>
+	<field name="paciente_talla" class="java.lang.Integer"/>
+	<field name="paciente_estado_civil" class="java.lang.String"/>
+	<field name="paciente_fecha_nacimiento" class="java.sql.Date"/>
+	<field name="paciente_peso_actual" class="java.lang.Double"/>
+	<field name="paciente_peso_habitual" class="java.lang.Double"/>
+	<field name="paciente_peso_ajusta" class="java.lang.Double"/>
+	<field name="paciente_peso_saludable" class="java.lang.Double"/>
+	<field name="paciente_porcentaje_peso_ideal" class="java.lang.Double"/>
+	<field name="paciente_imc" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="-20" y="0" width="595" height="64" uuid="a160c0d5-dbb2-41be-8fa2-ab3b9fe5df99"/>
+				<imageExpression><![CDATA["wood.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="5" width="263" height="33" uuid="c22ee153-83d2-42ec-aa49-615827a0175a"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Wood Title]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="63" y="39" width="200" height="22" forecolor="#FFFFFF" uuid="02f7d2ac-e11f-4495-b27f-6f53181c350b"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Wood SubTitle]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="2645cce8-2ce9-44f8-8d3a-0af84f243910"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="19" width="15" height="15" uuid="ab5ef58e-6d08-4f0e-ae22-f57cbb34b5f6"/>
+				<text><![CDATA[paciente_codigo_paciente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="15" y="19" width="48" height="15" uuid="cad3cd3b-9c64-4e24-86e5-d5295efb0922"/>
+				<text><![CDATA[paciente_nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="63" y="19" width="45" height="15" uuid="88e83683-7c46-41de-93b8-5d0d6cc11963"/>
+				<text><![CDATA[paciente_apellido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="108" y="19" width="57" height="15" uuid="44a1cde1-49bb-4dd3-813d-fde0cbf72caa"/>
+				<text><![CDATA[paciente_sexo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="165" y="19" width="66" height="15" uuid="873f9f01-adec-43d4-9f9a-9badf3f390fe"/>
+				<text><![CDATA[paciente_talla]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="231" y="19" width="64" height="15" uuid="9b7c0624-bfc0-4f89-bf1e-62b3bccb47d2"/>
+				<text><![CDATA[paciente_estado_civil]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="295" y="19" width="72" height="15" uuid="8d245f35-4fe8-437c-8324-2d0289c8e117"/>
+				<text><![CDATA[paciente_fecha_nacimiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="367" y="19" width="66" height="15" uuid="32c01df4-eeeb-4b7f-a4a2-60f01f5536a3"/>
+				<text><![CDATA[paciente_peso_actual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="433" y="19" width="68" height="15" uuid="79824d83-5e45-459d-b388-81aa159a6304"/>
+				<text><![CDATA[paciente_peso_habitual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="501" y="19" width="52" height="15" uuid="b2432865-0d8a-401b-9503-9dc1659f9fae"/>
+				<text><![CDATA[paciente_peso_ajusta]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="08872c75-69b9-4ee4-8759-de388d67642a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="Detail" x="0" y="0" width="12" height="15" uuid="141c2845-f589-4290-8f17-84cbda5722e9"/>
+				<textFieldExpression><![CDATA[$F{paciente_codigo_paciente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="12" y="0" width="51" height="15" uuid="ef957b19-66ba-4e3d-84c8-75005dee9b6b"/>
+				<textFieldExpression><![CDATA[$F{paciente_nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="63" y="0" width="45" height="15" uuid="1ebdcb83-1939-4f0c-9690-e5c4a893acd9"/>
+				<textFieldExpression><![CDATA[$F{paciente_apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="108" y="0" width="57" height="15" uuid="c8c8e752-bccf-4077-9af6-1952f1582e79"/>
+				<textFieldExpression><![CDATA[$F{paciente_sexo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="165" y="0" width="66" height="15" uuid="2a2502f5-b113-4ee5-bb50-798ea833691c"/>
+				<textFieldExpression><![CDATA[$F{paciente_talla}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="231" y="0" width="64" height="15" uuid="3821f5bd-9b38-451c-86c0-3852406b8e60"/>
+				<textFieldExpression><![CDATA[$F{paciente_estado_civil}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="295" y="0" width="72" height="15" uuid="50831b22-783c-48e6-8f59-4adc80da0aa0"/>
+				<textFieldExpression><![CDATA[$F{paciente_fecha_nacimiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="367" y="0" width="66" height="15" uuid="0236418d-225c-4424-bc0d-6bdd31f32c5e"/>
+				<textFieldExpression><![CDATA[$F{paciente_peso_actual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="501" y="0" width="52" height="15" uuid="e1a923b0-73d3-4262-944a-2901dae3d982"/>
+				<textFieldExpression><![CDATA[$F{paciente_peso_ajusta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="433" y="0" width="68" height="15" uuid="4d3a7019-6f95-4f46-bb9a-fc5b426186c4"/>
+				<textFieldExpression><![CDATA[$F{paciente_peso_habitual}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="5b41445d-fb19-4bd1-825c-bf70830d818d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="1e1440a2-1fa8-419c-8a32-b5cc7391f697"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="f50773aa-8abf-4fe3-9aa1-1f9cbaa9d176"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="b5d4e71c-53f0-4c32-85fa-0c43f6b97d73"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
