@@ -505,6 +505,25 @@ public class TablaAlimentosBean implements Serializable {
     /**
      * METHODS
      */
+    public void changeListenerCodigoDieta() {
+        if (codigoDieta != 0) {
+            actualizaListaAlimentos(codigoDieta);
+
+        }
+    }
+
+    public void changeListenerCodigoPaciente() {
+        if (codigoPaciente != 0) {
+            listaDesplegablePacientes = managerBeanLocal.nombrePacientes();
+            paciente = managerBeanLocal.detallePaciente(codigoPaciente);
+            //System.out.println("Se cambio de paciente al numero: " + codigoPaciente + " detalles: " + paciente.getFechaNacimiento());
+            edad = calcularEdad(paciente.getFechaNacimiento());
+            tipoImc = calcularTipoImc(paciente.getImc());
+            tipoPorcentajePI = calcularTipoPorcentajePI(paciente.getPorcentajePesoIdeal());
+        }
+        cargarListaDietas();
+    }
+
     public String agregarAlimentoDieta() {
         System.out.println("invoco agregarAlimentoDieta para dieta: " + codigoDieta + " codigo Alimento seleccionado: " + codigoAlimentoSeleccionado + " cantidad: " + cantidadNuevoAlimentoPAVB + " paciente: " + codigoPaciente);
         if (codigoAlimentoSeleccionado != 0 && cantidadNuevoAlimentoPAVB != 0 && codigoPaciente != 0) {
@@ -512,7 +531,8 @@ public class TablaAlimentosBean implements Serializable {
             numeroItemDieta = managerBeanLocal.siguienteItem(codigoDieta);
             int codigoDietaAfterInsert = managerBeanLocal.agregarAlimentoDieta(codigoDieta, numeroItemDieta, codigoAlimentoSeleccionado, cantidadNuevoAlimentoPAVB, codigoPaciente);
             codigoDieta = codigoDietaAfterInsert;
-            listaDesplegableDietas = managerBeanLocal.listadoDietas();
+            //listaDesplegableDietas = managerBeanLocal.listadoDietas();
+            cargarListaDietas();
             changeListenerCodigoDieta();
         }
         return null;
@@ -521,7 +541,7 @@ public class TablaAlimentosBean implements Serializable {
     private void actualizaListaAlimentos(int codigoDieta) {
         //CONSULTA LA TABLA DE DIETA Y RECUPERA LOS ITEMS PARA MOSTRAR DE ACUERDO A LA CANTIDAD
         double cantidadAlimentoDieta;
- 
+
         resetAllValues();
         List<Dieta> recuperaDietasPorCodigo = managerBeanLocal.detalleDieta(codigoDieta);
         for (Dieta detalle : recuperaDietasPorCodigo) {
@@ -554,35 +574,14 @@ public class TablaAlimentosBean implements Serializable {
         }
     }
 
-    public void changeListenerCodigoDieta() {
-        if (codigoDieta != 0) {
-            actualizaListaAlimentos(codigoDieta);
-
-        }
-    }
-
-    public void changeListenerCodigoPaciente() {
-        if (codigoPaciente != 0) {
-            listaDesplegablePacientes = managerBeanLocal.nombrePacientes();
-            paciente = managerBeanLocal.detallePaciente(codigoPaciente);
-            //System.out.println("Se cambio de paciente al numero: " + codigoPaciente + " detalles: " + paciente.getFechaNacimiento());
-            edad = calcularEdad(paciente.getFechaNacimiento());
-            tipoImc = calcularTipoImc(paciente.getImc());
-            tipoPorcentajePI = calcularTipoPorcentajePI(paciente.getPorcentajePesoIdeal());
-            listaDesplegableDietas = managerBeanLocal.dietasPorPaciente(codigoPaciente);
-        } else {
-            listaDesplegableDietas = managerBeanLocal.listadoDietas();
-        }
-    }
-
     private int calcularEdad(Date fechaNacimiento) {
         Instant instant = Instant.ofEpochMilli(fechaNacimiento.getTime());
-        
+
         int edadCalculada = 0;
-        
+
         LocalDate birthDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
         LocalDate currentDate = LocalDate.now();
-        
+
         edadCalculada = Period.between(birthDate, currentDate).getYears();
         //System.out.println("edad: " + edadCalculada);
 
@@ -677,7 +676,7 @@ public class TablaAlimentosBean implements Serializable {
         System.out.println("TABLAALIMENTODIETA borrarAlimentoDieta con datos, codigoDieta: " + codigoDietaBorrar + ", numeroItem: " + numeroItemDietaBorrar);
         managerBeanLocal.borrarAlimentoDieta(codigoDietaBorrar, numeroItemDietaBorrar);
         actualizaListaAlimentos(codigoDieta);
-        listaDesplegableDietas = managerBeanLocal.listadoDietas();
+        cargarListaDietas();
     }
 
     public String seleccionarAlimentoDieta(DatosDieta dietaSeleccionada) {
@@ -719,7 +718,7 @@ public class TablaAlimentosBean implements Serializable {
         kcalGrasa = sumatoriaGrasa * 9;
         kcalFibra = kcalGrasa + kcalHC + kcalProteina;
     }
-    
+
     private String calcularTipoImc(float imcParam) {
         String tipo;
         if (imcParam < 18.5) {
@@ -738,9 +737,9 @@ public class TablaAlimentosBean implements Serializable {
             tipo = " ";
         }
         return tipo;
-        
+
     }
-    
+
     private String calcularTipoPorcentajePI(float porcentajePesoIdeal) {
         String retorno = "No calculado";
         if (porcentajePesoIdeal > 180) {
@@ -778,5 +777,13 @@ public class TablaAlimentosBean implements Serializable {
         kcalFibra = 0;
         tablaAlimentos.removeAll(tablaAlimentos);
         tablaAlimentosNoPAVB.removeAll(tablaAlimentosNoPAVB);
+    }
+
+    private void cargarListaDietas() {
+        if (codigoPaciente == 0) {
+            listaDesplegableDietas = managerBeanLocal.listadoDietas();
+        } else {
+            listaDesplegableDietas = managerBeanLocal.dietasPorPaciente(codigoPaciente);
+        }
     }
 }
