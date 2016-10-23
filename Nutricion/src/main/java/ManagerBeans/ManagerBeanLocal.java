@@ -34,5 +34,6 @@ public interface ManagerBeanLocal {
     Paciente detallePaciente(int codigoPaciente);
     void registrarPaciente(Paciente nuevo);
     double calcularPI(int edad, String sexo, int talla, String biotipo);
+    List dietasPorPaciente(int codigoPaciente);
     
 }

@@ -16,6 +16,9 @@ import entities.ReferenciasDieta;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,8 +27,18 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  *
@@ -41,7 +54,6 @@ public class TablaAlimentosBean implements Serializable {
     private int codigoDieta;
     private int numeroItemDieta;
     private int cantidadNuevoAlimentoPAVB;
-    private int cantidadNuevoAlimentoNoPAVB;
     private List<ElementoListaBasico> listaDesplegableAlimentosPAVB;
     private List<ElementoListaBasico> listaDesplegablePacientes;
     private List listaDesplegableDietas;
@@ -372,7 +384,7 @@ public class TablaAlimentosBean implements Serializable {
     }
 
     public void changeListenerCampos() {
-        System.out.println("Se instancio el modulo");
+        System.out.println("Se instancio el modulo changeListenerCampos()");
     }
 
     public Paciente getPaciente() {
@@ -397,14 +409,6 @@ public class TablaAlimentosBean implements Serializable {
 
     public void setCantidadAlimentoModificado(double cantidadAlimentoModificado) {
         this.cantidadAlimentoModificado = cantidadAlimentoModificado;
-    }
-
-    public int getCantidadNuevoAlimentoNoPAVB() {
-        return cantidadNuevoAlimentoNoPAVB;
-    }
-
-    public void setCantidadNuevoAlimentoNoPAVB(int cantidadNuevoAlimentoNoPAVB) {
-        this.cantidadNuevoAlimentoNoPAVB = cantidadNuevoAlimentoNoPAVB;
     }
 
     public List<DatosDieta> getTablaAlimentosNoPAVB() {
@@ -514,15 +518,31 @@ public class TablaAlimentosBean implements Serializable {
     /**
      * METHODS
      */
+    public void changeListenerCodigoDieta() {
+        if (codigoDieta != 0) {
+            actualizaListaAlimentos(codigoDieta);
+            cargarDatosPaciente();
+        }
+    }
+
+    public void changeListenerCodigoPaciente() {
+        if (codigoPaciente != 0) {
+            listaDesplegablePacientes = managerBeanLocal.nombrePacientes();
+            cargarDatosPaciente();
+            resetAllValues();
+        }
+        cargarListaDietas();
+    }
+
     public String agregarAlimentoDieta() {
-        System.out.println(TablaAlimentosBean.class.getSimpleName() + " invoco agregarAlimentoDieta para paciente: " + codigoPaciente);
+        System.out.println("invoco agregarAlimentoDieta para dieta: " + codigoDieta + " codigo Alimento seleccionado: " + codigoAlimentoSeleccionado + " cantidad: " + cantidadNuevoAlimentoPAVB + " paciente: " + codigoPaciente);
         if (codigoAlimentoSeleccionado != 0 && cantidadNuevoAlimentoPAVB != 0 && codigoPaciente != 0) {
-            System.out.println(TablaAlimentosBean.class.getSimpleName() + " if distinto a cero");
+            System.out.println("campos registrados no son nulos agregarAlimentoDieta para dieta: " + codigoDieta + " codigo Alimento seleccionado: " + codigoAlimentoSeleccionado + " cantidad: " + cantidadNuevoAlimentoPAVB + " paciente: " + codigoPaciente);
             numeroItemDieta = managerBeanLocal.siguienteItem(codigoDieta);
             int codigoDietaAfterInsert = managerBeanLocal.agregarAlimentoDieta(codigoDieta, numeroItemDieta, codigoAlimentoSeleccionado, cantidadNuevoAlimentoPAVB, codigoPaciente);
-            System.out.println(TablaAlimentosBean.class.getSimpleName() + " tras la insercion retorno codigo dieta: " + codigoDietaAfterInsert);
             codigoDieta = codigoDietaAfterInsert;
-            listaDesplegableDietas = managerBeanLocal.listadoDietas();
+            //listaDesplegableDietas = managerBeanLocal.listadoDietas();
+            cargarListaDietas();
             changeListenerCodigoDieta();
         }
         return null;
@@ -530,18 +550,9 @@ public class TablaAlimentosBean implements Serializable {
 
     private void actualizaListaAlimentos(int codigoDieta) {
         //CONSULTA LA TABLA DE DIETA Y RECUPERA LOS ITEMS PARA MOSTRAR DE ACUERDO A LA CANTIDAD
-        sumatoriaHidratosCarbono = 0;
-        sumatoriaHidratosCarbonoPAVB = 0;
-        sumatoriaProteina = 0;
-        sumatoriaProteinaPAVB = 0;
-        sumatoriaGrasa = 0;
-        sumatoriaGrasaPAVB = 0;
-        sumatoriaFibra = 0;
-        sumatoriaFibraPAVB = 0;
         double cantidadAlimentoDieta;
 
-        tablaAlimentos.removeAll(tablaAlimentos);
-        tablaAlimentosNoPAVB.removeAll(tablaAlimentosNoPAVB);
+        resetAllValues();
         List<Dieta> recuperaDietasPorCodigo = managerBeanLocal.detalleDieta(codigoDieta);
         for (Dieta detalle : recuperaDietasPorCodigo) {
             cantidadAlimentoDieta = detalle.getCantidadAlimento();
@@ -573,38 +584,16 @@ public class TablaAlimentosBean implements Serializable {
         }
     }
 
-    public void changeListenerCodigoDieta() {
-        if (codigoDieta != 0) {
-            actualizaListaAlimentos(codigoDieta);
-
-        }
-    }
-
-    public void changeListenerCodigoPaciente() {
-        if (codigoPaciente != 0) {
-            listaDesplegablePacientes = managerBeanLocal.nombrePacientes();
-            paciente = managerBeanLocal.detallePaciente(codigoPaciente);
-            System.out.println("Se cambio de paciente al numero: " + codigoPaciente + " detalles: " + paciente.getFechaNacimiento());
-            edad = calcularEdad(paciente.getFechaNacimiento());
-            tipoImc = calcularTipoImc(paciente.getImc());
-            tipoPorcentajePI = calcularTipoPorcentajePI(paciente.getPorcentajePesoIdeal());
-
-        }
-    }
-
     private int calcularEdad(Date fechaNacimiento) {
         Instant instant = Instant.ofEpochMilli(fechaNacimiento.getTime());
-        
+
         int edadCalculada = 0;
-        
+
         LocalDate birthDate = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
         LocalDate currentDate = LocalDate.now();
-        
-        System.out.println("birthDate: " + birthDate.toString());
-        System.out.println("currentDate: " + currentDate.toString());
 
         edadCalculada = Period.between(birthDate, currentDate).getYears();
-        System.out.println("edad: " + edadCalculada);
+        //System.out.println("edad: " + edadCalculada);
 
         return edadCalculada;
     }
@@ -697,7 +686,7 @@ public class TablaAlimentosBean implements Serializable {
         System.out.println("TABLAALIMENTODIETA borrarAlimentoDieta con datos, codigoDieta: " + codigoDietaBorrar + ", numeroItem: " + numeroItemDietaBorrar);
         managerBeanLocal.borrarAlimentoDieta(codigoDietaBorrar, numeroItemDietaBorrar);
         actualizaListaAlimentos(codigoDieta);
-        listaDesplegableDietas = managerBeanLocal.listadoDietas();
+        cargarListaDietas();
     }
 
     public String seleccionarAlimentoDieta(DatosDieta dietaSeleccionada) {
@@ -739,7 +728,7 @@ public class TablaAlimentosBean implements Serializable {
         kcalGrasa = sumatoriaGrasa * 9;
         kcalFibra = kcalGrasa + kcalHC + kcalProteina;
     }
-    
+
     private String calcularTipoImc(float imcParam) {
         String tipo;
         if (imcParam < 18.5) {
@@ -757,13 +746,11 @@ public class TablaAlimentosBean implements Serializable {
         } else {
             tipo = " ";
         }
-        System.out.println("calcularTipoImc " + tipo);
         return tipo;
-        
+
     }
-    
+
     private String calcularTipoPorcentajePI(float porcentajePesoIdeal) {
-        System.out.println("calcularPorcentajePesoIdeal datos entrada - porcentaje peso ideal: " + porcentajePesoIdeal);
         String retorno = "No calculado";
         if (porcentajePesoIdeal > 180) {
             retorno = "Obesidad morbida";
@@ -783,5 +770,48 @@ public class TablaAlimentosBean implements Serializable {
             retorno = "Desnutricion severa";
         }
         return retorno;
+    }
+
+    private void resetAllValues() {
+        sumatoriaHidratosCarbono = 0;
+        sumatoriaHidratosCarbonoPAVB = 0;
+        sumatoriaProteina = 0;
+        sumatoriaProteinaPAVB = 0;
+        sumatoriaGrasa = 0;
+        sumatoriaGrasaPAVB = 0;
+        sumatoriaFibra = 0;
+        sumatoriaFibraPAVB = 0;
+        kcalHC = 0;
+        kcalProteina = 0;
+        kcalGrasa = 0;
+        kcalFibra = 0;
+        tablaAlimentos.removeAll(tablaAlimentos);
+        tablaAlimentosNoPAVB.removeAll(tablaAlimentosNoPAVB);
+    }
+
+    private void cargarListaDietas() {
+        if (codigoPaciente == 0) {
+            listaDesplegableDietas = managerBeanLocal.listadoDietas();
+        } else {
+            listaDesplegableDietas = managerBeanLocal.dietasPorPaciente(codigoPaciente);
+        }
+    }
+
+    private void cargarDatosPaciente() {
+        if (codigoPaciente != 0) {
+            paciente = managerBeanLocal.detallePaciente(codigoPaciente);
+            edad = calcularEdad(paciente.getFechaNacimiento());
+            tipoImc = calcularTipoImc(paciente.getImc());
+            tipoPorcentajePI = calcularTipoPorcentajePI(paciente.getPorcentajePesoIdeal());
+        }
+    }
+
+    public String crearReporte() {
+        System.out.println("entro al main");
+        
+        
+        
+        return null;
+
     }
 }
