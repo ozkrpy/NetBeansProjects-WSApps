@@ -16,6 +16,9 @@ import entities.ReferenciasDieta;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,8 +27,18 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
 
 /**
  *
@@ -791,5 +804,14 @@ public class TablaAlimentosBean implements Serializable {
             tipoImc = calcularTipoImc(paciente.getImc());
             tipoPorcentajePI = calcularTipoPorcentajePI(paciente.getPorcentajePesoIdeal());
         }
+    }
+
+    public String crearReporte() {
+        System.out.println("entro al main");
+        
+        
+        
+        return null;
+
     }
 }
