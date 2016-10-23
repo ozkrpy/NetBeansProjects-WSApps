@@ -26,6 +26,7 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "Dieta.findAll", query = "SELECT d FROM Dieta d"),
     @NamedQuery(name = "Dieta.findAllCodigoDieta", query = "SELECT DISTINCT(d.dietaPK.codigoDieta) FROM Dieta d ORDER BY d.dietaPK.codigoDieta"),
+    @NamedQuery(name = "Dieta.findAllByCodigoPaciente", query = "SELECT DISTINCT(d.dietaPK.codigoDieta) FROM Dieta d WHERE d.codigoPaciente.codigoPaciente = :codigoPaciente ORDER BY d.dietaPK.codigoDieta"),
     @NamedQuery(name = "Dieta.maxCodigoDieta", query = "SELECT MAX(d.dietaPK.codigoDieta) FROM Dieta d"),
     @NamedQuery(name = "Dieta.findByCodigoDieta", query = "SELECT d FROM Dieta d WHERE d.dietaPK.codigoDieta = :codigoDieta"),
     @NamedQuery(name = "Dieta.findByCodigoDietaMaxItem", query = "SELECT MAX(d.dietaPK.numeroItem) FROM Dieta d WHERE d.dietaPK.codigoDieta = :codigoDieta"),
